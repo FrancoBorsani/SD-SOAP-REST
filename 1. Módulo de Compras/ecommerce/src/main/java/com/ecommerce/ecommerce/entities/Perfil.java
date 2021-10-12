@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="perfil")
@@ -11,6 +14,10 @@ public class Perfil {
 	
 	@Id
 	private int id;
+	
+	@Column(name = "username")
+	private String username;
+
 	
 	@Column(name = "nombre")
 	private String nombre;
@@ -21,20 +28,18 @@ public class Perfil {
 	@Column(name = "user_role")
 	private String userRol;
 	
-	@Column(name = "usuario")
-	private String usuario;
-	
 	@Column(name = "dni")
 	private String dni;
+	
 
 
-	public Perfil(int id, String nombre, String userRol ,String apellido, String dni, String usuario) {
+	public Perfil(int id, String username, String userRol , String nombre, String apellido, String dni) {
 		this.id = id;
+		this.username = username;
 		this.nombre = nombre;
 		this.userRol = userRol;
 		this.apellido = apellido;
 		this.dni = dni;
-		this.usuario = usuario;
 	}
 
 
@@ -82,16 +87,6 @@ public class Perfil {
 	}
 
 
-	public String getUsuario() {
-		return usuario;
-	}
-
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
-
 	public String getDni() {
 		return dni;
 	}
@@ -100,6 +95,18 @@ public class Perfil {
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	
 	
 	
 	

@@ -1,23 +1,13 @@
 package com.ecommerce.ecommerce.entities;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Table(name="user")
@@ -33,14 +23,15 @@ public class User {
 	@Column(name="apellido",nullable=false, length=45)
 	private String apellido;
 	
-	@Column(name="usuario", nullable=false, length=45)
-	private String usuario;
-	
 	@Column(name="password", nullable=false, length=60)
 	private String password;
 	
 	@Column(name="dni", nullable=false, length=60)
 	private String dni;
+	
+	@Column(name="username", nullable=true, length=45)
+	private String username;
+	
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
@@ -51,23 +42,25 @@ public class User {
 
 	public User() {}
 	
-	public User(String nombre, String apellido, String usuario, String password, String dni, boolean enabled) {
+	public User(String username, String nombre, String apellido, String password, String dni, boolean enabled) {
+		this.username = username;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.usuario = usuario;
 		this.password = password;
 		this.dni = dni;
 		this.enabled = true;
+
 	}
 	
-	public User(String nombre, String apellido, String usuario, String password, String dni, boolean enabled, Set<UserRole> userRoles) {
+	public User(String username, String nombre, String apellido, String password, String dni, boolean enabled, Set<UserRole> userRoles) {
+		this.username = username;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.usuario = usuario;
 		this.password = password;
 		this.dni = dni;
 		this.userRoles = userRoles;
 		this.enabled = true;
+
 
 	}
 
@@ -95,13 +88,6 @@ public class User {
 		this.apellido = apellido;
 	}
 
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
 
 	public String getPassword() {
 		return password;
@@ -135,6 +121,13 @@ public class User {
 		this.enabled = enabled;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	
 	
 	

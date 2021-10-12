@@ -11,13 +11,16 @@ import java.io.Serializable;
 @Repository("userRepository")
 public interface IUserRepository extends JpaRepository<User, Serializable> {
 
-	@Query("SELECT u FROM User u JOIN FETCH u.userRoles WHERE u.usuario = (:usuario)")
-	public abstract User findByUsernameAndFetchUserRolesEagerly(@Param("usuario") String usuario);
+	@Query("SELECT u FROM User u JOIN FETCH u.userRoles WHERE u.username = (:username)")
+	public abstract User findByUsernameAndFetchUserRolesEagerly(@Param("username") String username);
 	
-	@Query("SELECT u FROM User u WHERE u.usuario = (:usuario)")	
-	public abstract User findByUsuario(@Param("usuario") String usuario);
+	public User findByUsername(String username);
 	
-	@Query("SELECT usuario FROM User u WHERE u.usuario = (:usuario)")
-	public abstract String userNameByEmailInUsername(@Param("usuario") String username);
+	@Query("SELECT username FROM User u WHERE u.username = (:username)")
+	public abstract String userNameByEmailInUsername(@Param("username") String username);
+
+	@Query(nativeQuery=true,value="select * from User where id=(:idUser)")
+	public User findByIdUser(int idUser);
+	
 	
 }

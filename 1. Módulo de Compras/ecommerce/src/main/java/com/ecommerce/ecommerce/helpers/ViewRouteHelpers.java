@@ -5,4 +5,6 @@ public class ViewRouteHelpers {
 	public final static String HOME = "home/index";
 	
 	public final static String REGISTRO = "registro/index";
+	
+	public final static String INICIAR = "login/index";
 }

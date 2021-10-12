@@ -13,8 +13,10 @@ public interface IPerfilService {
 	public abstract Perfil findById(int id);
 	
 	public Perfil addNewProfile(User usuario);
-		
+	
+	public Perfil updateProfile(Perfil profileToModif , String username  ,MultipartFile imagen , String aboutMe)throws IOException;
+	
 	public Perfil updateProfile(Perfil newProfile)throws IOException;
-		
+	
 	public abstract boolean remove(int id);
 }
