@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Registro</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="../../css/registro/style.css">
+
+	</head>
+	<body>
+	<div  class="alert" th:classappend="'alert-' + (${clase != null} ? ${clase} +' alert-dismissible' : info + ' alert-dismissible')" aria-hidden="true" th:if="${mensaje != null}">
+    	<button type="button" class="close " aria-hidden="true" data-dismiss="alert">&times;</button>
+        <span th:text="${mensaje}"></span>
+    </div>
+                    
+                    
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Registro</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-5">
+					<div class="login-wrap p-4 p-md-5">
+		      	<div class="icon d-flex align-items-center justify-content-center">
+		      		<span class="fa fa-user-o"></span>
+		      	</div>
+		      	<form th:action="@{registrarse}" method="post" class="login-form">
+		      		<div class="form-group">
+		      			<input type="text" class="form-control rounded-left" name="nombre" placeholder="Nombre" required>
+		      		</div>
+		      		<div class="form-group">
+		      			<input type="text" class="form-control rounded-left" name="apellido" placeholder="Apellido" required>
+		      		</div>
+		      		<div class="form-group">
+		      			<input type="text" class="form-control rounded-left" name="usuario" placeholder="Usuario" required>
+		      		</div>
+		      		<div class="form-group">
+		      			<input type="text" class="form-control rounded-left" name="dni" placeholder="DNI" required>
+		      		</div>
+		            <div class="form-group d-flex">
+		              <input type="password" class="form-control rounded-left" name="password" placeholder="Password" required>
+		            </div>
+		            <div class="form-group">
+		            	<button type="submit" class="btn btn-primary rounded submit p-3 px-5">REGISTRARSE</button>
+		            </div>
+	          </form>
+	        </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="../../js/registro/jquery.min.js"></script>
+  <script src="../../js/registro/popper.js"></script>
+  <script src="../../js/registro/bootstrap.min.js"></script>
+  <script src="../../js/registro/main.js"></script>
+
+	</body>
+</html>
+

@@ -45,25 +45,94 @@ public class User {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
 	
+	@Column(name="enabled")
+	private boolean enabled;
+	
 
 	public User() {}
 	
-	public User(String nombre, String apellido, String usuario, String password, String dni) {
+	public User(String nombre, String apellido, String usuario, String password, String dni, boolean enabled) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.usuario = usuario;
 		this.password = password;
 		this.dni = dni;
+		this.enabled = true;
 	}
 	
-	public User(String nombre, String apellido, String usuario, String password, String dni, Set<UserRole> userRoles) {
+	public User(String nombre, String apellido, String usuario, String password, String dni, boolean enabled, Set<UserRole> userRoles) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.usuario = usuario;
 		this.password = password;
 		this.dni = dni;
 		this.userRoles = userRoles;
+		this.enabled = true;
 
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	
