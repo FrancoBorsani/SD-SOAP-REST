@@ -25,7 +25,13 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
                             <h1>BIENVENIDO</h1>
+                            
                         </div>
+                        <div class="form-row" id="barraDeBusqueda">
+		                	<input type="text" name="buscarProducto" id="buscarProducto" class="form-control" placeholder="Buscar producto" required/>
+		                    <button type="submit" style="border-radius: 30px; background-color: blue; color: white;">Buscar</button>
+		                </div>
+
                         <div  class="alert" th:classappend="'alert-' + (${clase != null} ? ${clase} +' alert-dismissible' : info + ' alert-dismissible')" aria-hidden="true" th:if="${mensaje != null}">
                         	<button type="button" class="close " aria-hidden="true" data-dismiss="alert">&times;</button>
                         	<span th:text="${mensaje}"></span>
