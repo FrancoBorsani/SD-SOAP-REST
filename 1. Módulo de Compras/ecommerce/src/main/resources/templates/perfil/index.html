@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  	<title>Perfil</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="../../css/registro/style.css">
+	
+	<link rel="stylesheet" href="../../css/perfil/style.css">
+
+</head>
+	
+<body>
+	<div th:insert="generic/navBar.html"> </div>
+                    
+	<section class="profile">
+  		<header class="header">
+    		<div class="details">
+      			<img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/User_Circle.png" class="profile-pic">
+      			<h1 class="heading"  th:text="${perfil.username}"></h1>
+     			
+    		</div>
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+  		</header>
+	</section>
+	
+	<div class="row align-items-center justify-content-center text-center">
+	<div class="col-md-8">
+				<div class="card mb-3">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">Nombre</p>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<p th:text="${perfil.nombre}"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">Apellido</p>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<p th:text="${perfil.apellido}"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">D.N.I</p>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<p th:text="${perfil.dni}"></p>
+							</div>
+						</div>
+						
+						</div>
+						<!-- Modal -->
+<div class="modal fade" id="modalCambiarDatos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+	 aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Cambiar Datos</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form th:action="@{updateProfile}" th:object="${perfil}" method="post">
+					<div class="row">
+						<div class="col-sm-11 col-md-12">
+							<div class="form-group" style="display:none">
+								<label>ID:</label>
+								<input th:field="*{id}" type="text" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label for="">Nombre</label>
+								<input th:field="*{nombre}" type="text" id="firstName" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label for="">Apellido</label>
+								<input th:field="*{apellido}" type="text" id="lastName" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label for="">D.N.I</label>
+								<input th:field="*{dni}" type="text" id="dni" class="form-control" />
+							</div>
+
+						</div>
+						<div class="col-sm-1 col-md-12">
+							<div class="col-md-12 text-center">
+								<div class="form-group">
+									<button type="submit" class="btn btn-info">Aceptar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+						
+						
+						<div class="row">
+							<div class="col-sm-12">
+								<button title="Modificar" type="submit" class="float-right btn btn-info"
+										aria-hidden="true" id="modificar" data-toggle="modal"
+										data-target="#modalCambiarDatos">Modificar Datos</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+</body>
+
+</html>
+

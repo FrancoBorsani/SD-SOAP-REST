@@ -20,63 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.ecommerce.ecommerce.entities.Perfil;
 import com.ecommerce.ecommerce.entities.User;
 import com.ecommerce.ecommerce.entities.UserRole;
 import com.ecommerce.ecommerce.helpers.ViewRouteHelpers;
 import com.ecommerce.ecommerce.implementation.PerfilService;
 import com.ecommerce.ecommerce.repositories.IUserRepository;
 import com.ecommerce.ecommerce.repositories.IUserRoleRepository;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class RegistroController {
@@ -172,5 +122,36 @@ public class RegistroController {
 	    return "redirect:/login?logout"; //You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 	
+	@RequestMapping(value="/profile", method = RequestMethod.GET)
+	    public ModelAndView viewProfile() {
+	    	ModelAndView mAV = new ModelAndView(ViewRouteHelpers.PROFILE_INDEX);
+	    	
+	    	String username = "";
+	    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    	if( principal instanceof UserDetails) {
+	    		username = ((UserDetails)principal).getUsername();
+	    	}
+	    	
+	    	User currentUser = userRepository.findByUsername(username);
+	    	mAV.addObject("perfil", perfilService.findById(currentUser.getId()));
+	    	return mAV;
+	    }
+	
+	@PostMapping("/updateProfile")
+	public RedirectView updateProfile(@ModelAttribute("perfil") Perfil editPerfil, RedirectAttributes redirectAttrs) {
+    	try {
+			perfilService.updateProfile(editPerfil);
+			User perfilUser = userRepository.findByUsername(editPerfil.getUsername());
+			perfilUser.setNombre(editPerfil.getNombre());
+			perfilUser.setApellido(editPerfil.getApellido());
+			perfilUser.setDni(editPerfil.getDni());
+			userRepository.save(perfilUser);
+			redirectAttrs.addFlashAttribute("mensaje", "Perfil actualizado correctamente");
+		}catch (Exception e) {
+			redirectAttrs.addFlashAttribute("mensaje", "Problemas al actualizar el perfil");
+		}
+		
+		return new RedirectView("/profile");
+	}
 	
 }

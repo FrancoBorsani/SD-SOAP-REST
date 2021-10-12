@@ -7,4 +7,9 @@ public class ViewRouteHelpers {
 	public final static String REGISTRO = "registro/index";
 	
 	public final static String INICIAR = "login/index";
+	
+	public final static String PROFILE_INDEX = "perfil/index";
+	
+	
+	
 }
