@@ -32,6 +32,9 @@ public class User {
 	@Column(name="username", nullable=true, length=45)
 	private String username;
 	
+	@Column(name="telefono", nullable=true, length=45)
+	private String telefono;
+	
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
@@ -128,6 +131,15 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	
 	
 	
 	

@@ -58,6 +58,14 @@
 							<p th:text="${perfil.dni}"></p>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-sm-3">
+							<p class="mb-0">Teléfono</p>
+						</div>
+						<div class="col-sm-9 text-secondary">
+							<p th:text="${perfil.telefono}"></p>
+						</div>
+					</div>
 				</div>
 						
 				<!-- Modal 1 -->
@@ -90,6 +98,10 @@
 											<div class="form-group">
 												<label for="">D.N.I</label>
 												<input th:field="*{dni}" type="text" id="dni" class="form-control" />
+											</div>
+											<div class="form-group">
+												<label for="">Teléfono</label>
+												<input th:field="*{telefono}" type="text" id="telefono" class="form-control" />
 											</div>
 				
 										</div>

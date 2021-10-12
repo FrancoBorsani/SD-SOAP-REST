@@ -31,7 +31,9 @@ public class Perfil {
 	@Column(name = "dni")
 	private String dni;
 	
-
+	@Column(name = "telefono")
+	private String telefono;
+	
 
 	public Perfil(int id, String username, String userRol , String nombre, String apellido, String dni) {
 		this.id = id;
@@ -105,6 +107,17 @@ public class Perfil {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	
 	
 	
 	

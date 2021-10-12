@@ -161,6 +161,7 @@ public class RegistroController {
 			perfilUser.setNombre(editPerfil.getNombre());
 			perfilUser.setApellido(editPerfil.getApellido());
 			perfilUser.setDni(editPerfil.getDni());
+			perfilUser.setTelefono(editPerfil.getTelefono());
 			userRepository.save(perfilUser);
 			redirectAttrs.addFlashAttribute("mensaje", "Perfil actualizado correctamente");
 		}catch (Exception e) {
