@@ -24,11 +24,13 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.ecommerce.ecommerce.entities.Domicilio;
 import com.ecommerce.ecommerce.entities.Perfil;
+import com.ecommerce.ecommerce.entities.Tarjeta;
 import com.ecommerce.ecommerce.entities.User;
 import com.ecommerce.ecommerce.entities.UserRole;
 import com.ecommerce.ecommerce.helpers.ViewRouteHelpers;
 import com.ecommerce.ecommerce.implementation.PerfilService;
 import com.ecommerce.ecommerce.repositories.IDomicilioRepository;
+import com.ecommerce.ecommerce.repositories.ITarjetaRepository;
 import com.ecommerce.ecommerce.repositories.IUserRepository;
 import com.ecommerce.ecommerce.repositories.IUserRoleRepository;
 
@@ -51,6 +53,11 @@ public class RegistroController {
 	@Autowired
 	@Qualifier("perfilService")
 	private PerfilService perfilService;
+	
+	@Autowired
+	@Qualifier("tarjetaRepository")
+	private ITarjetaRepository tarjetaRepository;
+	
 	
 	@GetMapping("/registro")
 	public ModelAndView index() {
@@ -144,10 +151,13 @@ public class RegistroController {
 			List<Domicilio> domicilios = domicilioRepository.findByIdUser(usuarioBuscado.getId());
 
 			mAV.addObject("domicilios", domicilios);
+			
+			List<Tarjeta> tarjetas = tarjetaRepository.findByIdUser(usuarioBuscado.getId());
+
+			mAV.addObject("tarjetas", tarjetas);
 		}
 	    
 	    
-	    	
 	    User currentUser = userRepository.findByUsername(username);
 	    mAV.addObject("perfil", perfilService.findById(currentUser.getId()));
 	    return mAV;
