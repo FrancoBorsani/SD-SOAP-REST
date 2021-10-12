@@ -123,19 +123,19 @@ public class RegistroController {
 	}
 	
 	@RequestMapping(value="/profile", method = RequestMethod.GET)
-	    public ModelAndView viewProfile() {
-	    	ModelAndView mAV = new ModelAndView(ViewRouteHelpers.PROFILE_INDEX);
+	public ModelAndView viewProfile() {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelpers.PROFILE_INDEX);
 	    	
-	    	String username = "";
-	    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    	if( principal instanceof UserDetails) {
-	    		username = ((UserDetails)principal).getUsername();
-	    	}
-	    	
-	    	User currentUser = userRepository.findByUsername(username);
-	    	mAV.addObject("perfil", perfilService.findById(currentUser.getId()));
-	    	return mAV;
+		String username = "";
+	    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    if( principal instanceof UserDetails) {
+	    	username = ((UserDetails)principal).getUsername();
 	    }
+	    	
+	    User currentUser = userRepository.findByUsername(username);
+	    mAV.addObject("perfil", perfilService.findById(currentUser.getId()));
+	    return mAV;
+	}
 	
 	@PostMapping("/updateProfile")
 	public RedirectView updateProfile(@ModelAttribute("perfil") Perfil editPerfil, RedirectAttributes redirectAttrs) {
