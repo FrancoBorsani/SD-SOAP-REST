@@ -1,5 +1,7 @@
 package com.ecommerce.ecommerce.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,11 +22,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.ecommerce.ecommerce.entities.Domicilio;
 import com.ecommerce.ecommerce.entities.Perfil;
 import com.ecommerce.ecommerce.entities.User;
 import com.ecommerce.ecommerce.entities.UserRole;
 import com.ecommerce.ecommerce.helpers.ViewRouteHelpers;
 import com.ecommerce.ecommerce.implementation.PerfilService;
+import com.ecommerce.ecommerce.repositories.IDomicilioRepository;
 import com.ecommerce.ecommerce.repositories.IUserRepository;
 import com.ecommerce.ecommerce.repositories.IUserRoleRepository;
 
@@ -40,6 +44,9 @@ public class RegistroController {
 	@Qualifier("userRoleRepository")
 	private IUserRoleRepository userRoleRepository;
 	
+	@Autowired
+	@Qualifier("domicilioRepository")
+	private IDomicilioRepository domicilioRepository;
 	
 	@Autowired
 	@Qualifier("perfilService")
@@ -131,6 +138,15 @@ public class RegistroController {
 	    if( principal instanceof UserDetails) {
 	    	username = ((UserDetails)principal).getUsername();
 	    }
+	    
+	    User usuarioBuscado = userRepository.findByUsername(((UserDetails)principal).getUsername());
+		if (usuarioBuscado != null) {
+			List<Domicilio> domicilios = domicilioRepository.findByIdUser(usuarioBuscado.getId());
+
+			mAV.addObject("domicilios", domicilios);
+		}
+	    
+	    
 	    	
 	    User currentUser = userRepository.findByUsername(username);
 	    mAV.addObject("perfil", perfilService.findById(currentUser.getId()));
