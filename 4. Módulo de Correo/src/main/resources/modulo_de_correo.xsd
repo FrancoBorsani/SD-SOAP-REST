@@ -13,7 +13,8 @@
    	<xs:element name="updateEnvioRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="envio" type="tns:envio"/>
+                <xs:element name="codigoDeSeguimiento" type="xs:string"/>
+                <xs:element name="estado" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -45,6 +46,7 @@
     <xs:element name="updateEnvioResponse">
         <xs:complexType>
             <xs:sequence>
+            	<xs:element name="envio" type="tns:envio"/>
                 <xs:element name="responseStatus" type="tns:responseStatus"/>
             </xs:sequence>
         </xs:complexType>
@@ -80,7 +82,7 @@
             <xs:element name="descripcion" type="xs:string"/>
             <xs:element name="estado" type="xs:string"/>
             <xs:element name="DNIDestinatario" type="xs:string"/>
-            <xs:element name="fecha" type="xs:date"/>
+            <xs:element name="fecha" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
     

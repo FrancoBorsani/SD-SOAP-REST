@@ -44,27 +44,21 @@ public class Envio {
 		super();
 	}
 
-	public Envio(String descripcion, String estado, String dNIDestinatario, String codigoDeSeguimiento,
-			LocalDateTime createdAt, LocalDateTime updatedAt) {
+	public Envio(String descripcion, String estado, String dNIDestinatario, String codigoDeSeguimiento) {
 		super();
 		this.descripcion = descripcion;
 		this.estado = estado;
 		this.DNIDestinatario = dNIDestinatario;
 		this.codigoDeSeguimiento = codigoDeSeguimiento;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
 	}
 
-	public Envio(int id, String descripcion, String estado, String dNIDestinatario, String codigoDeSeguimiento,
-			LocalDateTime createdAt, LocalDateTime updatedAt) {
+	public Envio(int id, String descripcion, String estado, String dNIDestinatario, String codigoDeSeguimiento) {
 		super();
 		this.id = id;
 		this.descripcion = descripcion;
 		this.estado = estado;
 		this.DNIDestinatario = dNIDestinatario;
 		this.codigoDeSeguimiento = codigoDeSeguimiento;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
 	}
 
 	public int getId() {
