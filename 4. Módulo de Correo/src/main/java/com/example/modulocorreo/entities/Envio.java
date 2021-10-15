@@ -39,6 +39,8 @@ public class Envio {
 	@Column(name = "updatedat")
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
+	
+	public final static String ESTADO_EN_PREPARACION = "En preparación";
 
 	public Envio() {
 		super();

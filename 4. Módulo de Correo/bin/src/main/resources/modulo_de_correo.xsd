@@ -1,0 +1,89 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://spring.io/modulo-de-correo"
+           targetNamespace="http://spring.io/modulo-de-correo" attributeFormDefault="qualified" elementFormDefault="qualified">
+
+   	<xs:element name="createEnvioRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="descripcion" type="xs:string"/>
+                <xs:element name="dniDestinatario" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+   	<xs:element name="updateEnvioRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigoDeSeguimiento" type="xs:string"/>
+                <xs:element name="estado" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getAllEnviosRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getEnvioRequest">
+        <xs:complexType>
+            <xs:sequence>
+            	<xs:element name="codigoDeSeguimiento" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+   <xs:element name="createEnvioResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="envio" type="tns:envio"/>
+                <xs:element name="responseStatus" type="tns:responseStatus"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="updateEnvioResponse">
+        <xs:complexType>
+            <xs:sequence>
+            	<xs:element name="envio" type="tns:envio"/>
+                <xs:element name="responseStatus" type="tns:responseStatus"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getAllEnviosResponse">
+	    <xs:complexType >
+	        <xs:sequence>
+	            <xs:element name="envios" type="tns:envio" minOccurs="0" maxOccurs="unbounded"/>
+	        </xs:sequence>
+	    </xs:complexType>
+	</xs:element>
+	
+	<xs:element name="getEnvioResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="envio" type="tns:envio"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="responseStatus">
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="message" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="envio">
+        <xs:sequence>
+        	<xs:element name="id" type="xs:int"/>
+            <xs:element name="codigoDeSeguimiento" type="xs:string"/>
+            <xs:element name="descripcion" type="xs:string"/>
+            <xs:element name="estado" type="xs:string"/>
+            <xs:element name="DNIDestinatario" type="xs:string"/>
+            <xs:element name="fecha" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+</xs:schema>
