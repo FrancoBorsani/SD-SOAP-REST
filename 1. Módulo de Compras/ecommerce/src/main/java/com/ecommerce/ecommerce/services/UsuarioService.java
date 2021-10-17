@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.ecommerce.entities.Perfil;
 import com.ecommerce.ecommerce.entities.User;
+import com.ecommerce.ecommerce.entities.UserRole;
+import com.ecommerce.ecommerce.implementation.PerfilService;
+import com.ecommerce.ecommerce.repositories.IUserRoleRepository;
 import com.ecommerce.ecommerce.repositories.UsuarioRepository;
 
 @Service
@@ -12,6 +16,11 @@ public class UsuarioService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	PerfilService perfilService;
+	
+	@Autowired
+	IUserRoleRepository userRoleRepository;
 	
 	public User guardarUsuario(User usuario) {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
@@ -19,5 +28,14 @@ public class UsuarioService {
 		usuario.setEnabled(true);
 		return usuarioRepository.save(usuario);	
 	}
+	
+	public UserRole guardarRole(User usuario) {
+		return userRoleRepository.save(new UserRole(usuarioRepository.findByIdUser(usuario.getId()),"ROLE_USER"));			
+	}
+
+	public Perfil guardarPerfil(User usuario) {
+		return perfilService.addNewProfile(usuario);
+	}
+
 
 }

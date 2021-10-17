@@ -77,7 +77,6 @@
             		  "username": $("#username").val(),
             		  "dni": $("#dni").val(),
             		  "password": $("#password").val(),
-            		  "color": $("#color-add").val()
             		 }
             
             $.ajax({
@@ -88,18 +87,13 @@
 		        cache: false,
 		        timeout: 600000,
 				success : function(result) {
-					
-					if(!result){
 						alert("Usuario registrado correctamente");						
-					}else{
-						alert("El username ya existe");
-					}	
 					
-					window.location.reload();
+						window.location.reload();
 					
 				},
 				error : function(e) {
-					alert("Error!");
+						alert("El username ya existe");
 				}
 			});
 
