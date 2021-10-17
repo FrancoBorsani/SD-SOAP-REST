@@ -8,6 +8,7 @@ import com.ecommerce.ecommerce.entities.Perfil;
 import com.ecommerce.ecommerce.entities.User;
 import com.ecommerce.ecommerce.entities.UserRole;
 import com.ecommerce.ecommerce.implementation.PerfilService;
+import com.ecommerce.ecommerce.repositories.IPerfilRepository;
 import com.ecommerce.ecommerce.repositories.IUserRoleRepository;
 import com.ecommerce.ecommerce.repositories.UsuarioRepository;
 
@@ -18,6 +19,9 @@ public class UsuarioService {
 	
 	@Autowired
 	PerfilService perfilService;
+	
+	@Autowired
+	IPerfilRepository perfilRepository;
 	
 	@Autowired
 	IUserRoleRepository userRoleRepository;
@@ -35,6 +39,14 @@ public class UsuarioService {
 
 	public Perfil guardarPerfil(User usuario) {
 		return perfilService.addNewProfile(usuario);
+	}
+	
+	public User traerUser(int id) {
+		return usuarioRepository.findByIdUser(id);
+	}
+	
+	public User actualizarUsuario(User usuario) {
+		return usuarioRepository.save(usuario);	
 	}
 
 
