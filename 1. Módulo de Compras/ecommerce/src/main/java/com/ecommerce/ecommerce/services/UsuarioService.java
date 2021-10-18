@@ -45,6 +45,11 @@ public class UsuarioService {
 		return usuarioRepository.findByIdUser(id);
 	}
 	
+	public User traerUser(String username) {
+		return usuarioRepository.findByUsername(username);
+	}
+	
+	
 	public User actualizarUsuario(User usuario) {
 		return usuarioRepository.save(usuario);	
 	}
