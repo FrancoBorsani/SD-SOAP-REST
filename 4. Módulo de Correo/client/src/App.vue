@@ -1,22 +1,19 @@
 <template>
   <div id="app">
-      <Header />
+      <Header v-if="$route.path != '/login'" />
       <router-view />
-      <Newsletter v-if="$route.path != '/contact'" />
-      <Footer />
+      <!--<Newsletter v-if="$route.path != '/contact' && $route.path != '/envios'"  />
+      <Footer v-if="$route.path != '/envios'" /> -->
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header.vue'
-import Newsletter from '@/components/Newsletter.vue'
-import Footer from '@/components/Footer.vue'
-
 
 export default{
   name: 'app',
   components: {
-    Header, Newsletter, Footer
+    Header
   }
 }
 </script>

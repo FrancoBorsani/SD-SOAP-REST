@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Envios from '@/views/Envios.vue'
+import Login from '@/views/Login.vue'
+import DetailEnvio from '@/views/DetailEnvio.vue'
 
 const Home = () => import('@/views/Home.vue');
 const Products = () => import('@/views/Products.vue');
@@ -27,6 +30,21 @@ const routes = [
     path: '/info',
     name: 'Info',
     component: Info
+  },
+  {
+    path: '/envios',
+    name: 'Envios',
+    component: Envios
+  },
+  {
+    path: '/envios/:id',
+    name: 'envio-detail',
+    component: DetailEnvio
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   }
 ]
 

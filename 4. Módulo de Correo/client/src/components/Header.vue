@@ -2,63 +2,32 @@
   <div class="container-flex">
     <nav class="navbar navbar-light">
       <div class="dropdown d-xl-none d-lg-none mr-auto">
-        <img src="https://png.icons8.com/windows/32/000000/menu.png" data-toggle="dropdown" data-target="#navd" aria-haspopup="true" aria-expanded="false">
+          <img src="https://png.icons8.com/windows/32/000000/menu.png" data-toggle="dropdown" data-target="#navd" aria-haspopup="true" aria-expanded="false">
         <div class="dropdown-menu hb" aria-labelledby="navd">
           <router-link class="dropdown-item" to="/">Home</router-link>
           <router-link class="dropdown-item" to="/products">Products</router-link>
+          <router-link class="dropdown-item" to="/envios">Envios</router-link>
           <router-link class="dropdown-item" to="/contact">Contact us</router-link>
         </div>
       </div>
       <!--Logo-->
-      <a class="navbar-brand py-0 pl-5">
+      <router-link class="navbar-brand py-0 pl-5" to="/">
           <img src="@/assets/fi-logo.svg" width="50" height="50">
-      </a>
+      </router-link>
       <!--Header navigation-->
       <span class="navbar-item bc d-none d-xl-block d-lg-block py-0">
         <router-link class="pl-5" to="/">Home</router-link>
         <router-link class="px-5" to="/products">Products</router-link>
+        <router-link class="pr-5" to="/envios">Envios</router-link>
         <router-link to="/contact">Contact us</router-link>
       </span>
 
-      <div class="navbar-item ml-auto d-flex">
+      <div class="navbar-item ml-auto">
         <div class="user">
-          <h5 style="cursor: pointer" data-toggle="modal" data-target="#userModal">Sign In</h5>
-        </div>
-
-        <div class="bag" @click="openCart">
-            <img class="pb-1" src="@/assets/cart.svg">
-            <span class="mb-3" v-if="this.bagItemscount > 0">{{ bagItemscount }}</span>
+          <router-link to="/login">Login</router-link>
         </div>
       </div>
     </nav>
-    <!--User Modal-->
-    <div class="modal fade" id="userModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Login</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form class="px-3 py-2">
-              <div class="form-group">
-                <label for="exampleDropdownFormEmail1">Username</label>
-                <input type="email" class="form-control" placeholder="email@example.com">
-              </div>
-              <div class="form-group">
-                <label for="exampleDropdownFormPassword1">Password</label>
-                <input type="password" class="form-control" placeholder="Password">
-              </div>
-              <button type="submit" class="btn-xl btn-success mt-3">Sign in</button>
-            </form>
-          </div>
-          <div class="modal-footer">
-          </div>
-        </div>
-      </div>
-    </div>
     <!--Cart Component-->
     <Cart ref="cartMove" />
     </div>
@@ -75,11 +44,6 @@ export default {
   computed: {
     bagItemscount() {
       return this.$store.getters.itemsNumber
-    }
-  },
-  methods: {
-    openCart() {
-      this.$refs.cartMove.cartON()
     }
   }
 }
@@ -110,35 +74,19 @@ nav {
 .navbar-item.bc a:hover, .navbar-item.bc a:active {
   color: #FFD700;
 }
+
+.user a {
+  font-size: 17px;
+  text-decoration: none;
+  color: black;
+}
+
+.user a:active, .user a:hover {
+  color: #FFD700;
+}
+
 .btn-sm{
   border-radius: 0;
-}
-
-.search {
-  outline: none;
-  border: 1px #F8F8F8;
-  background: #ededed url('../assets/search.png') no-repeat 5px center;
-  padding: 5px 8px 0px 26px;
-  width: 10px;
-  -webkit-border-radius: 10em;
-  -moz-border-radius: 10em;
-  border-radius: 10em;
-  -webkit-transition: all .5s;
-  -moz-transition: all .5s;
-  transition: all .5s;
-  margin-right: 10px;
-}
-
-.search:focus {
-  width: 160px;
-  border: solid 1px #ccc;
-  background-color: #fff;
-  border-color: #98ccfd;
-  -webkit-box-shadow: 0 0 5px rgba(109, 207, 246, .5);
-  -moz-box-shadow: 0 0 5px rgba(109, 207, 246, .5);
-  box-shadow: 0 0 5px rgba(109, 207, 246, .5);
-  backface-visibility: hidden;
-  perspective: 1000;
 }
 
 form .btn-xl.btn-success.mt-3 {

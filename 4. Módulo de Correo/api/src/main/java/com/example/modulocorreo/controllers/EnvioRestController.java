@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import com.example.modulocorreo.services.IEnvioService;
 
 @RestController
 @RequestMapping("/api/v1/envios")
+@CrossOrigin("*")
 public class EnvioRestController {
 	
 	@Autowired
@@ -55,8 +57,8 @@ public class EnvioRestController {
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<?> updateEstadoDeEnvio(@PathVariable("id") int idEnvio, @RequestParam("estado") String estado) {
-		
+	public ResponseEntity<?> updateEstadoDeEnvio(@PathVariable("id") int idEnvio, @RequestParam(name="estado") String estado) {
+				
 		Envio envio = envioService.findById(idEnvio);
 		
 		if(envio == null) return ResponseEntity.ok(new ApiResponse(false, "Envio no encontrado."));

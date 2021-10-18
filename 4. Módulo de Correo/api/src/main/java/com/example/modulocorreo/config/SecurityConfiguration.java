@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.modulocorreo.filters.JwtRequestFilter;
 import com.example.modulocorreo.services.implementation.UserService;
+import com.example.modulocorreo.utils.AuthEntryPointJwt;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +28,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
+    
+	@Autowired
+	private AuthEntryPointJwt unauthorizedHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -37,9 +41,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity security) throws Exception {
         security.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/authenticate", "/signin", "/signup").permitAll()
-                .anyRequest().authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+			.authorizeRequests().antMatchers("/api/auth/**", "/signin", "/api/v1/envios", "/api/v1/envios/**").permitAll()
+			.antMatchers("/api/test/**").permitAll()
+			.anyRequest().authenticated();
+        
         security.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
