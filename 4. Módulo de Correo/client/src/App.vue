@@ -2,8 +2,6 @@
   <div id="app">
       <Header v-if="$route.path != '/login'" />
       <router-view />
-      <!--<Newsletter v-if="$route.path != '/contact' && $route.path != '/envios'"  />
-      <Footer v-if="$route.path != '/envios'" /> -->
   </div>
 </template>
 
@@ -14,6 +12,9 @@ export default{
   name: 'app',
   components: {
     Header
+  },
+  mounted() {
+    this.$store.dispatch('loadCurrentUser')
   }
 }
 </script>

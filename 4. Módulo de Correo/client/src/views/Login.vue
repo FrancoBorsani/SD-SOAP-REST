@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-content-center m-2 mt-5">
+  <div class="row justify-content-center m-3 mt-5">
     <login-form :submitForm="loginUser" />
   </div>
 </template>
@@ -13,9 +13,15 @@ export default {
   },
   methods: {
     async loginUser(loginInfo) {
-      //let user = await this.$store.dispatch("loginUser", loginInfo);
-      alert('Login!', loginInfo)
-    }
+      let user = await this.$store.dispatch("loginUser", loginInfo);
+
+      if (user.error) {
+        alert(user.error)
+      } else {
+        this.$router.push({ name: 'Envios'})
+      }
+
+    },
   },
 };
 </script>

@@ -10,13 +10,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.modulocorreo.dto.LoginRequest;
+import com.example.modulocorreo.dto.LoginResponse;
 import com.example.modulocorreo.services.implementation.UserService;
 import com.example.modulocorreo.utils.JwtUtil;
 
 import javax.validation.Valid;
 
-
 @RestController
+@RequestMapping("/api/v1/auth")
+@CrossOrigin("*")
 public class AuthController {
 
     @Autowired
@@ -49,8 +51,8 @@ public class AuthController {
         UserDetails userDetails = userService.loadUserByUsername(loginRequest.getUsername());
 
         final String jwt = jwtUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(jwt);
+        
+        return ResponseEntity.ok(new LoginResponse(jwt, userDetails.getUsername()));
     }
 
 }

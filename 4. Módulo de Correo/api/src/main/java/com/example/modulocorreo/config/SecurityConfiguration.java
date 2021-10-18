@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         security.csrf().disable()
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.authorizeRequests().antMatchers("/api/auth/**", "/signin", "/api/v1/envios", "/api/v1/envios/**").permitAll()
+			.authorizeRequests().antMatchers("/api/auth/**", "/api/v1/auth/signin", "/api/v1/envios", "/api/v1/envios/**").permitAll()
 			.antMatchers("/api/test/**").permitAll()
 			.anyRequest().authenticated();
         
