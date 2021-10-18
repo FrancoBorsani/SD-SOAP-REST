@@ -80,20 +80,20 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form th:action="@{updateProfile}" th:object="${perfil}" method="post">
+								<form th:object="${perfil}">
 									<div class="row">
 										<div class="col-sm-11 col-md-12">
 											<div class="form-group" style="display:none">
 												<label>ID:</label>
-												<input th:field="*{id}" type="text" class="form-control" />
+												<input th:field="*{id}" id="id" type="text" class="form-control" />
 											</div>
 											<div class="form-group">
 												<label for="">Nombre</label>
-												<input th:field="*{nombre}" type="text" id="firstName" class="form-control" />
+												<input th:field="*{nombre}" type="text" id="nombre" class="form-control" />
 											</div>
 											<div class="form-group">
 												<label for="">Apellido</label>
-												<input th:field="*{apellido}" type="text" id="lastName" class="form-control" />
+												<input th:field="*{apellido}" type="text" id="apellido" class="form-control" />
 											</div>
 											<div class="form-group">
 												<label for="">D.N.I</label>
@@ -108,7 +108,7 @@
 										<div class="col-sm-1 col-md-12">
 											<div class="col-md-12 text-center">
 												<div class="form-group">
-													<button type="submit" class="btn btn-info">Aceptar</button>
+													<button type="submit" id="actualizarDatosPersonales" class="btn btn-info">Aceptar</button>
 												</div>
 											</div>
 										</div>
@@ -279,7 +279,42 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-							
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+						
+	<script>
+		$( document ).ready(function() {
+			$("#modalCambiarDatos #actualizarDatosPersonales").on("click",function () {
+	        	         console.log("ENTRÓ");
+	            var user = {
+						  "id": $("#id").val(),
+	            		  "nombre": $("#nombre").val(),
+	            		  "apellido": $("#apellido").val(),
+	            		  "dni": $("#dni").val(),
+	            		  "telefono": $("#telefono").val(),
+	            		 }
+	            
+	            $.ajax({
+					type : "POST",
+					url : "/api/perfil/updateProfile",
+					contentType: "application/json",
+					data: JSON.stringify(user),
+			        cache: false,
+			        timeout: 600000,
+					success : function(result) {
+							alert("Perfil actualizado correctamente");						
+						
+							window.location.reload();
+						
+					},
+					error : function(e) {
+							alert("Error al actualizar el perfil");
+					}
+				});
+	
+	        });
+         });
+		</script>	
 </body>
 
 </html>

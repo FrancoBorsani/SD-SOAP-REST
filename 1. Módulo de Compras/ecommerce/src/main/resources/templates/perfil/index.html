@@ -164,35 +164,33 @@
 						</button>
 					</div>
 				<div class="modal-body">
-					<form th:action="@{altaDireccion}" th:object="${direccion}" method="post">
 						<div class="row">
 							<div class="col-sm-11 col-md-12">
 								<div class="form-group">
 									<label for="">Calle</label>
-									<input  type="text" name="calle" class="form-control" required />
+									<input  type="text" name="calle" id="calle" class="form-control" required />
 								</div>
 								<div class="form-group">
 									<label for="">Número</label>
-									<input  type="number" name="numero" class="form-control" required />
+									<input  type="number" name="numero" id="numero" class="form-control" required />
 								</div>
 								<div class="form-group">
 									<label for="">Código postal</label>
-									<input  type="text" name="codigoPostal" class="form-control" required />
+									<input  type="text" name="codigoPostal" id="codigoPostal" class="form-control" required />
 								</div>
 								<div class="form-group">
 									<label for="">Provincia</label>
-									<input  type="text" name="provincia" class="form-control" required />
+									<input  type="text" name="provincia" id="provincia" class="form-control" required />
 								</div>			
 							</div>
 							<div class="col-sm-1 col-md-12">
 								<div class="col-md-12 text-center">
 									<div class="form-group">
-										<button type="submit" class="btn btn-info">Guardar</button>
+										<button type="submit" id="agregarDireccion" class="btn btn-info">Guardar</button>
 									</div>
 								</div>
 							</div>
 						</div>
-					</form>
 				</div>
 			</div>
 		</div>
@@ -285,7 +283,6 @@
 	<script>
 		$( document ).ready(function() {
 			$("#modalCambiarDatos #actualizarDatosPersonales").on("click",function () {
-	        	         console.log("ENTRÓ");
 	            var user = {
 						  "id": $("#id").val(),
 	            		  "nombre": $("#nombre").val(),
@@ -313,6 +310,47 @@
 				});
 	
 	        });
+	        
+	        
+	        
+	        
+	        $("#agregarDireccion").on("click",function () {
+	            var direccion = {
+	            		  "calle": $("#calle").val(),
+	            		  "numero": $("#numero").val(),
+	            		  "codigoPostal": $("#codigoPostal").val(),
+	            		  "provincia": $("#provincia").val(),
+	            		 }
+	            
+	            $.ajax({
+					type : "POST",
+					url : "/api/direccion/agregar",
+					contentType: "application/json",
+					data: JSON.stringify(direccion),
+			        cache: false,
+			        timeout: 600000,
+				});
+				
+				window.location.reload();
+	
+	        });
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
          });
 		</script>	
 </body>

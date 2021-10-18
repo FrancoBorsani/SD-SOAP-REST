@@ -11,4 +11,7 @@ public interface UsuarioRepository extends CrudRepository<User, Long> {
 	@Query(nativeQuery=true,value="select * from User where id=(:idUser)")
 	public User findByIdUser(int idUser);
 	
+	@Query(nativeQuery=true,value="select * from User where username=(:username)")
+	public User findByUsername(String username);
+	
 }
