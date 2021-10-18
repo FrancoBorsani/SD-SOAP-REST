@@ -35,26 +35,26 @@
 			      	<div class="icon d-flex align-items-center justify-content-center">
 			      		<span class="fa fa-user-o"></span>
 			      	</div>
-			      	<form th:action="@{registrarse}" method="post" class="login-form">
+			      	<!--<form th:action="@{registrarse}" method="post" class="login-form">-->
 			      		<div class="form-group">
-			      			<input type="text" class="form-control rounded-left" name="nombre" placeholder="Nombre" required>
+			      			<input type="text" class="form-control rounded-left" id="nombre" name="nombre" placeholder="Nombre" required>
 			      		</div>
 			      		<div class="form-group">
-			      			<input type="text" class="form-control rounded-left" name="apellido" placeholder="Apellido" required>
+			      			<input type="text" class="form-control rounded-left" id="apellido" name="apellido" placeholder="Apellido" required>
 			      		</div>
 			      		<div class="form-group">
-			      			<input type="text" class="form-control rounded-left" name="username" placeholder="Usuario" required>
+			      			<input type="text" class="form-control rounded-left" id="username" name="username" placeholder="Usuario" required>
 			      		</div>
 			      		<div class="form-group">
-			      			<input type="text" class="form-control rounded-left" name="dni" placeholder="DNI" required>
+			      			<input type="text" class="form-control rounded-left" id="dni"  name="dni" placeholder="DNI" required>
 			      		</div>
 			            <div class="form-group d-flex">
-			              <input type="password" class="form-control rounded-left" name="password" placeholder="Password" required>
+			              <input type="password" class="form-control rounded-left" id="password" name="password" placeholder="Password" required>
 			            </div>
 			            <div class="form-group">
-			            	<button type="submit" class="btn btn-primary rounded submit p-3 px-5">REGISTRARSE</button>
+			            	<button type="submit" id="registrarse" class="btn btn-primary rounded submit p-3 px-5">REGISTRARSE</button>
 			            </div>
-		          </form>
+		         <!-- </form> -->
 		        </div>
 					</div>
 				</div>
@@ -65,6 +65,49 @@
 	  	<script src="../../js/registro/popper.js"></script>
 	  	<script src="../../js/registro/bootstrap.min.js"></script>
 	  	<script src="../../js/registro/main.js"></script>
+
+
+		<script>
+		
+		$("#registrarse").on("click",function () {
+        	         
+            var user = {
+            		  "nombre": $("#nombre").val(),
+            		  "apellido": $("#apellido").val(),
+            		  "username": $("#username").val(),
+            		  "dni": $("#dni").val(),
+            		  "password": $("#password").val(),
+            		  "color": $("#color-add").val()
+            		 }
+            
+            $.ajax({
+				type : "POST",
+				url : "/api/registro/create",
+				contentType: "application/json",
+				data: JSON.stringify(user),
+		        cache: false,
+		        timeout: 600000,
+				success : function(result) {
+					
+					if(!result){
+						alert("Usuario registrado correctamente");						
+					}else{
+						alert("El username ya existe");
+					}	
+					
+					window.location.reload();
+					
+				},
+				error : function(e) {
+					alert("Error!");
+				}
+			});
+
+        });
+        
+	
+		</script>
+
 
 	</body>
 </html>

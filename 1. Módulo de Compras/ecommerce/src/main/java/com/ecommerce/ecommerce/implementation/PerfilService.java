@@ -55,7 +55,7 @@ public class PerfilService implements IPerfilService{
 	}
 
 	@Override
-	public Perfil updateProfile(Perfil newProfile)throws IOException {
+	public Perfil updateProfile(Perfil newProfile){
 		Perfil oldProfile = perfilRepository.getById(newProfile.getId());
 		newProfile.setUsername(oldProfile.getUsername());
 		newProfile.setUserRol(oldProfile.getUserRol());
