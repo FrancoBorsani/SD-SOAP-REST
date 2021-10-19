@@ -6,9 +6,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loading: true,
+    loading: false,
     envios: [],
-    currentUser: {},
+    currentUser: {}
   },
   mutations: {
     SET_ENVIOS(state, envios) {
@@ -39,8 +39,9 @@ export default new Vuex.Store({
 
       commit('SET_LOADING', true);
 
-      await axios().patch(`/envios/${idEnvio}?estado=${estado}`);
+      let response  = await axios().patch(`/envios/${idEnvio}?estado=${estado}`);
 
+      this._vm.$toast.success(response.data.apiResponse.message)
       commit('SET_LOADING', false);
 
     },
@@ -54,7 +55,7 @@ export default new Vuex.Store({
         return response
 
       } catch {
-        return { error : 'Email/Password combination was incorrect.Please try again' }
+        return { error : 'Usuario o contraseña incorrecta.' }
       }
 
     },
@@ -64,6 +65,7 @@ export default new Vuex.Store({
     },
     logoutUser({ commit }) {
       commit('LOGOUT_USER');
-    },
+      this._vm.$toast.success('Sesión cerrada satisfactoriamente.')
+    }
   }
 })

@@ -2,11 +2,12 @@
     <nav class="navbar navbar-light">
       <div class="dropdown d-xl-none d-lg-none mr-auto">
         <img
-          src="https://png.icons8.com/windows/32/000000/menu.png"
+          src="https://css-tricks.com/wp-content/uploads/2012/10/threelines.png"
           data-toggle="dropdown"
           data-target="#navd"
           aria-haspopup="true"
           aria-expanded="false"
+          width="35"
         />
         <div class="dropdown-menu hb" aria-labelledby="navd">
           <router-link class="dropdown-item" to="/">Home</router-link>
@@ -67,10 +68,11 @@
                 </button>
               </div>
               <div class="modal-body">
-                ...
+                <p>{{ `${currentUser.nombre}  ${currentUser.apellido}` }}</p>
+                {{ currentUser.email }}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>

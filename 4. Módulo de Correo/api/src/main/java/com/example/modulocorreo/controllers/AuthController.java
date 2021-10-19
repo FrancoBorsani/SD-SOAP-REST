@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.modulocorreo.dto.LoginRequest;
 import com.example.modulocorreo.dto.LoginResponse;
+import com.example.modulocorreo.entities.User;
+import com.example.modulocorreo.repositories.IUserRepository;
 import com.example.modulocorreo.services.implementation.UserService;
 import com.example.modulocorreo.utils.JwtUtil;
 
@@ -26,16 +28,12 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private IUserRepository userRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
-
-    @GetMapping("/checkUser")
-    public String checkUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        return  currentPrincipalName;
-    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -50,9 +48,11 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetails userDetails = userService.loadUserByUsername(loginRequest.getUsername());
 
-        final String jwt = jwtUtil.generateToken(userDetails);
+        String jwt = jwtUtil.generateToken(userDetails);
         
-        return ResponseEntity.ok(new LoginResponse(jwt, userDetails.getUsername()));
+        User user = userRepository.findByUsername(userDetails.getUsername());
+                
+        return ResponseEntity.ok(new LoginResponse(jwt, user.getUsername(), user.getNombre(), user.getApellido(), user.getEmail()));
     }
 
 }

@@ -3,6 +3,16 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index';
 
+import Toast,{ POSITION } from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
+const options = {
+  position: POSITION.BOTTOM_CENTER,
+  timeout: 1500
+};
+
+Vue.use(Toast, options);
+
 Vue.config.productionTip = false
 Vue.config.devtools = true
 

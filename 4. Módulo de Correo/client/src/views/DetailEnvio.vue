@@ -23,7 +23,7 @@
               >
             </p>
           </div>
-          <div class="d-flex flex-column text-sm-right">
+          <div class="d-flex flex-column">
             <p>
               Código
               <span class="font-weight-bold">{{
@@ -38,6 +38,7 @@
             </p>
           </div>
         </div>
+
         <!-- Add class 'active' to progress -->
         <div class="row d-flex justify-content-center">
           <div class="col-12">
@@ -110,8 +111,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["envios"]),
-    ...mapState(["loading"]),
+    ...mapState(["loading"])
   },
   mounted() {
     axios()

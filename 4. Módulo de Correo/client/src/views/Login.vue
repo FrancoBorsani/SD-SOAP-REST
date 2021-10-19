@@ -16,8 +16,9 @@ export default {
       let user = await this.$store.dispatch("loginUser", loginInfo);
 
       if (user.error) {
-        alert(user.error)
+        this.$toast.error(user.error)
       } else {
+        this.$toast.success('Logueado satisfactoriamente.')
         this.$router.push({ name: 'Envios'})
       }
 
