@@ -1,5 +1,7 @@
 package com.example.modulocorreo.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +15,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import com.example.modulocorreo.filters.JwtRequestFilter;
 import com.example.modulocorreo.services.implementation.UserService;
-import com.example.modulocorreo.utils.AuthEntryPointJwt;
+
 
 @Configuration
 @EnableWebSecurity
@@ -28,9 +31,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
-    
-	@Autowired
-	private AuthEntryPointJwt unauthorizedHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -40,12 +40,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity security) throws Exception {
-        security.csrf().disable()
-			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.authorizeRequests().antMatchers("/api/auth/**", "/api/v1/auth/signin", "/api/v1/envios", "/api/v1/envios/**").permitAll()
-			.antMatchers("/api/test/**").permitAll()
-			.anyRequest().authenticated();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setExposedHeaders(List.of("Authorization"));
+
+    	security.cors().configurationSource(request -> corsConfiguration).
+    	and().csrf().disable()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+		.authorizeRequests().antMatchers("/api/v1/auth/signin", "/api/v1/envios/**").permitAll()
+		.anyRequest().authenticated();
         
         security.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
@@ -60,5 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
+    
 
+    
 }

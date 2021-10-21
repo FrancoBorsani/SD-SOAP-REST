@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from '../config/axios';
+import authHeader from '../config/authHeader';
 
 Vue.use(Vuex);
 
@@ -23,14 +24,16 @@ export default new Vuex.Store({
     },
     LOGOUT_USER(state) {
       state.currentUser = {};
-      window.localStorage.currentUser = JSON.stringify({});
+      localStorage.removeItem('currentUser')
     },
   },
   actions: {
     async getAllEnvios({ commit }) {
       commit('SET_LOADING', true);
 
-      let response = await axios().get('/envios');
+      let response = await axios().get('/envios', {
+        headers: authHeader()
+      });
 
       commit('SET_ENVIOS', response.data);
       commit('SET_LOADING', false);
@@ -39,7 +42,9 @@ export default new Vuex.Store({
 
       commit('SET_LOADING', true);
 
-      let response  = await axios().patch(`/envios/${idEnvio}?estado=${estado}`);
+      let response = await axios().put(`/envios/${idEnvio}?estado=${estado}`, {
+        headers: authHeader()
+      });
 
       this._vm.$toast.success(response.data.apiResponse.message)
       commit('SET_LOADING', false);
@@ -52,16 +57,19 @@ export default new Vuex.Store({
 
         commit('SET_CURRENT_USER', response.data);
 
-        return response
+        return response.data
 
       } catch {
-        return { error : 'Usuario o contraseña incorrecta.' }
+        return { error: 'Usuario o contraseña incorrecta.' }
       }
 
     },
     loadCurrentUser({ commit }) {
-      let user = JSON.parse(window.localStorage.currentUser);
-      commit('SET_CURRENT_USER', user);
+
+      let user = localStorage.getItem('currentUser');
+
+      if (user) commit('SET_CURRENT_USER', JSON.parse(window.localStorage.currentUser));
+
     },
     logoutUser({ commit }) {
       commit('LOGOUT_USER');

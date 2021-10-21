@@ -100,22 +100,20 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import axios from "../config/axios";
+import authHeader from "../config/authHeader";
 
 export default {
   data() {
     return {
       envio: {},
-      estadoFinal: "",
     };
-  },
-  computed: {
-    ...mapState(["loading"])
   },
   mounted() {
     axios()
-      .get(`/envios/codigo/${this.$route.params.id}`)
+      .get(`/envios/codigo/${this.$route.params.id}`, {
+        headers: authHeader()
+      })
       .then((response) => (this.envio = response.data))
       .catch((error) => console.log(error));
   },
@@ -127,21 +125,18 @@ export default {
 
       switch (estado) {
         case "En Prepación":
-          this.estadoFinal = 'En Prepación';
           this.updateEstadoDeEnvio(this.envio.id, 'En Prepación')
           step2.classList.remove("active");
           step3.classList.remove("active");
           step4.classList.remove("active");
           break;
         case "Despachado":
-          this.estadoFinal = 'Despachado';
           this.updateEstadoDeEnvio(this.envio.id, 'Despachado')
           step2.classList.add("active");
           step3.classList.remove("active");
           step4.classList.remove("active");
           break;
         case "En Camino":
-          this.estadoFinal = 'En Camino';
           this.updateEstadoDeEnvio(this.envio.id, 'En Camino')
           step2.classList.add("active");
           step3.classList.add("active");
@@ -149,7 +144,6 @@ export default {
           break;
 
         case "Entregado":
-          this.estadoFinal = 'Entregado';
           this.updateEstadoDeEnvio(this.envio.id, 'Entregado')
           step2.classList.add("active");
           step3.classList.add("active");
