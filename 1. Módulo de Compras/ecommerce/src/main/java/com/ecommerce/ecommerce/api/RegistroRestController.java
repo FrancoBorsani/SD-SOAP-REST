@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.ecommerce.entities.Perfil;
 import com.ecommerce.ecommerce.entities.User;
-import com.ecommerce.ecommerce.entities.UserRole;
-import com.ecommerce.ecommerce.implementation.PerfilService;
+//import com.ecommerce.ecommerce.entities.UserRole;
+//import com.ecommerce.ecommerce.implementation.PerfilService;
 import com.ecommerce.ecommerce.services.UsuarioService;
 
 
@@ -20,16 +20,16 @@ public class RegistroRestController {
 	@Autowired
     UsuarioService usuarioService;
 	
-	@Autowired
-    PerfilService perfilService;
+//	@Autowired
+ //   PerfilService perfilService;
 
 	@PostMapping("/create")
-	public Perfil createCliente(@RequestBody User user) {
-		this.usuarioService.guardarUsuario(user);
-		createRole(user);
-		return createPerfil(user);
+	public User createCliente(@RequestBody User user) {
+		return this.usuarioService.guardarUsuario(user);
+		//createRole(user);
+		//return createPerfil(user);
 	}
-	
+	/*
 	public UserRole createRole(User user) {
 		return this.usuarioService.guardarRole(user);
 	}
@@ -38,5 +38,5 @@ public class RegistroRestController {
 		return this.usuarioService.guardarPerfil(user);
 	}
 	
-
+*/
 }

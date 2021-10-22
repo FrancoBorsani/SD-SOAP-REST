@@ -10,10 +10,12 @@ import com.ecommerce.ecommerce.helpers.ViewRouteHelpers;
 @RequestMapping("/")
 @Controller
 public class HomeController {
-	@GetMapping("/")
+	@GetMapping("/home")
 	public ModelAndView index() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelpers.HOME);
 		
 		return mAV;
 	}
+	
+
 }

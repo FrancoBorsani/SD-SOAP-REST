@@ -1,16 +1,23 @@
 package com.ecommerce.ecommerce.configuration;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
+import com.ecommerce.ecommerce.security.JwtRequestFilter;
 import com.ecommerce.ecommerce.implementation.UserService;
 
 
@@ -18,32 +25,52 @@ import com.ecommerce.ecommerce.implementation.UserService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-	@Autowired
-	@Qualifier("userService")
-	private UserService userService;
 	
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
-	}
-	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-				.antMatchers("/css/**", "/js/**","/screenshot/**", "/fonts/**", "/vendor/**", "/vendor/jquery/*", "/vendor/bootstrap/js/*", "/scss/**" , "/js/**" , "/img/**" ,"/images/**", "/demo/**").permitAll()
-				.antMatchers("/").permitAll()
-				.antMatchers("/signin").permitAll()
-				.antMatchers("/register").permitAll()
-			.and()
-				.formLogin().loginPage("/login").loginProcessingUrl("/loginprocess")
-				.usernameParameter("username").passwordParameter("password")
-				.defaultSuccessUrl("/loginsuccess").permitAll()
-			.and()
-				//.logout().logoutUrl("/logout").logoutSuccessUrl("/logout").permitAll();
-				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
-		http.csrf().disable();
+    @Autowired
+    private UserService userService;
 
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
-	}
-}	
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        super.configure(auth);
+        auth.userDetailsService(userService);
+    }
+
+    @Override
+    public void configure(HttpSecurity security) throws Exception {
+    	security.authorizeRequests()
+			.antMatchers("/css/**", "/js/**","/screenshot/**", "/fonts/**", "/vendor/**", "/vendor/jquery/*", "/vendor/bootstrap/js/*", "/scss/**" , "/js/**" , "/img/**" ,"/images/**", "/demo/**", "/assets/**").permitAll();
+    	
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:8080"));
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setExposedHeaders(List.of("Authorization"));
+
+    	security.cors().configurationSource(request -> corsConfiguration).
+    	and().csrf().disable()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+		
+		.authorizeRequests().antMatchers("/api/v1/auth/signin", "/api/v1/envios/**", "/api/registro/create", "/home", "/registro", "/iniciar").permitAll()
+		.anyRequest().authenticated();
+        
+        security.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    @Bean
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
+    
+
+    
+}

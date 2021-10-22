@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.ecommerce.ecommerce.entities.Domicilio;
 import com.ecommerce.ecommerce.entities.User;
-import com.ecommerce.ecommerce.implementation.PerfilService;
+//import com.ecommerce.ecommerce.implementation.PerfilService;
 import com.ecommerce.ecommerce.services.DomicilioService;
 import com.ecommerce.ecommerce.services.UsuarioService;
 
@@ -23,8 +23,8 @@ public class DireccionRestController {
 	@Autowired
     UsuarioService usuarioService;
 	
-	@Autowired
-    PerfilService perfilService;
+//	@Autowired
+//    PerfilService perfilService;
 
 	@Autowired
     DomicilioService domicilioService;

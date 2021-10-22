@@ -14,12 +14,12 @@ import com.ecommerce.ecommerce.entities.User;
 @Repository("domicilioRepository")
 public interface IDomicilioRepository extends CrudRepository<Domicilio, Long> {
 	
-
+/*
 	@Query(nativeQuery=true,value="select * from Domicilio where calle=(:calle)")
 	public User findByCalle(String calle);
 	
 	@Query(nativeQuery = true, value = "select * from Domicilio where user_id=(:id)")
 	public List<Domicilio> findByIdUser(int id);
-	
+	*/
 	
 }

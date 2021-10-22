@@ -1,4 +1,4 @@
-package com.ecommerce.ecommerce.repositories;
+/*package com.ecommerce.ecommerce.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -9,4 +9,4 @@ import com.ecommerce.ecommerce.entities.UserRole;
 public interface UsuarioRoleRepository extends CrudRepository<UserRole, Long> {
 	
 
-}
+}*/

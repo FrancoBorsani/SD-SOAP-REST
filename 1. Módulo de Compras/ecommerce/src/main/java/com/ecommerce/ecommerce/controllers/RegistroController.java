@@ -26,13 +26,13 @@ import com.ecommerce.ecommerce.entities.Domicilio;
 import com.ecommerce.ecommerce.entities.Perfil;
 import com.ecommerce.ecommerce.entities.Tarjeta;
 import com.ecommerce.ecommerce.entities.User;
-import com.ecommerce.ecommerce.entities.UserRole;
+//import com.ecommerce.ecommerce.entities.UserRole;
 import com.ecommerce.ecommerce.helpers.ViewRouteHelpers;
-import com.ecommerce.ecommerce.implementation.PerfilService;
+//import com.ecommerce.ecommerce.implementation.PerfilService;
 import com.ecommerce.ecommerce.repositories.IDomicilioRepository;
 import com.ecommerce.ecommerce.repositories.ITarjetaRepository;
 import com.ecommerce.ecommerce.repositories.IUserRepository;
-import com.ecommerce.ecommerce.repositories.IUserRoleRepository;
+//import com.ecommerce.ecommerce.repositories.IUserRoleRepository;
 
 @Controller
 public class RegistroController {
@@ -42,17 +42,17 @@ public class RegistroController {
 	private IUserRepository userRepository;
 	
 	
-	@Autowired
-	@Qualifier("userRoleRepository")
-	private IUserRoleRepository userRoleRepository;
+//	@Autowired
+//	@Qualifier("userRoleRepository")
+//	private IUserRoleRepository userRoleRepository;
 	
 	@Autowired
 	@Qualifier("domicilioRepository")
 	private IDomicilioRepository domicilioRepository;
 	
-	@Autowired
-	@Qualifier("perfilService")
-	private PerfilService perfilService;
+//	@Autowired
+//	@Qualifier("perfilService")
+//	private PerfilService perfilService;
 	
 	@Autowired
 	@Qualifier("tarjetaRepository")
@@ -66,7 +66,8 @@ public class RegistroController {
 		return mAV;
 	}
 	
-	
+	//
+	/*
 	@PostMapping("/registrarse")
 	public RedirectView registrarse( @ModelAttribute("user") User newUSer, RedirectAttributes redirectAttrs) {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
@@ -79,18 +80,18 @@ public class RegistroController {
 			return new RedirectView("/registro");
 		} else {
 			System.out.println("REGISTRADO");
-			newUSer.setEnabled(true);
+			//newUSer.setEnabled(true);
 			userRepository.save(newUSer);
-			userRoleRepository.save(new UserRole(userRepository.findByUsername(newUSer.getUsername()),"ROLE_USER"));			
+			//userRoleRepository.save(new UserRole(userRepository.findByUsername(newUSer.getUsername()),"ROLE_USER"));			
 			
-			perfilService.addNewProfile(newUSer);
+			//perfilService.addNewProfile(newUSer);
 		}
 		
 		
 		redirectAttrs.addFlashAttribute("mensaje","Usuario registrado con éxito");
 
 		return new RedirectView("/");
-	}
+	}*/
 	
 	@GetMapping("/iniciar")
 	public ModelAndView iniciar() {
@@ -98,7 +99,7 @@ public class RegistroController {
 		
 		return mAV;
 	}
-	
+	/*
 	@GetMapping("/login")	
 	public String login(Model model,	
 						@RequestParam(name="error",required=false) String error,	
@@ -135,7 +136,7 @@ public class RegistroController {
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 	    return "redirect:/login?logout"; //You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
-	
+	/*
 	@RequestMapping(value="/profile", method = RequestMethod.GET)
 	public ModelAndView viewProfile() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelpers.PROFILE_INDEX);
@@ -161,8 +162,9 @@ public class RegistroController {
 	    User currentUser = userRepository.findByUsername(username);
 	    mAV.addObject("perfil", perfilService.findById(currentUser.getId()));
 	    return mAV;
-	}
+	}*/
 	
+	/*
 	@PostMapping("/updateProfile")
 	public RedirectView updateProfile(@ModelAttribute("perfil") Perfil editPerfil, RedirectAttributes redirectAttrs) {
     	try {
@@ -180,5 +182,5 @@ public class RegistroController {
 		
 		return new RedirectView("/profile");
 	}
-	
+	*/
 }

@@ -1,4 +1,4 @@
-package com.ecommerce.ecommerce.implementation;
+/*package com.ecommerce.ecommerce.implementation;
 
 import com.ecommerce.ecommerce.entities.Perfil;
 import com.ecommerce.ecommerce.entities.User;
@@ -28,7 +28,7 @@ public class PerfilService implements IPerfilService{
 	@Qualifier("userRoleRepository")
 	private IUserRoleRepository userRoleRepository;
 
-	@Override
+/*	@Override
 	public List<Perfil> getAll() {
 		return perfilRepository.findAll();
 	}
@@ -47,13 +47,14 @@ public class PerfilService implements IPerfilService{
 			return false;
 		}
 	}
-
+*/
+	/*
 	@Override
 	public Perfil addNewProfile(User usuario) {
 		return perfilRepository.save(new Perfil(usuario.getId(), usuario.getUsername(),userRoleRepository.findByIdUser(usuario.getId()).getRole(),
 				usuario.getNombre(), usuario.getApellido() ,usuario.getDni()));
-	}
-
+	}*/
+/*
 	@Override
 	public Perfil updateProfile(Perfil newProfile){
 		Perfil oldProfile = perfilRepository.getById(newProfile.getId());
@@ -72,6 +73,6 @@ public class PerfilService implements IPerfilService{
 		remove(profileToModif.getId());
 		return perfilRepository.save(profileToModif); 
 	}
+*/
 
-
-}
+//}

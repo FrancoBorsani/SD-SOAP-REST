@@ -1,4 +1,4 @@
-package com.ecommerce.ecommerce.api;
+/*package com.ecommerce.ecommerce.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,7 +27,7 @@ public class PerfilRestController {
 	
 	@Autowired
     PerfilService perfilService;
-
+/*
 	@PostMapping("/create")
 	public Perfil createCliente(@RequestBody User user) {
 		this.usuarioService.guardarUsuario(user);
@@ -42,8 +42,8 @@ public class PerfilRestController {
 	public Perfil createPerfil(User user) {
 		return this.usuarioService.guardarPerfil(user);
 	}
-	
-
+	*/
+/*
 	@PostMapping("/updateProfile")
 	public User updateProfile(@RequestBody Perfil editPerfil) {
 		System.out.println("PERFILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
@@ -58,6 +58,6 @@ public class PerfilRestController {
 			
 			return this.usuarioService.actualizarUsuario(perfilUser);
 	}
+*/
 
-
-}
+//}
