@@ -9,8 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.modulocorreo.dto.LoginRequest;
-import com.example.modulocorreo.dto.LoginResponse;
+import com.example.modulocorreo.dto.request.LoginRequest;
+import com.example.modulocorreo.dto.response.LoginResponse;
 import com.example.modulocorreo.entities.User;
 import com.example.modulocorreo.repositories.IUserRepository;
 import com.example.modulocorreo.services.implementation.UserService;

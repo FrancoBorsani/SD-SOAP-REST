@@ -1,4 +1,4 @@
-package com.example.modulocorreo.dto;
+package com.example.modulocorreo.dto.response;
 
 import com.example.modulocorreo.entities.Envio;
 

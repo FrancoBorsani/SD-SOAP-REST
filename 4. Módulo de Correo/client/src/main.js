@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index';
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "datatables.net-bs4";
+import "datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+
 import Toast,{ POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 

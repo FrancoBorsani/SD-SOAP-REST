@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,15 +20,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.modulocorreo.dto.ApiResponse;
-import com.example.modulocorreo.dto.CreateEnvioRequest;
-import com.example.modulocorreo.dto.InsertOrUpdateEnvioResponse;
+import com.example.modulocorreo.dto.request.CreateEnvioRequest;
+import com.example.modulocorreo.dto.response.ApiResponse;
+import com.example.modulocorreo.dto.response.InsertOrUpdateEnvioResponse;
 import com.example.modulocorreo.entities.Envio;
 import com.example.modulocorreo.services.IEnvioService;
 
 @RestController
 @RequestMapping("/api/v1/envios")
 @CrossOrigin("*")
+@Validated
 public class EnvioRestController {
 	
 	@Autowired
@@ -41,12 +43,14 @@ public class EnvioRestController {
 	
 	@PostMapping("")
 	public ResponseEntity<?> createEnvio(@Valid @RequestBody CreateEnvioRequest createEnvioRequest) {
-		
-		Envio envio = envioService.insertOrUpdate(new Envio(createEnvioRequest.getDescripcion(),Envio.ESTADO_EN_PREPARACION , createEnvioRequest.getDniDestinatario(), UUID.randomUUID().toString()));
+
+		Envio envio = envioService.insertOrUpdate(new Envio(createEnvioRequest.getDescripcion(),
+				Envio.ESTADO_EN_PREPARACION, createEnvioRequest.getDniDestinatario(), UUID.randomUUID().toString(),
+				createEnvioRequest.getVendedor(), createEnvioRequest.getIdOrden()));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(new InsertOrUpdateEnvioResponse(new ApiResponse(true, "Envio creado correctamente."), envio));
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getEnvio(@PathVariable("id") int idEnvio) {
 		

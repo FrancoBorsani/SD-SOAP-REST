@@ -1,7 +1,12 @@
 <template>
   <div class="row justify-content-center mt-4">
     <div class="container">
-      <div class="card">
+
+      <div v-if="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+
+      <div class="card" v-else>
         <div class="row d-flex justify-content-between px-3 top">
           <div class="d-flex flex-column">
             <p>
@@ -107,6 +112,7 @@ export default {
   data() {
     return {
       envio: {},
+      error: ""
     };
   },
   mounted() {
@@ -115,10 +121,13 @@ export default {
         headers: authHeader()
       })
       .then((response) => (this.envio = response.data))
-      .catch((error) => console.log(error));
+      .catch((error) => (this.error = error.response.data.message));
   },
   methods: {
     cambiarEstado(estado) {
+
+      if(this.envio.estado === estado) return;
+
       var step2 = document.getElementById("step2");
       var step3 = document.getElementById("step3");
       var step4 = document.getElementById("step4");

@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-outline-secondary w-100 my-3">
+    <button type="submit" class="btn btn-outline-dark w-100 my-3">
       Login
     </button>
   </form>

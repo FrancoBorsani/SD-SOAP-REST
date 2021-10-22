@@ -1,4 +1,4 @@
-package com.example.modulocorreo.dto;
+package com.example.modulocorreo.dto.request;
 
 import javax.validation.constraints.NotBlank;
 

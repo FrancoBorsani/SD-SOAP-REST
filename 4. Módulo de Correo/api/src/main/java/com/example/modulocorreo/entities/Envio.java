@@ -20,17 +20,23 @@ public class Envio {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "descripcion")
+	@Column(name = "descripcion", nullable=false)
 	private String descripcion;
 
-	@Column(name = "estado")
+	@Column(name = "estado", nullable=false)
 	private String estado;
 
-	@Column(name = "DNIDestinatario")
+	@Column(name = "DNIDestinatario", nullable=false)
 	private String DNIDestinatario;
 
-	@Column(name = "codigoDeSeguimiento")
+	@Column(name = "codigoDeSeguimiento", nullable=false)
 	private String codigoDeSeguimiento;
+	
+	@Column(name = "idOrden", nullable=false)
+	private String idOrden;
+	
+	@Column(name = "vendedor", nullable=false)
+	private String vendedor;
 
 	@Column(name = "createdat")
 	@CreationTimestamp
@@ -46,21 +52,27 @@ public class Envio {
 		super();
 	}
 
-	public Envio(String descripcion, String estado, String dNIDestinatario, String codigoDeSeguimiento) {
+	public Envio(String descripcion, String estado, String dNIDestinatario, String codigoDeSeguimiento, String idOrden,
+			String vendedor) {
 		super();
 		this.descripcion = descripcion;
 		this.estado = estado;
-		this.DNIDestinatario = dNIDestinatario;
+		DNIDestinatario = dNIDestinatario;
 		this.codigoDeSeguimiento = codigoDeSeguimiento;
+		this.idOrden = idOrden;
+		this.vendedor = vendedor;
 	}
 
-	public Envio(int id, String descripcion, String estado, String dNIDestinatario, String codigoDeSeguimiento) {
+	public Envio(int id, String descripcion, String estado, String dNIDestinatario, String codigoDeSeguimiento,
+			String idOrden, String vendedor) {
 		super();
 		this.id = id;
 		this.descripcion = descripcion;
 		this.estado = estado;
-		this.DNIDestinatario = dNIDestinatario;
+		DNIDestinatario = dNIDestinatario;
 		this.codigoDeSeguimiento = codigoDeSeguimiento;
+		this.idOrden = idOrden;
+		this.vendedor = vendedor;
 	}
 
 	public int getId() {
@@ -103,6 +115,22 @@ public class Envio {
 		this.codigoDeSeguimiento = codigoDeSeguimiento;
 	}
 
+	public String getIdOrden() {
+		return idOrden;
+	}
+
+	public void setIdOrden(String idOrden) {
+		this.idOrden = idOrden;
+	}
+
+	public String getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(String vendedor) {
+		this.vendedor = vendedor;
+	}
+
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
@@ -122,8 +150,8 @@ public class Envio {
 	@Override
 	public String toString() {
 		return "Envio [id=" + id + ", descripcion=" + descripcion + ", estado=" + estado + ", DNIDestinatario="
-				+ DNIDestinatario + ", codigoDeSeguimiento=" + codigoDeSeguimiento + ", createdAt=" + createdAt
-				+ ", updatedAt=" + updatedAt + "]";
+				+ DNIDestinatario + ", codigoDeSeguimiento=" + codigoDeSeguimiento + ", idOrden=" + idOrden
+				+ ", vendedor=" + vendedor + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 	
 }

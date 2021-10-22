@@ -7,39 +7,13 @@
     >
       <span class="visually-hidden"></span>
     </div>
-
     <div v-else class="col-md-10">
       <div class="card">
         <div class="card-header">
-          <span>Envios</span>
+          <span class="font-weight-bold">Envios</span>
         </div>
         <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Descripción</th>
-                  <th scope="col">Fecha</th>
-                  <th scope="col">Destinatario</th>
-                  <th scope="col">Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="envio in envios" :key="envio.id">
-                  <th scope="row">
-                    <router-link class="text-dark" :to="{ name: 'envio-detail', params : { id : envio.codigoDeSeguimiento} }">
-                      {{ envio.codigoDeSeguimiento }}
-                    </router-link>
-                  </th>
-                  <td>{{ envio.descripcion }}</td>
-                  <td>{{ envio.createdAt }}</td>
-                  <td>{{ envio.dnidestinatario }}</td>
-                  <td>{{ envio.estado }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <TableEnvios :envios="envios" />
         </div>
       </div>
     </div>
@@ -47,15 +21,47 @@
 </template>
 
 <script>
+import TableEnvios from "../components/TableEnvios.vue";
 import { mapState } from "vuex";
+import $ from 'jquery'; 
 
 export default {
+  components: {
+    TableEnvios
+  },
   computed: {
     ...mapState(["envios"]),
     ...mapState(["loading"]),
   },
   mounted() {
     this.$store.dispatch("getAllEnvios");
+  },
+  updated() {
+    this.showTable();
+  },
+  methods: {
+    showTable() {
+      this.$nextTick(() => {
+        $("#datatable").DataTable({
+          language: {
+            processing: "Cargando...",
+            search: "Buscar:",
+            lengthMenu: "Mostrar  _MENU_ elementos",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+            infoEmpty: "Mostrando 0 de 0 elementos",
+            infoFiltered: "(filtrado de _MAX_ elementos en total)",
+            infoPostFix: "",
+            zeroRecords: "No hay solicitudes coincidentes con la busqueda",
+            paginate: {
+                first: "<<",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: ">>"
+            },
+          },
+        });
+      });
+    },
   }
 };
 </script>
