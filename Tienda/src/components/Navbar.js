@@ -25,7 +25,7 @@ function IndexNavbar() {
           }}
         />
       ) : null}
-      <Navbar className={"fixed-top " + navbarColor} expand="lg" color="info">
+      <Navbar className={navbarColor} expand="lg" color="info">
         <Container>
           <div className="navbar-translate">
             <Link to="/">
@@ -71,8 +71,8 @@ function IndexNavbar() {
                   to="/cart"
                   tag={Link}
                 >
-                  <i class="fas fa-shopping-cart"></i>
-                  <p className="d-lg-none d-xl-none">Facebook</p>
+                  <i className="fas fa-shopping-cart"></i>
+                  <p className="d-lg-none d-xl-none pl-2">Cart</p>
                 </NavLink>
               </NavItem>
             </Nav>

@@ -12,7 +12,7 @@ function IndexHeader() {
   return (
     <>
       <div className="page-header clear-filter" filter-color="blue">
-         <Carousel/>
+         {/*<Carousel/>*/}
       </div>
     </>
   );

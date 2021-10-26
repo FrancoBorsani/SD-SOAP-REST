@@ -1,10 +1,8 @@
 import React from "react";
 
-// reactstrap components
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
   Form,
   Input,
@@ -16,7 +14,6 @@ import {
   CardTitle,
 } from "reactstrap";
 
-// core components
 import { Link } from "react-router-dom";
 
 function LoginPage() {
