@@ -9,6 +9,7 @@ import RegisterPage from "pages/RegisterPage";
 import CartPage from "pages/CartPage";
 import Navbar from "components/Navbar";
 import React from "react";
+import DetailProductPage from "pages/DetailProductPage";
 
 
 function App() {
@@ -49,6 +50,10 @@ function App() {
             <Route
               path="/registro"
               render={(props) => <RegisterPage {...props} exact />}
+            />
+            <Route
+              path="/product/:id"
+              render={(props) => <DetailProductPage {...props} exact />}
             />
             <Route
               path="/cart"

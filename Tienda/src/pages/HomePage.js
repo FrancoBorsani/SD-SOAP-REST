@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import IndexHeader from "components/Headers/IndexHeader.js";
 import { Container, Spinner } from "reactstrap";
 import ProductItem from "components/ProductItem";
+import { getData } from "utils/fetchData";
+import Filter from "components/Filter";
 
 function HomePage() {
 
@@ -9,13 +10,10 @@ function HomePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-    .then(response => response.json())
-    .then(data => {
-        setProducts(data);
-        setLoading(false)
-      }
-    );
+    getData("productos").then(res => {
+      setProducts(res)
+      setLoading(false)
+    })
   })
 
   if (loading) return (
@@ -24,20 +22,21 @@ function HomePage() {
         <Spinner color="info" />
       </Container>
     </div>
-  ) 
+  )
 
   return (
     <div className="clear-filter">
       <Container className="text-black">
-      <div className="row mt-3">
-        {
+        <div className="row justify-content-center mt-3">
+          <Filter />
+          {
             products.map(product =>
-                <div className="col-md-4 pb-2" key={product.id}>
-                    <ProductItem product={product} />
-                </div>
+              <div className="col-md-4" key={product.id}>
+                <ProductItem product={product} />
+              </div>
             )
-        }
-      </div>
+          }
+        </div>
       </Container>
     </div>
   );
