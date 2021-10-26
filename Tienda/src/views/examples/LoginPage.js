@@ -17,7 +17,6 @@ import {
 } from "reactstrap";
 
 // core components
-import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
 
 function LoginPage() {
@@ -36,7 +35,6 @@ function LoginPage() {
   }, []);
   return (
     <>
-      <ExamplesNavbar />
       <div className="page-header clear-filter" filter-color="blue">
         <div
           className="page-header-image"
@@ -58,7 +56,7 @@ function LoginPage() {
                       ></img>
                     </div>
                   </CardHeader>
-                  <CardBody>
+                  <CardBody className="m-0">
                     <InputGroup
                       className={
                         "no-border input-lg" +
@@ -95,8 +93,6 @@ function LoginPage() {
                         onBlur={() => setLastFocus(false)}
                       ></Input>
                     </InputGroup>
-                  </CardBody>
-                  <CardFooter className="text-center">
                     <Button
                       block
                       className="btn-round"
@@ -105,9 +101,8 @@ function LoginPage() {
                       onClick={(e) => e.preventDefault()}
                       size="lg"
                     >
-                      Get Started
+                      Login
                     </Button>
-                    <div className="pull-left">
                       <h6>
                         <a
                           className="link"
@@ -117,25 +112,12 @@ function LoginPage() {
                           Create Account
                         </a>
                       </h6>
-                    </div>
-                    <div className="pull-right">
-                      <h6>
-                        <a
-                          className="link"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Need Help?
-                        </a>
-                      </h6>
-                    </div>
-                  </CardFooter>
+                  </CardBody>
                 </Form>
               </Card>
             </Col>
           </Container>
         </div>
-        <TransparentFooter />
       </div>
     </>
   );

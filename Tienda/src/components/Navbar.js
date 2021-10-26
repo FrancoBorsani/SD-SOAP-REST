@@ -1,44 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// reactstrap components
 import {
-  Button,
   Collapse,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
   NavbarBrand,
   Navbar,
   NavItem,
   NavLink,
   Nav,
   Container,
-  UncontrolledTooltip,
 } from "reactstrap";
 
 function IndexNavbar() {
-  const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
+  const [navbarColor, setNavbarColor] = React.useState("navbar-secondary");
   const [collapseOpen, setCollapseOpen] = React.useState(false);
-  React.useEffect(() => {
-    const updateNavbarColor = () => {
-      if (
-        document.documentElement.scrollTop > 399 ||
-        document.body.scrollTop > 399
-      ) {
-        setNavbarColor("");
-      } else if (
-        document.documentElement.scrollTop < 400 ||
-        document.body.scrollTop < 400
-      ) {
-        setNavbarColor("navbar-transparent");
-      }
-    };
-    window.addEventListener("scroll", updateNavbarColor);
-    return function cleanup() {
-      window.removeEventListener("scroll", updateNavbarColor);
-    };
-  });
+
   return (
     <>
       {collapseOpen ? (
@@ -53,13 +28,14 @@ function IndexNavbar() {
       <Navbar className={"fixed-top " + navbarColor} expand="lg" color="info">
         <Container>
           <div className="navbar-translate">
-            <NavbarBrand
-              href="#"
-              target="_blank"
-              id="navbar-brand"
-            >
-              ECOMMERCE
-            </NavbarBrand>
+            <Link to="/">
+              <NavbarBrand
+                target="_blank"
+                id="navbar-brand"
+              >
+                ECOMMERCE
+              </NavbarBrand>
+            </Link>
             <button
               className="navbar-toggler navbar-toggler"
               onClick={() => {
@@ -81,26 +57,23 @@ function IndexNavbar() {
           >
             <Nav navbar>
               <NavItem>
-                <Button
-                  className="nav-link btn-neutral"
-                  color="info"
-                  href="#"
-                  id="upgrade-to-pro"
-                  target="_blank"
-                >
-                  <p>LOGIN</p>
-                </Button>
+                <NavLink to="/login" tag={Link}>
+                  Login
+                </NavLink>
               </NavItem>
               <NavItem>
-                <Button
-                  className="nav-link btn-neutral"
-                  color="info"
-                  href="#"
-                  id="upgrade-to-pro"
-                  target="_blank"
+                <NavLink to="/registro" tag={Link}>
+                  Registro
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  to="/cart"
+                  tag={Link}
                 >
-                  <p>REGISTRO</p>
-                </Button>
+                  <i class="fas fa-shopping-cart"></i>
+                  <p className="d-lg-none d-xl-none">Facebook</p>
+                </NavLink>
               </NavItem>
             </Nav>
           </Collapse>

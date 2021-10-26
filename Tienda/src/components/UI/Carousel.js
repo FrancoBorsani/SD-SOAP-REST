@@ -1,8 +1,6 @@
 import React from "react";
 
-// reactstrap components
 import {
-  Container,
   Row,
   Col,
   Carousel,
@@ -10,21 +8,19 @@ import {
   CarouselIndicators,
 } from "reactstrap";
 
-// core components
-
 const items = [
   {
-    src: require("assets/img/bg1.jpg").default,
+    src: 'https://media.gettyimages.com/vectors/online-shopping-ecommerce-related-web-banner-line-style-modern-design-vector-id1296100096?s=2048x2048',
     altText: "Nature, United States",
     caption: "Nature, United States",
   },
   {
-    src: require("assets/img/bg3.jpg").default,
+    src: 'https://simpsonstudio-ni.com/php_assests/uploads/2019/01/Banner-ecommerce-2019-simpson-studio.jpg',
     altText: "Somewhere Beyond, United States",
     caption: "Somewhere Beyond, United States",
   },
   {
-    src: require("assets/img/bg4.jpg").default,
+    src: 'https://simpsonstudio-ni.com/php_assests/uploads/2019/01/Banner-ecommerce-2019-simpson-studio.jpg',
     altText: "Yellowstone National Park, United States",
     caption: "Yellowstone National Park, United States",
   },
@@ -56,12 +52,8 @@ function CarouselSection() {
   return (
     <>
       <div className="section" id="carousel">
-        <Container>
-          <div className="title">
-            <h4>Carousel</h4>
-          </div>
           <Row className="justify-content-center">
-            <Col lg="8" md="12">
+            <Col lg="12" md="12">
               <Carousel
                 activeIndex={activeIndex}
                 next={next}
@@ -80,9 +72,6 @@ function CarouselSection() {
                       key={item.src}
                     >
                       <img src={item.src} alt={item.altText} />
-                      <div className="carousel-caption d-none d-md-block">
-                        <h5>{item.caption}</h5>
-                      </div>
                     </CarouselItem>
                   );
                 })}
@@ -113,7 +102,6 @@ function CarouselSection() {
               </Carousel>
             </Col>
           </Row>
-        </Container>
       </div>
     </>
   );

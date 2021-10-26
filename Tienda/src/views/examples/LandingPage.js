@@ -13,7 +13,6 @@ import {
 } from "reactstrap";
 
 // core components
-import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import LandingPageHeader from "components/Headers/LandingPageHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter.js";
 
@@ -33,7 +32,6 @@ function LandingPage() {
   }, []);
   return (
     <>
-      <ExamplesNavbar />
       <div className="wrapper">
         <LandingPageHeader />
         <div className="section section-about-us">
