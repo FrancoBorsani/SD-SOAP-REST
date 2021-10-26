@@ -37,6 +37,21 @@ public class RegistroRestController {
 	public Perfil createPerfil(User user) {
 		return this.usuarioService.guardarPerfil(user);
 	}
-	
+
 */
+	
+	
+	@PostMapping("/updateProfile")
+	public User updateProfile(@RequestBody User user) {
+			return this.usuarioService.actualizarUsuario(user);
+			//User perfilUser = this.usuarioService.traerUser(editPerfil.getId());
+			//System.out.println(perfilUser);
+			//perfilUser.setNombre(editPerfil.getNombre());
+			//perfilUser.setApellido(editPerfil.getApellido());
+			//perfilUser.setDni(editPerfil.getDni());
+			//perfilUser.setTelefono(editPerfil.getTelefono());
+			
+			//return this.usuarioService.actualizarUsuario(perfilUser);
+	}
+	
 }
