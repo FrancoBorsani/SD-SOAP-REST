@@ -4,7 +4,7 @@ import { DataContext } from 'store/GlobalState'
 
 const CartPage = () => {
 
-    const { state, dispatch } = useContext(DataContext)
+    const { state } = useContext(DataContext)
 
     const { cart } = state
 

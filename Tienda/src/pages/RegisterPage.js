@@ -36,7 +36,7 @@ function RegisterPage() {
     <Container>
       <Row className="justify-content-center">
         <Col md="6">            
-          <Card className="card m-3" data-background-color="blue">
+          <Card className="card p-3">
             <Form onSubmit={handleSubmit} className="form">
               <CardHeader className="text-center">
                 <CardTitle className="title-up pt-2" tag="h3">
@@ -73,7 +73,7 @@ function RegisterPage() {
               <CardBody>
                 <Row>
                   <Col md="6">
-                    <InputGroup className="no-border">
+                    <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons users_circle-08"></i>
@@ -89,7 +89,7 @@ function RegisterPage() {
                     </InputGroup>
                   </Col>
                   <Col md="6">
-                    <InputGroup className="no-border">
+                    <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons text_caps-small"></i>
@@ -107,7 +107,7 @@ function RegisterPage() {
                 </Row>
                 <Row>
                   <Col md="6">
-                    <InputGroup className="no-border">
+                    <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons ui-1_email-85"></i>
@@ -123,7 +123,7 @@ function RegisterPage() {
                     </InputGroup>
                   </Col>
                   <Col md="6">
-                    <InputGroup className="no-border">
+                    <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons text_caps-small"></i>
@@ -141,7 +141,7 @@ function RegisterPage() {
                 </Row>
                 <Row>
                   <Col md="6">
-                    <InputGroup className="no-border">
+                    <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons users_circle-08"></i>
@@ -157,7 +157,7 @@ function RegisterPage() {
                     </InputGroup>
                   </Col>
                   <Col md="6">
-                    <InputGroup className="no-border">
+                    <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons ui-1_email-85"></i>
@@ -169,12 +169,13 @@ function RegisterPage() {
                         name="password"
                         value={userData.password}
                         onChange={handleChangeInput}
+                        autoComplete="on"
                       ></Input>
                     </InputGroup>
                   </Col>
                 </Row>
                 <Button
-                  className="btn-neutral btn-round w-100"
+                  className="btn-primary btn-round w-100"
                   size="lg"
                   type="submit"
                 >

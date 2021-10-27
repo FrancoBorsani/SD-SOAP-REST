@@ -1,18 +1,77 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import {
-  Collapse,
-  NavbarBrand,
-  Navbar,
-  NavItem,
-  NavLink,
-  Nav,
-  Container,
+  Collapse, NavbarBrand, Navbar, NavItem, NavLink, Nav, Container, DropdownMenu,
+  DropdownItem, DropdownToggle, UncontrolledDropdown
 } from "reactstrap";
+import { DataContext } from "store/GlobalState";
 
 function IndexNavbar() {
-  const [navbarColor, setNavbarColor] = React.useState("navbar-secondary");
+
   const [collapseOpen, setCollapseOpen] = React.useState(false);
+
+  const { state, dispatch } = useContext(DataContext);
+
+  const { auth } = state;
+
+  const router = useHistory();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch({ type: 'AUTH', payload: {} });
+
+    router.push('/');
+}
+
+  const noLogged = () => {
+    return (
+      <>
+        <NavItem>
+          <NavLink to="/login" tag={Link}>
+            Login
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/registro" tag={Link}>
+            Registro
+          </NavLink>
+        </NavItem>
+      </>
+    )
+  }
+
+  const loggedUser = () => {
+    return (
+      <UncontrolledDropdown className="button-dropdown">
+        <DropdownToggle
+          caret
+          data-toggle="dropdown"
+          id="navbarDropdown"
+          tag="a"
+        >
+          <i className="now-ui-icons users_circle-08" style={{ fontSize: '20px' }}></i>
+        </DropdownToggle>
+        <DropdownMenu aria-labelledby="navbarDropdown" right>
+          <DropdownItem header tag="a">
+            Dropdown header
+          </DropdownItem>
+          <DropdownItem tag={Link} to="/profile">
+            Perfil
+          </DropdownItem>
+          <DropdownItem onClick={(e) => e.preventDefault()}>
+            Mis compras
+          </DropdownItem>
+          <DropdownItem onClick={(e) => e.preventDefault()}>
+            Something else here
+          </DropdownItem>
+          <DropdownItem divider></DropdownItem>
+          <DropdownItem onClick={handleLogout}>
+            Cerrar sesión
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    )
+  }
 
   return (
     <>
@@ -25,7 +84,7 @@ function IndexNavbar() {
           }}
         />
       ) : null}
-      <Navbar className={navbarColor} expand="lg" color="info">
+      <Navbar className="navbar-secondary" expand="lg" color="info">
         <Container>
           <div className="navbar-translate">
             <Link to="/">
@@ -56,16 +115,7 @@ function IndexNavbar() {
             navbar
           >
             <Nav navbar>
-              <NavItem>
-                <NavLink to="/login" tag={Link}>
-                  Login
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/registro" tag={Link}>
-                  Registro
-                </NavLink>
-              </NavItem>
+
               <NavItem>
                 <NavLink
                   to="/cart"
@@ -75,6 +125,7 @@ function IndexNavbar() {
                   <p className="d-lg-none d-xl-none pl-2">Cart</p>
                 </NavLink>
               </NavItem>
+              { auth.token ? loggedUser() : noLogged() }
             </Nav>
           </Collapse>
         </Container>

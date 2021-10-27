@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecommerce.ecommerce.entities.Perfil;
 import com.ecommerce.ecommerce.entities.User;
 //import com.ecommerce.ecommerce.entities.UserRole;
 //import com.ecommerce.ecommerce.implementation.PerfilService;

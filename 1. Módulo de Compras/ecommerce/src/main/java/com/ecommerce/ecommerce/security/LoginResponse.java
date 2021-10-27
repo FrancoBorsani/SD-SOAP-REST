@@ -1,71 +1,36 @@
 package com.ecommerce.ecommerce.security;
 
+import com.ecommerce.ecommerce.entities.User;
+
 public class LoginResponse {
 
-	private String jwt;
-	private String username;
-	private String nombre;
-	private String apellido;
-	private String email;
-
-	public LoginResponse() {
-		super();
-	}
-
-	public LoginResponse(String jwt, String username, String nombre, String apellido, String email) {
-		super();
-		this.jwt = jwt;
-		this.username = username;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-	}
-
-	public String getJwt() {
-		return jwt;
-	}
-
-	public void setJwt(String jwt) {
-		this.jwt = jwt;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	private String token;
+	private User user;
 	
-
-	public String getNombre() {
-		return nombre;
+	public LoginResponse(String token, User user) {
+		super();
+		this.token = token;
+		this.user = user;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public String getToken() {
+		return token;
 	}
 
-	public String getApellido() {
-		return apellido;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public User getUser() {
+		return user;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
 	public String toString() {
-		return "LoginResponse [jwt=" + jwt + ", username=" + username + ", nombre=" + nombre + ", apellido=" + apellido
-				+ ", email=" + email + "]";
+		return "LoginResponse [token=" + token + ", user=" + user + "]";
 	}
-
 }

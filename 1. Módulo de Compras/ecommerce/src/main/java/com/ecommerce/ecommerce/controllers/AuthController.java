@@ -52,7 +52,7 @@ public class AuthController {
         
         User user = userRepository.findByUsername(userDetails.getUsername());
                 
-        return ResponseEntity.ok(new LoginResponse(jwt, user.getUsername(), user.getNombre(), user.getApellido(), user.getEmail()));
+        return ResponseEntity.ok(new LoginResponse(jwt, user));
     }
 
 }

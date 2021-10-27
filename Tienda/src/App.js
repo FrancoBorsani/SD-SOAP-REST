@@ -40,7 +40,7 @@ function App() {
               render={(props) => <LandingPage {...props} exact />}
             />
             <Route
-              path="/profile-page"
+              path="/profile"
               render={(props) => <ProfilePage {...props} exact />}
             />
             <Route

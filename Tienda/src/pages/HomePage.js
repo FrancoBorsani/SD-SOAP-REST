@@ -14,7 +14,7 @@ function HomePage() {
       setProducts(res)
       setLoading(false)
     })
-  })
+  }, [])
 
   if (loading) return (
     <div className="page-header clear-filter">

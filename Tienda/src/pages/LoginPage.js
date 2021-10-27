@@ -1,33 +1,54 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 
-import {
-  Button,
-  Card,
-  CardBody,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Col,
-  CardTitle,
-  Row,
-  CardHeader
-} from "reactstrap";
+import { Button, Card, CardBody, Form, Input, InputGroupAddon, InputGroupText, InputGroup, Container,
+  Col, CardTitle, Row, CardHeader } from "reactstrap";
 
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { DataContext } from "store/GlobalState";
+import { postData } from "utils/fetchData";
 
 function LoginPage() {
-  const [firstFocus, setFirstFocus] = React.useState(false);
-  const [lastFocus, setLastFocus] = React.useState(false);
+
+  const initialState = { username: '', password: '' };
+  const [userData, setUserData] = useState(initialState);
+
+  const { state, dispatch } = useContext(DataContext);
+
+  const { auth } = state;
+
+  const router = useHistory()
+
+  const handleChangeInput = e => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    
+    const res = await postData('auth/signin', userData);
+
+    dispatch({
+      type: 'AUTH', payload: {
+        token: res.token,
+        user: res.user
+      }
+    })
+
+    localStorage.setItem('jwt', res.token);
+
+    router.push("/");
+
+  }
+
+  if (auth.user) return <Redirect to="/" />
 
   return (
     <Container>
       <Row className="justify-content-center">
         <Col md="6">
-          <Card className="card m-3" data-background-color="blue">
-            <Form action="" className="form" method="">
+          <Card className="card p-3">
+            <Form className="form" onSubmit={handleSubmit}>
               <CardHeader className="text-center">
                 <CardTitle className="title-up pt-2" tag="h3">
                   Login
@@ -36,7 +57,6 @@ function LoginPage() {
                   <Button
                     className="btn-neutral btn-icon btn-round"
                     color="facebook"
-                    href="#pablo"
                     onClick={(e) => e.preventDefault()}
                   >
                     <i className="fab fa-facebook-square"></i>
@@ -44,7 +64,6 @@ function LoginPage() {
                   <Button
                     className="btn-neutral btn-icon btn-round"
                     color="twitter"
-                    href="#pablo"
                     onClick={(e) => e.preventDefault()}
                     size="lg"
                   >
@@ -53,7 +72,6 @@ function LoginPage() {
                   <Button
                     className="btn-neutral btn-icon btn-round"
                     color="google"
-                    href="#pablo"
                     onClick={(e) => e.preventDefault()}
                   >
                     <i className="fab fa-google-plus"></i>
@@ -63,36 +81,40 @@ function LoginPage() {
               <CardBody>
                 <Row>
                   <Col md="12">
-                    <InputGroup className="no-border"
-                    >
+                    <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons users_circle-08"></i>
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
-                        placeholder="Ingrese su nombre"
+                        placeholder="Ingrese su username"
                         type="text"
+                        name="username"
+                        value={userData.username}
+                        onChange={handleChangeInput}
                       ></Input>
                     </InputGroup>
-                    <InputGroup className="no-border">
+                    <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons text_caps-small"></i>
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
-                        placeholder="Ingrese su apellido"
-                        type="text"
+                        placeholder="Ingrese su contraseña"
+                        type="password"
+                        name="password"
+                        value={userData.password}
+                        onChange={handleChangeInput}
+                        autoComplete="on"
                       ></Input>
                     </InputGroup>
                   </Col>
                 </Row>
                 <Button
-                  className="btn-neutral btn-round w-100"
+                  className="btn-primary btn-round w-100"
                   color="info"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
                   size="lg"
                 >
                   Login
