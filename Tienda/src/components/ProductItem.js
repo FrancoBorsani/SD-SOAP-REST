@@ -1,11 +1,7 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addToCart } from '../redux/actions/cartAction';
 
 const ProductItem = ({ product }) => {
-
-    const dispatch = useDispatch()
 
     const userLink = () => {
         return (
@@ -13,21 +9,11 @@ const ProductItem = ({ product }) => {
                 <Link to={`/product/${product.idProducto}`} className="btn btn-info mr-1 flex-fill">
                     View
                 </Link>
-                <button className="btn btn-success ml-1 flex-fill" disabled={product.stock === 0 ? true : false} onClick={() => handleAddToCart()}>
+                <button className="btn btn-success ml-1 flex-fill" disabled={product.stock === 0 ? true : false}>
                     Buy
                 </button>
             </>
         )
-    }
-
-    const adminLink = () => {
-        return (
-            <h1>Admin!</h1>
-        )
-    }
-
-    const handleAddToCart = () => {
-        dispatch(addToCart(product))
     }
 
     return (

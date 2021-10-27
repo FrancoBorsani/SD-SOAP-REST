@@ -15,7 +15,7 @@ const DetailProduct = () => {
             setProduct(res)
             setLoading(false)
         })
-    })
+    }, [id])
 
     if (loading) return (
         <div className="page-header clear-filter">

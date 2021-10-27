@@ -54,7 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     	and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		
-		.authorizeRequests().antMatchers("/api/v1/auth/signin", "/api/v1/envios/**", "/api/registro/create", "/home", "/registro", "/iniciar", "/api/v1/productos", "/api/v1/productos/*").permitAll()
+		.authorizeRequests().antMatchers("/api/v1/auth/signin", "/api/v1/envios/**", "/api/v1/registro/create", "/home", "/registro", "/iniciar", "/api/v1/productos", "/api/v1/productos/*").permitAll()
 		.anyRequest().authenticated();
         
         security.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

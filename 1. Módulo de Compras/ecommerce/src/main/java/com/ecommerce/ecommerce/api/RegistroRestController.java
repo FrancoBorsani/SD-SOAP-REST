@@ -14,7 +14,7 @@ import com.ecommerce.ecommerce.services.UsuarioService;
 
 
 @RestController
-@RequestMapping("api/registro")
+@RequestMapping("api/v1/registro")
 public class RegistroRestController {
 	
 	@Autowired

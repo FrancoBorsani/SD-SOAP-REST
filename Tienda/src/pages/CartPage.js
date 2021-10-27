@@ -1,9 +1,12 @@
 import CartItem from 'components/CartItem'
-import { useSelector } from 'react-redux'
+import { useContext } from 'react'
+import { DataContext } from 'store/GlobalState'
 
 const CartPage = () => {
 
-    const { cart } = useSelector(state => state)
+    const { state, dispatch } = useContext(DataContext)
+
+    const { cart } = state
 
     return (
         <div className="container-fluid clear-filter">
@@ -13,7 +16,7 @@ const CartPage = () => {
                     <table className="table my-3">
                         <tbody>
                             {
-                                cart.cart.map((item) => (
+                                cart.map((item) => (
                                     <CartItem key={item.id} item={item} />
                                 ))
                             }

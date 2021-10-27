@@ -31,7 +31,7 @@ function HomePage() {
           <Filter />
           {
             products.map(product =>
-              <div className="col-md-4" key={product.id}>
+              <div className="col-md-4" key={product.idProducto}>
                 <ProductItem product={product} />
               </div>
             )
