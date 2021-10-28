@@ -4,19 +4,19 @@ import com.example.modulocorreo.entities.Envio;
 
 public class InsertOrUpdateEnvioResponse {
 	
-	private ApiResponse apiResponse;
+	private ApiMessageResponse apiResponse;
     private Envio envio;
 
-    public InsertOrUpdateEnvioResponse(ApiResponse apiResponse, Envio envio) {
+    public InsertOrUpdateEnvioResponse(ApiMessageResponse apiResponse, Envio envio) {
         this.apiResponse = apiResponse;
         this.envio = envio;
     }
 
-	public ApiResponse getApiResponse() {
+	public ApiMessageResponse getApiResponse() {
 		return apiResponse;
 	}
 
-	public void setApiResponse(ApiResponse apiResponse) {
+	public void setApiResponse(ApiMessageResponse apiResponse) {
 		this.apiResponse = apiResponse;
 	}
 

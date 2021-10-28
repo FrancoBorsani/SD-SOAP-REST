@@ -12,7 +12,7 @@ function IndexNavbar() {
 
   const { state, dispatch } = useContext(DataContext);
 
-  const { auth } = state;
+  const { auth, cart } = state;
 
   const router = useHistory();
 
@@ -84,7 +84,7 @@ function IndexNavbar() {
           }}
         />
       ) : null}
-      <Navbar className="navbar-secondary" expand="lg" color="info">
+      <Navbar className="navbar-secondary" expand="lg" color="info" sticky="top">
         <Container>
           <div className="navbar-translate">
             <Link to="/">
@@ -115,14 +115,14 @@ function IndexNavbar() {
             navbar
           >
             <Nav navbar>
-
               <NavItem>
                 <NavLink
                   to="/cart"
                   tag={Link}
                 >
-                  <i className="fas fa-shopping-cart"></i>
                   <p className="d-lg-none d-xl-none pl-2">Cart</p>
+                  <i className="fa" style={{ fontSize: '20px'}}>&#xf07a;</i>
+                  <span className='badge badge-danger' id='lblCartCount'>{ cart.length }</span>
                 </NavLink>
               </NavItem>
               { auth.token ? loggedUser() : noLogged() }

@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     	security.cors().configurationSource(request -> corsConfiguration).
     	and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.authorizeRequests().antMatchers("/api/v1/auth/signin", "/api/v1/envios/**").permitAll()
+		.authorizeRequests().antMatchers("/api/v1/auth/signin", "/api/v1/envios/**", "/v3/api-docs/", "/**").permitAll()
 		.anyRequest().authenticated();
         
         security.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

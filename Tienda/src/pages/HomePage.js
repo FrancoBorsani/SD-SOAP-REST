@@ -28,7 +28,9 @@ function HomePage() {
     <div className="clear-filter">
       <Container className="text-black">
         <div className="row justify-content-center mt-3">
-          <Filter />
+          <div className="col-md-12">
+            <Filter />
+          </div>
           {
             products.map(product =>
               <div className="col-md-4" key={product.idProducto}>

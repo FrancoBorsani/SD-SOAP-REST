@@ -50,9 +50,8 @@ function CarouselSection() {
     setActiveIndex(newIndex);
   };
   return (
-    <>
-      <div className="section" id="carousel">
-          <Row className="justify-content-center">
+      <div id="carousel">
+          <Row>
             <Col lg="12" md="12">
               <Carousel
                 activeIndex={activeIndex}
@@ -78,7 +77,6 @@ function CarouselSection() {
                 <a
                   className="carousel-control-prev"
                   data-slide="prev"
-                  href="#pablo"
                   onClick={(e) => {
                     e.preventDefault();
                     previous();
@@ -90,7 +88,6 @@ function CarouselSection() {
                 <a
                   className="carousel-control-next"
                   data-slide="next"
-                  href="#pablo"
                   onClick={(e) => {
                     e.preventDefault();
                     next();
@@ -103,7 +100,6 @@ function CarouselSection() {
             </Col>
           </Row>
       </div>
-    </>
   );
 }
 

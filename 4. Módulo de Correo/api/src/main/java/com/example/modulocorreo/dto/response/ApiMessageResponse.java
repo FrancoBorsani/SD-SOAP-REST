@@ -1,11 +1,11 @@
 package com.example.modulocorreo.dto.response;
 
-public class ApiResponse {
+public class ApiMessageResponse {
 	
     private Boolean success;
     private String message;
 
-    public ApiResponse(Boolean success, String message) {
+    public ApiMessageResponse(Boolean success, String message) {
         this.success = success;
         this.message = message;
     }

@@ -1,43 +1,49 @@
 import { Link } from "react-router-dom"
+import { increase } from "store/Actions"
+import { decrease } from "store/Actions"
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, dispatch, cart }) => {
     return (
-        <tr>
-            <td style={{ width: '100px' }}>
-                <img src={item.imagen} alt={item.imagen}
-                    className="img-thumbnail w-100"
-                    style={{ minWidth: '80px', height: '80px' }}
-                />
-            </td>
+        <div className="row border-top border-bottom">
+            <div className="row main align-items-center">
+                <div className="col-2">
+                    <img className="img-fluid" src={item.imagen} alt={item.imagen} />
+                </div>
+                <div className="col">
+                    <div className="row">
+                        <Link to={`/product/${item.idProducto}`}>
+                            { item.descripcionLarga }
+                        </Link>
+                    </div>
+                </div>
+                <div className="col">
+                    <button className="mr-1" onClick={() => dispatch(decrease(cart, item.idProducto))} 
+                        style={{ cursor: 'pointer', border: 'none' }}
+                        disabled={item.cantidad === 1 ? true : false}
+                    >
+                        -
+                    </button>
 
-            <td style={{ width: '200px' }} className="w-50 align-middle">
-                <h5 className="text-capitalize">
-                    <Link to={`product/${item.idProducto}`}>
-                        {item.descripcionLarga}
-                    </Link>
-                </h5>
+                    <button href="#" className="border mr-1">{ item.cantidad }</button>
 
-                <h6 className="text-danger">${item.precio /* * item.quantity */}</h6>
-                {
-                    item.stock > 0
-                        ? <p className="text-danger mb-1">In Stock: {item.stock}</p>
-                        : <p className="text-danger mb-1">Out Stock</p>
-                }
-            </td>
-
-            <td className="align-middle" style={{ minWidth: '150px' }}>
-                <button className="btn btn-secondary" 
-                >-</button>
-                <span className="px-3">{/*item.quantity */ 10}</span>
-                <button className="btn btn-secondary" 
-                >+</button>
-            </td>
-
-            <td className="align-middle" style={{ minWidth: '50px', cursor: 'pointer' }}>
-                <i className="fas fa-trash-alt text-danger" data-toggle="modal" data-target="#exampleModal"></i>  
-            </td>
-
-        </tr>
+                    <button onClick={() => dispatch(increase(cart, item.idProducto))} style={{ cursor: 'pointer', border: 'none' }}
+                        disabled={item.stock === item.cantidad ? true : false}
+                    >
+                        +
+                    </button>
+                    
+                </div>
+                <div className="col">
+                    <span>${ item.precio * item.cantidad }</span>
+                    <span className="close" style={{ cursor: 'pointer' }}
+                    onClick={() => dispatch({
+                        type: 'ADD_MODAL',
+                        payload: [{data: cart, id: item.idProducto, title: item.descripcionCorta, type: 'ADD_CART'}]
+                    })}
+                    >&#10005;</span>
+                </div>
+            </div>
+        </div>
     )
 }
 

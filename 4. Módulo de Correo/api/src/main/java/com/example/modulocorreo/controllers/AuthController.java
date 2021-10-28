@@ -16,6 +16,8 @@ import com.example.modulocorreo.repositories.IUserRepository;
 import com.example.modulocorreo.services.implementation.UserService;
 import com.example.modulocorreo.utils.JwtUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 import javax.validation.Valid;
 
 @RestController
@@ -35,6 +37,7 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
+	@Operation(summary = "Iniciar sesión en el sistema.")
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 

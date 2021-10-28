@@ -58,7 +58,6 @@ const DetailProduct = () => {
                         disabled={product.stock === 0 ? true : false}>
                         Buy
                     </button>
-
                 </div>
             </div>
         </div>

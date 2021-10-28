@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { addToCart } from 'store/Actions';
+import { DataContext } from 'store/GlobalState';
 
 const ProductItem = ({ product }) => {
+
+    const { state, dispatch } = useContext(DataContext);
+
+    const { cart } = state;
 
     const userLink = () => {
         return (
             <>
                 <Link to={`/product/${product.idProducto}`} className="btn btn-info mr-1 flex-fill">
-                    View
+                    Detalles
                 </Link>
-                <button className="btn btn-success ml-1 flex-fill" disabled={product.stock === 0 ? true : false}>
-                    Buy
+                <button className="btn btn-success ml-1 flex-fill"
+                 disabled={product.stock === 0 ? true : false} 
+                 onClick={() => dispatch(addToCart(product, cart))}>
+                    Comprar
                 </button>
             </>
         )
@@ -18,7 +26,7 @@ const ProductItem = ({ product }) => {
 
     return (
         <div className="products">
-            <div className="card shadow p-2" style={{ width: '18rem' }}>
+            <div className="card p-2" style={{ width: '18rem' }}>
 
                 <img className="card-img-top" src={product.imagen} alt={product.imagen} />
                 <div className="card-body">
@@ -30,8 +38,8 @@ const ProductItem = ({ product }) => {
                         <h6 className="text-danger">${product.precio}</h6>
                         {
                             product.stock > 0
-                            ? <h6 className="text-success">In Stock: {product.stock}</h6>
-                            : <h6 className="text-danger">Out Stock</h6>
+                            ? <h6 className="text-success">Stock: {product.stock}</h6>
+                            : <h6 className="text-danger">Sin Stock</h6>
                         }
                     </div>
 

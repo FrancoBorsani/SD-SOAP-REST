@@ -4,12 +4,13 @@ import Index from "pages/HomePage";
 import NucleoIcons from "views/NucleoIcons.js";
 import LoginPage from "pages/LoginPage.js";
 import LandingPage from "views/examples/LandingPage.js";
-import ProfilePage from "views/examples/ProfilePage.js";
+import ProfilePage from "pages/ProfilePage";
 import RegisterPage from "pages/RegisterPage";
 import CartPage from "pages/CartPage";
 import Navbar from "components/Navbar";
 import React from "react";
 import DetailProductPage from "pages/DetailProductPage";
+import ModalCustom from "components/ModalCustom";
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
               render={(props) => <CartPage {...props} exact />}
             />
         </Switch>
+        <ModalCustom/>
       </BrowserRouter>
     );
   }
