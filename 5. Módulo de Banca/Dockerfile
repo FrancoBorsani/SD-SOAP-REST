@@ -7,4 +7,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 EXPOSE 8082
-CMD ["python", "api_modulo_banca.py.py"]
+CMD ["python", "api_modulo_banca.py"]
