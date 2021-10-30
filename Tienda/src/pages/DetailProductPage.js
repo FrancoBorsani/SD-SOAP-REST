@@ -1,21 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router"
 import { Container, Spinner } from "reactstrap";
+import { addToCart } from "store/Actions";
+import { DataContext } from "store/GlobalState";
 import { getData } from "utils/fetchData";
 
 const DetailProduct = () => {
 
+    const { state, dispatch } = useContext(DataContext);
+    const { cart } = state;
+
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
 
-    const { id } = useParams()
+    const { id } = useParams();
 
     useEffect(() => {
         getData(`productos/${id}`).then(res => {
             setProduct(res)
             setLoading(false)
         })
-    }, [id])
+    }, [id]);
 
     if (loading) return (
         <div className="page-header clear-filter">
@@ -49,14 +54,18 @@ const DetailProduct = () => {
                                 <h6 className="text-danger">Stock: Out Stock</h6>
                         }
 
-                        <h6 className="text-danger">Sold: {product.sold} 30</h6>
+                        <h6 className="text-danger">Vendidos: {product.sold} 30</h6>
                     </div>
 
                     <div className="my-2">{product.descripcionLarga}</div>
+                     <div className="my-2">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo error sed obcaecati autem quas explicabo rerum delectus? Accusantium doloribus esse eaque non sint? Accusantium laboriosam praesentium dolores. Deleniti architecto harum saepe alias deserunt a, quibusdam veniam eaque sint ratione aspernatur.
+                    </div>
 
-                    <button type="button" className="btn btn-dark d-block my-3 px-5 w-100"
-                        disabled={product.stock === 0 ? true : false}>
-                        Buy
+                    <button type="button" className="btn-dark d-block my-3 px-5 py-2 w-100"
+                        disabled={product.stock === 0 ? true : false}
+                        onClick={() => dispatch(addToCart(product, cart))}>
+                        Comprar
                     </button>
                 </div>
             </div>

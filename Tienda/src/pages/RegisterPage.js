@@ -26,8 +26,6 @@ function RegisterPage() {
 
     dispatch({ type: 'NOTIFY', payload: { success: 'Registrado correctamente.' } })
 
-    alert('OK!')
-
   }
 
   if (auth.user) return <Redirect to="/" />

@@ -1,11 +1,25 @@
+import Adresses from "components/Profile/Adresses";
+import CreditCards from "components/Profile/CreditCards";
 import { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { DataContext } from "store/GlobalState";
+import Account from '../components/Profile/Account'
 
 const ProfilePage = () => {
 
     const { state } = useContext(DataContext);
 
     const { auth } = state;
+
+    const router = useHistory();
+
+    const isActive = (r) => {
+        if (r === router.location.pathname) {
+            return "active"
+        } else {
+            return ""
+        }
+    }
 
     return (
         <div className="container">
@@ -17,103 +31,41 @@ const ProfilePage = () => {
                         </div>
                         <h4 className="text-center text-capitalize">{ auth.user.username }</h4>
                     </div>
-                    <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a className="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
+                    <div className="nav flex-column nav-pills">
+                        <Link className={"nav-link " + isActive('/profile')} to="/profile">
                             <i className="fa fa-home text-center mr-1"></i>
-                            Account
-                        </a>
-                        <a className="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
-                            <i className="fa fa-key text-center mr-1"></i>
-                            Password
-                        </a>
-                        <a className="nav-link" id="security-tab" data-toggle="pill" href="#security" role="tab" aria-controls="security" aria-selected="false">
-                            <i className="fa fa-user text-center mr-1"></i>
-                            Security
-                        </a>
-                        <a className="nav-link" id="application-tab" data-toggle="pill" href="#application" role="tab" aria-controls="application" aria-selected="false">
+                            Cuenta
+                        </Link>
+                        <Link className={"nav-link " + isActive('/profile/cards')} to="/profile/cards">
+                            <i className="fa fa-credit-card text-center mr-1"></i>
+                            Tarjetas
+                        </Link>
+                        <Link className={"nav-link " + isActive('/profile/adresses')} to="/profile/adresses">
+                            <i className="fa fa-home text-center mr-1"></i>
+                            Direcciones
+                        </Link>
+                        <Link className="nav-link">
                             <i className="fa fa-tv text-center mr-1"></i>
                             Application
-                        </a>
-                        <a className="nav-link" id="notification-tab" data-toggle="pill" href="#notification" role="tab" aria-controls="notification" aria-selected="false">
-                            <i className="fa fa-bell text-center mr-1"></i>
-                            Notification
-                        </a>
+                        </Link>
                     </div>
                 </div>
-                <div className="tab-content p-4 p-md-5" id="v-pills-tabContent">
-                    <div className="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-                        <h3 className="mb-4">Account Settings</h3>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Nombre</label>
-                                    <input type="text" className="form-control" value={auth.user.nombre} />
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Apellido</label>
-                                    <input type="text" className="form-control" value={auth.user.apellido}/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Email</label>
-                                    <input type="text" className="form-control" value={auth.user.email}/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Documento</label>
-                                    <input type="text" className="form-control" value={auth.user.dni}/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Telefono</label>
-                                    <input type="text" className="form-control" value="42269863"/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Designation</label>
-                                    <input type="text" className="form-control" value="UI Developer"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <button className="btn btn-primary btn-round w-100">Update</button>
-                        </div>
-                    </div>
-                    <div className="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                        <h3 className="mb-4">Password Settings</h3>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Old password</label>
-                                    <input type="password" className="form-control"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>New password</label>
-                                    <input type="password" className="form-control"/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Confirm new password</label>
-                                    <input type="password" className="form-control"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <button className="btn btn-primary">Update</button>
-                            <button className="btn btn-light">Cancel</button>
-                        </div>
-                    </div>
+
+                <div className="tab-content p-4" id="v-pills-tabContent">
+                    
+                    {
+                        router.location.pathname === '/profile' && <Account auth={auth} />
+                    }
+
+                    {
+                        router.location.pathname === '/profile/cards' && <CreditCards />
+                    }
+                    
+                    {
+                        router.location.pathname === '/profile/adresses' && <Adresses />
+                    }
+
+
                     <div className="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
                         <h3 className="mb-4">Security Settings</h3>
                         <div className="row">
@@ -145,6 +97,8 @@ const ProfilePage = () => {
                             <button className="btn btn-light">Cancel</button>
                         </div>
                     </div>
+
+
                     <div className="tab-pane fade" id="application" role="tabpanel" aria-labelledby="application-tab">
                         <h3 className="mb-4">Application Settings</h3>
                         <div className="row">

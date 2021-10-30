@@ -31,12 +31,6 @@ img{
   border-bottom: 2px solid #e81f76 !important;
 }
 
-.products{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    justify-content: center;
-    margin: 20px 0;
-}
 .products .card{
     margin: 10px auto;
 }
@@ -193,7 +187,7 @@ img{
   color: transparent
 }
 
-.checkout .btn {
+.btn-dark {
   background-color: #000;
   border-color: #000;
   color: white;
@@ -201,10 +195,11 @@ img{
   font-size: 0.7rem;
   margin-top: 4vh;
   padding: 1vh;
-  border-radius: 0
+  border-radius: 0;
+  cursor: pointer;
 }
 
-.checkout .btn:focus {
+.btn-dark:focus, .btn-dark:hover {
   box-shadow: none;
   outline: none;
   box-shadow: none;

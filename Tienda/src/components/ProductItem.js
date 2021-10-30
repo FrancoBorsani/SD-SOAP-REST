@@ -26,8 +26,7 @@ const ProductItem = ({ product }) => {
 
     return (
         <div className="products">
-            <div className="card p-2" style={{ width: '18rem' }}>
-
+            <div className="card p-2">
                 <img className="card-img-top" src={product.imagen} alt={product.imagen} />
                 <div className="card-body">
                     <h5 className="card-title text-capitalize" title={product.descripcionCorta}>

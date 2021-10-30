@@ -61,9 +61,6 @@ function IndexNavbar() {
           <DropdownItem onClick={(e) => e.preventDefault()}>
             Mis compras
           </DropdownItem>
-          <DropdownItem onClick={(e) => e.preventDefault()}>
-            Something else here
-          </DropdownItem>
           <DropdownItem divider></DropdownItem>
           <DropdownItem onClick={handleLogout}>
             Cerrar sesión

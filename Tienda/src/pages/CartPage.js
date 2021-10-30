@@ -33,7 +33,7 @@ const CartPage = () => {
                             <div className="col-sm-12 empty-cart-cls text-center"> <img src="https://i.imgur.com/dCdflKN.png" alt="cart_empty" width="130" height="130" className="img-fluid mb-4 mr-3"/>
                                 <h3><strong>El Carrito Esta Vacio</strong></h3>
                                 <h4>Parece que aún no ha hecho su elección...</h4>
-                                <Link to="/" className="btn btn-info cart-btn-transform m-3">Continue Shopping</Link>
+                                <Link to="/" className="btn btn-info cart-btn-transform m-3">Seguir Comprando</Link>
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ const CartPage = () => {
                                     <div className="col">TOTAL PRICE</div>
                                     <div className="col text-right">$ {total}</div>
                                 </div> 
-                                <button className="btn">CHECKOUT</button>
+                                <button className="btn-dark">CHECKOUT</button>
                             </div>
                         </div>
                     </div>

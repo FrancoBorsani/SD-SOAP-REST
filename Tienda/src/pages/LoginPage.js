@@ -26,16 +26,18 @@ function LoginPage() {
   const handleSubmit = async e => {
     e.preventDefault();
     
-    const res = await postData('auth/signin', userData);
+    const response = await postData('auth/signin', userData);
+
+    if(response.error) return dispatch({ type: 'NOTIFY', payload: { error: 'Usuario o contraseña incorrectos.' } }) 
 
     dispatch({
       type: 'AUTH', payload: {
-        token: res.token,
-        user: res.user
+        token: response.token,
+        user: response.user
       }
     })
 
-    localStorage.setItem('jwt', res.token);
+    localStorage.setItem('jwt', response.token);
 
     router.push("/");
 
@@ -57,14 +59,12 @@ function LoginPage() {
                   <Button
                     className="btn-neutral btn-icon btn-round"
                     color="facebook"
-                    onClick={(e) => e.preventDefault()}
                   >
                     <i className="fab fa-facebook-square"></i>
                   </Button>
                   <Button
                     className="btn-neutral btn-icon btn-round"
                     color="twitter"
-                    onClick={(e) => e.preventDefault()}
                     size="lg"
                   >
                     <i className="fab fa-twitter"></i>
@@ -72,7 +72,6 @@ function LoginPage() {
                   <Button
                     className="btn-neutral btn-icon btn-round"
                     color="google"
-                    onClick={(e) => e.preventDefault()}
                   >
                     <i className="fab fa-google-plus"></i>
                   </Button>
@@ -113,17 +112,11 @@ function LoginPage() {
                   </Col>
                 </Row>
                 <Button
-                  className="btn-primary btn-round w-100"
-                  color="info"
-                  size="lg"
-                >
+                  className="btn-primary btn-round w-100" color="info" size="lg">
                   Login
                 </Button>
                 <h6 className="text-center mb-4">
-                  <Link
-                    className="link"
-                    to="/registro"
-                  >
+                  <Link className="link" to="/registro">
                     Registrarse
                   </Link>
                 </h6>

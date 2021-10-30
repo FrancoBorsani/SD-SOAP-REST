@@ -27,17 +27,19 @@ function HomePage() {
   return (
     <div className="clear-filter">
       <Container className="text-black">
-        <div className="row justify-content-center mt-3">
-          <div className="col-md-12">
-            <Filter />
+        <div className="row">
+          <Filter />
+          <div className="col-md-9">
+            <div className="row justify-content-center ">
+              {
+                products.map(product =>
+                  <div className="col-md-4" key={product.idProducto}>
+                    <ProductItem product={product} />
+                  </div>
+                )
+              }
+            </div>
           </div>
-          {
-            products.map(product =>
-              <div className="col-md-4" key={product.idProducto}>
-                <ProductItem product={product} />
-              </div>
-            )
-          }
         </div>
       </Container>
     </div>
