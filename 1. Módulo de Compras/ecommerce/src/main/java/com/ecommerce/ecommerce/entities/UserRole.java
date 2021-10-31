@@ -1,4 +1,4 @@
-/*package com.ecommerce.ecommerce.entities;
+package com.ecommerce.ecommerce.entities;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -82,4 +82,4 @@ public class UserRole {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-}*/
+}
