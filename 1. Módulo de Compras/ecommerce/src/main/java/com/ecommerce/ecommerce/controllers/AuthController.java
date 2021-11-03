@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import com.ecommerce.ecommerce.security.LoginRequest;
 import com.ecommerce.ecommerce.security.LoginResponse;
 import com.ecommerce.ecommerce.entities.User;
+import com.ecommerce.ecommerce.entities.UserRole;
 import com.ecommerce.ecommerce.repositories.IUserRepository;
 import com.ecommerce.ecommerce.implementation.UserService;
 import com.ecommerce.ecommerce.security.JwtUtil;
+
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -48,11 +51,12 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetails userDetails = userService.loadUserByUsername(loginRequest.getUsername());
 
-        String jwt = jwtUtil.generateToken(userDetails);
+        String token = jwtUtil.generateToken(userDetails);
         
         User user = userRepository.findByUsername(userDetails.getUsername());
-                
-        return ResponseEntity.ok(new LoginResponse(jwt, user));
+        
+       return ResponseEntity.ok(new LoginResponse(token, new User(user.getUsername(), user.getPassword(), user.getNombre(), user.getApellido(), user.getEmail(), user.getDni(), user.getTelefono())));
+       
     }
 
 }
