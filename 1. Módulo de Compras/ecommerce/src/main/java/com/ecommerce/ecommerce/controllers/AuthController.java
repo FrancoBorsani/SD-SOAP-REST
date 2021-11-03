@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ecommerce.ecommerce.security.LoginRequest;
 import com.ecommerce.ecommerce.security.LoginResponse;
+import com.ecommerce.ecommerce.security.UserResponse;
 import com.ecommerce.ecommerce.entities.User;
-import com.ecommerce.ecommerce.entities.UserRole;
 import com.ecommerce.ecommerce.repositories.IUserRepository;
 import com.ecommerce.ecommerce.implementation.UserService;
 import com.ecommerce.ecommerce.security.JwtUtil;
 
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -53,9 +54,13 @@ public class AuthController {
 
         String token = jwtUtil.generateToken(userDetails);
         
-        User user = userRepository.findByUsername(userDetails.getUsername());
+        User user = userRepository.findByUsername(userDetails.getUsername());        
         
-       return ResponseEntity.ok(new LoginResponse(token, new User(user.getUsername(), user.getPassword(), user.getNombre(), user.getApellido(), user.getEmail(), user.getDni(), user.getTelefono())));
+		List<String> roles = userDetails.getAuthorities().stream()
+				.map(item -> item.getAuthority())
+				.collect(Collectors.toList());
+				        
+        return ResponseEntity.ok(new LoginResponse(token, new UserResponse(user.getUsername(), user.getNombre(), user.getApellido(), user.getDni(), user.getEmail(), user.getTelefono(), roles)));
        
     }
 

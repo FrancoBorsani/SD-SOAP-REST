@@ -1,13 +1,11 @@
 package com.ecommerce.ecommerce.security;
 
-import com.ecommerce.ecommerce.entities.User;
-
 public class LoginResponse {
 
 	private String token;
-	private User user;
+	private UserResponse user;
 	
-	public LoginResponse(String token, User user) {
+	public LoginResponse(String token, UserResponse user) {
 		super();
 		this.token = token;
 		this.user = user;
@@ -21,11 +19,11 @@ public class LoginResponse {
 		this.token = token;
 	}
 
-	public User getUser() {
+	public UserResponse getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserResponse user) {
 		this.user = user;
 	}
 

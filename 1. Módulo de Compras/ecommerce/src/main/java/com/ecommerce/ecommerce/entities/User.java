@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.entities;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="user")
@@ -23,6 +26,7 @@ public class User {
 	@Column(name="username", unique=true, nullable=false, length=60)
 	private String username;
 	
+	@JsonIgnore
 	@Column(name="password", nullable=false, length=80)
 	private String password;
 	
@@ -41,12 +45,13 @@ public class User {
 	@Column(name = "telefono", nullable = true)
 	private String telefono;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
-	
+		
 	@Column(name="enabled")
 	private boolean enabled;
-	
+		
 	public User() {}
 	
 	public User(String username, String password) {
@@ -141,12 +146,6 @@ public class User {
 		this.telefono = telefono;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", nombre=" + nombre
-				+ ", apellido=" + apellido + ", dni=" + dni + ", email=" + email + ", telefono=" + telefono + "]";
-	}
-
 	public Set<UserRole> getUserRoles() {
 		return userRoles;
 	}
@@ -162,9 +161,11 @@ public class User {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", nombre=" + nombre
+				+ ", apellido=" + apellido + ", dni=" + dni + ", email=" + email + ", telefono=" + telefono + "]";
+	}
 
 }
