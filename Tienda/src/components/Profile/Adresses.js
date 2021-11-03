@@ -5,7 +5,7 @@ const Adresses = () => {
             <div className="row">
                 <div className="col-md-12">
                     <ul class="list-group w-100 mb-4">
-                        <li class="list-group-item active">29 de Septiembre 3901, B1832 Remedios de Escalada, Provincia de Buenos Aires</li>
+                        <li class="list-group-item">29 de Septiembre 3901, B1832 Remedios de Escalada, Provincia de Buenos Aires</li>
                     </ul>
                 </div>
             </div>

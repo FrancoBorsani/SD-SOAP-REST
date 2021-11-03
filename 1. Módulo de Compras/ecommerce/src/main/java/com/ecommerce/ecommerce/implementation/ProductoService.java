@@ -35,6 +35,16 @@ public class ProductoService implements IProductoService{
 		return productoRepository.findByIdProducto(id);
 	}
 	
+	@Override
+	public List<Producto> searchProduct(String keyword) {
+		// TODO Auto-generated method stub
+		return productoRepository.searchProduct(keyword);
+	}
 	
+    @Override
+    public List<Producto> findByCategoria(String categoria) {
+        return productoRepository.findByCategoria(categoria);
+    }
+
 
 }

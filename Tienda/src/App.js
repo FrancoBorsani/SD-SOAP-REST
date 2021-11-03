@@ -1,9 +1,7 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Index from "pages/HomePage";
-import NucleoIcons from "views/NucleoIcons.js";
 import LoginPage from "pages/LoginPage.js";
-import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "pages/ProfilePage";
 import RegisterPage from "pages/RegisterPage";
 import CartPage from "pages/CartPage";
@@ -11,6 +9,8 @@ import Navbar from "components/Navbar";
 import React from "react";
 import DetailProductPage from "pages/DetailProductPage";
 import ModalCustom from "components/ModalCustom";
+import Products from "pages/Products";
+import Orders from "pages/Orders";
 
 
 function App() {
@@ -28,18 +28,10 @@ function App() {
   });
 
     return (
-        <BrowserRouter>
+      <BrowserRouter>
         <Navbar />
         <Switch>
             <Route path="/" render={(props) => <Index {...props} />} exact />
-            <Route
-              path="/nucleo-icons"
-              render={(props) => <NucleoIcons {...props} exact />}
-            />
-            <Route
-              path="/landing-page"
-              render={(props) => <LandingPage {...props} exact />}
-            />
             <Route
               path="/profile"
               render={(props) => <ProfilePage {...props} exact />}
@@ -59,6 +51,14 @@ function App() {
             <Route
               path="/cart"
               render={(props) => <CartPage {...props} exact />}
+            />
+            <Route
+              path="/my/products"
+              render={(props) => <Products {...props} exact />}
+            />
+            <Route
+              path="/my/orders"
+              render={(props) => <Orders {...props} exact />}
             />
         </Switch>
         <ModalCustom/>

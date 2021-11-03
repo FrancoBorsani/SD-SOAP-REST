@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.ecommerce.entities.User;
+import com.ecommerce.ecommerce.entities.UserRole;
+import com.ecommerce.ecommerce.implementation.PerfilService;
+import com.ecommerce.ecommerce.implementation.UserRoleService;
+import com.ecommerce.ecommerce.repositories.IUserRoleRepository;
 //import com.ecommerce.ecommerce.entities.UserRole;
 //import com.ecommerce.ecommerce.implementation.PerfilService;
 import com.ecommerce.ecommerce.services.UsuarioService;
@@ -19,12 +23,27 @@ public class RegistroRestController {
 	@Autowired
     UsuarioService usuarioService;
 	
-//	@Autowired
- //   PerfilService perfilService;
+	@Autowired
+	UserRoleService userRoleService;
+	
+	@Autowired
+	IUserRoleRepository userRoleRepository;
+
+	
+	@Autowired
+    PerfilService perfilService;
 
 	@PostMapping("/create")
-	public User createCliente(@RequestBody User user) {
-		return this.usuarioService.guardarUsuario(user);
+	public User createCliente(@RequestBody User user) {		
+		
+		User userReturn = usuarioService.guardarUsuario(user);
+		
+		userRoleService.saveUser(new UserRole(usuarioService.traerUser(user.getUsername()),"ROLE_USER"));			
+		
+		usuarioService.guardarPerfil(user);
+		
+		return userReturn;
+		
 		//createRole(user);
 		//return createPerfil(user);
 	}

@@ -40,6 +40,27 @@ function IndexNavbar() {
     )
   }
 
+  const userRouter = () => {
+    return (
+      <DropdownItem tag={Link} to="/my/orders">
+        Mis compras
+      </DropdownItem>
+    )
+  }
+
+  const adminRouter = () => {
+    return (
+      <>
+        <DropdownItem tag={Link} to="/my/products" >
+          Mis productos
+        </DropdownItem>
+        <DropdownItem tag={Link} to="/my/orders">
+          Mis ventas
+        </DropdownItem>
+      </>
+    )
+  }
+
   const loggedUser = () => {
     return (
       <UncontrolledDropdown className="button-dropdown">
@@ -58,9 +79,11 @@ function IndexNavbar() {
           <DropdownItem tag={Link} to="/profile">
             Perfil
           </DropdownItem>
-          <DropdownItem onClick={(e) => e.preventDefault()}>
-            Mis compras
-          </DropdownItem>
+
+          {
+            auth.user.roles.includes('ROLE_ADMIN') ? adminRouter() : userRouter()
+          }
+
           <DropdownItem divider></DropdownItem>
           <DropdownItem onClick={handleLogout}>
             Cerrar sesión
@@ -85,10 +108,7 @@ function IndexNavbar() {
         <Container>
           <div className="navbar-translate">
             <Link to="/">
-              <NavbarBrand
-                target="_blank"
-                id="navbar-brand"
-              >
+              <NavbarBrand target="_blank" id="navbar-brand">
                 ECOMMERCE
               </NavbarBrand>
             </Link>
@@ -106,17 +126,10 @@ function IndexNavbar() {
               <span className="navbar-toggler-bar bottom-bar"></span>
             </button>
           </div>
-          <Collapse
-            className="justify-content-end"
-            isOpen={collapseOpen}
-            navbar
-          >
+          <Collapse className="justify-content-end" isOpen={collapseOpen} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink
-                  to="/cart"
-                  tag={Link}
-                >
+                <NavLink to="/cart" tag={Link}>
                   <p className="d-lg-none d-xl-none pl-2">Cart</p>
                   <i className="fa" style={{ fontSize: '20px'}}>&#xf07a;</i>
                   <span className='badge badge-danger' id='lblCartCount'>{ cart.length }</span>

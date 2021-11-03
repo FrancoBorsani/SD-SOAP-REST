@@ -1,4 +1,4 @@
-/*package com.ecommerce.ecommerce.implementation;
+package com.ecommerce.ecommerce.implementation;
 
 import com.ecommerce.ecommerce.repositories.IUserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,5 +14,7 @@ public class UserRoleService {
 	
 	public void saveUser(com.ecommerce.ecommerce.entities.UserRole user) {
 		userRoleRepository.save(user);
+		
+		
 	}
-}*/
+}

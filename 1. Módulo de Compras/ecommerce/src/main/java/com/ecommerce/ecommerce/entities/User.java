@@ -1,10 +1,16 @@
 package com.ecommerce.ecommerce.entities;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,6 +26,7 @@ public class User {
 	@Column(name="username", unique=true, nullable=false, length=60)
 	private String username;
 	
+	@JsonIgnore
 	@Column(name="password", nullable=false, length=80)
 	private String password;
 	
@@ -38,6 +45,13 @@ public class User {
 	@Column(name = "telefono", nullable = true)
 	private String telefono;
 	
+	@JsonIgnore
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
+	private Set<UserRole> userRoles = new HashSet<UserRole>();
+		
+	@Column(name="enabled")
+	private boolean enabled;
+		
 	public User() {}
 	
 	public User(String username, String password) {
@@ -54,6 +68,18 @@ public class User {
 		this.email = email;
 		this.dni = dni;
 		this.telefono = telefono;
+	}
+	
+	public User(String username, String password, String nombre, String apellido, String email, String dni, String telefono, Set<UserRole> userRoles) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.dni = dni;
+		this.telefono = telefono;
+		this.userRoles = userRoles;
 	}
 
 	public String getNombre() {
@@ -120,14 +146,26 @@ public class User {
 		this.telefono = telefono;
 	}
 
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", nombre=" + nombre
 				+ ", apellido=" + apellido + ", dni=" + dni + ", email=" + email + ", telefono=" + telefono + "]";
 	}
-	
-	
-	
-	
 
 }

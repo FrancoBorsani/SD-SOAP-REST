@@ -33,7 +33,6 @@ const DetailProduct = () => {
     return (
         <div className="container clear-filter">
             <div className="row detail-page">
-
                 <div className="col-md-6">
                     <img src={product.imagen} alt={product.imagen}
                         className="d-block img-thumbnail rounded mt-4 w-100"
@@ -58,7 +57,10 @@ const DetailProduct = () => {
                     </div>
 
                     <div className="my-2">{product.descripcionLarga}</div>
-                     <div className="my-2">
+
+                    <div className="my-2">{product.categoria.nombre}</div>
+
+                    <div className="my-2">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo error sed obcaecati autem quas explicabo rerum delectus? Accusantium doloribus esse eaque non sint? Accusantium laboriosam praesentium dolores. Deleniti architecto harum saepe alias deserunt a, quibusdam veniam eaque sint ratione aspernatur.
                     </div>
 

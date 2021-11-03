@@ -1,10 +1,12 @@
 package com.ecommerce.ecommerce.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,6 +34,9 @@ public class Producto {
     
     @Column(name = "stock")
     private int stock;
+    
+    @OneToOne(cascade = CascadeType.MERGE)
+	private Categoria categoria;
 	
     public boolean isVisible() {
 		return visible;
@@ -42,18 +47,19 @@ public class Producto {
 	}
 
 	public Producto() { }
-	
-    public Producto(long idProducto, double precio, String descripcionCorta,
-			String descripcionLarga, int stock, boolean visible, String imagen) {
+
+	public Producto(long idProducto, double precio, String descripcionCorta, String descripcionLarga, boolean visible,
+			String imagen, int stock, Categoria categoria) {
 		super();
 		this.idProducto = idProducto;
 		this.precio = precio;
 		this.descripcionCorta = descripcionCorta;
 		this.descripcionLarga = descripcionLarga;
+		this.visible = visible;
+		this.imagen = imagen;
 		this.stock = stock;
-        this.visible = visible;
-        this.imagen = imagen;
-    }
+		this.categoria = categoria;
+	}
 
 	public String getImagen() {
 		return imagen;
@@ -102,12 +108,20 @@ public class Producto {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
+	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 
 	@Override
 	public String toString() {
 		return "Producto [idProducto=" + idProducto + ", precio=" + precio + ", descripcionCorta=" + descripcionCorta
 				+ ", descripcionLarga=" + descripcionLarga + ", visible=" + visible + ", imagen=" + imagen + ", stock="
-				+ stock + "]";
+				+ stock + ", categoria=" + categoria + "]";
 	}
-
+	
 }

@@ -25,9 +25,9 @@ function LoginPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    
-    const response = await postData('auth/signin', userData);
 
+    const response = await postData('auth/signin', userData);
+    
     if(response.error) return dispatch({ type: 'NOTIFY', payload: { error: 'Usuario o contraseña incorrectos.' } }) 
 
     dispatch({
@@ -35,11 +35,11 @@ function LoginPage() {
         token: response.token,
         user: response.user
       }
-    })
+    });
 
     localStorage.setItem('jwt', response.token);
 
-    router.push("/");
+    response.user.roles.includes("ROLE_USER") ? router.push("/") : router.push("/profile");
 
   }
 

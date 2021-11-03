@@ -5,7 +5,7 @@ const CreditCards = () => {
             <div className="row">
                 <div className="col-md-12">
                     <ul class="list-group w-100 mb-4">
-                        <li class="list-group-item active">XXXXXXXXXXXX-8181 - Visa Crédito</li>
+                        <li class="list-group-item">XXXXXXXXXXXX-8181 - Visa Crédito</li>
                         <li class="list-group-item">XXXXXXXXXXXX-8182 - MasterCard</li>
                     </ul>
                 </div>
