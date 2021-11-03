@@ -42,9 +42,7 @@ const ProductItem = ({ product }) => {
                         }
                     </div>
 
-                    {/*<p className="card-text" title={product.description}>
-                        {product.description}
-                    </p> */}
+                    {product.descripcionLarga}
                         
                     <div className="row justify-content-between mx-0">
                         {userLink()}

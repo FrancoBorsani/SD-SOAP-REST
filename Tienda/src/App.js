@@ -1,9 +1,7 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Index from "pages/HomePage";
-import NucleoIcons from "views/NucleoIcons.js";
 import LoginPage from "pages/LoginPage.js";
-import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "pages/ProfilePage";
 import RegisterPage from "pages/RegisterPage";
 import CartPage from "pages/CartPage";
@@ -32,14 +30,6 @@ function App() {
         <Navbar />
         <Switch>
             <Route path="/" render={(props) => <Index {...props} />} exact />
-            <Route
-              path="/nucleo-icons"
-              render={(props) => <NucleoIcons {...props} exact />}
-            />
-            <Route
-              path="/landing-page"
-              render={(props) => <LandingPage {...props} exact />}
-            />
             <Route
               path="/profile"
               render={(props) => <ProfilePage {...props} exact />}
