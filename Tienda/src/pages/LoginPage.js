@@ -25,9 +25,9 @@ function LoginPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    
-    const response = await postData('auth/signin', userData);
 
+    const response = await postData('auth/signin', userData);
+    
     if(response.error) return dispatch({ type: 'NOTIFY', payload: { error: 'Usuario o contraseña incorrectos.' } }) 
 
     dispatch({
@@ -36,6 +36,7 @@ function LoginPage() {
         user: response.user
       }
     })
+
 
     localStorage.setItem('jwt', response.token);
 
