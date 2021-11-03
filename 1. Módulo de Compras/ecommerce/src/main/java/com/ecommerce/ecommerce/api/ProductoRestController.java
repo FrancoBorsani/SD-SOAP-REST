@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.ecommerce.entities.Producto;
@@ -31,7 +32,6 @@ public class ProductoRestController {
     
     @GetMapping("/{id}")
     public ResponseEntity<Producto> getProductById(@PathVariable("id") int idProducto) {
-    	System.out.println(productoService.getProductoById(idProducto));
     	
     	Producto producto = productoService.getProductoById(idProducto);
     	
@@ -42,5 +42,25 @@ public class ProductoRestController {
 		}
    
     }
+    
+    @GetMapping("/search")
+    public ResponseEntity<List<Producto>> searchProduct(@RequestParam(name="keyword") String keyword) {
+    	
+    	List<Producto> productos = productoService.searchProduct(keyword);
+    	    	
+    	return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+   
+    }
+    
+    @GetMapping("/getByCategoria")
+    public ResponseEntity<List<Producto>> getByCategory(@RequestParam(name="idCategoria") String categoria) {
+    	
+    	List<Producto> productos = productoService.findByCategoria(categoria);
+    	    	
+    	return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+   
+    }
+    
+    
 
 }
