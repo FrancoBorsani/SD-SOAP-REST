@@ -9,6 +9,8 @@ import Navbar from "components/Navbar";
 import React from "react";
 import DetailProductPage from "pages/DetailProductPage";
 import ModalCustom from "components/ModalCustom";
+import Products from "pages/Products";
+import Orders from "pages/Orders";
 
 
 function App() {
@@ -26,7 +28,7 @@ function App() {
   });
 
     return (
-        <BrowserRouter>
+      <BrowserRouter>
         <Navbar />
         <Switch>
             <Route path="/" render={(props) => <Index {...props} />} exact />
@@ -49,6 +51,14 @@ function App() {
             <Route
               path="/cart"
               render={(props) => <CartPage {...props} exact />}
+            />
+            <Route
+              path="/my/products"
+              render={(props) => <Products {...props} exact />}
+            />
+            <Route
+              path="/my/orders"
+              render={(props) => <Orders {...props} exact />}
             />
         </Switch>
         <ModalCustom/>

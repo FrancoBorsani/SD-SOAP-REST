@@ -33,7 +33,6 @@ const DetailProduct = () => {
     return (
         <div className="container clear-filter">
             <div className="row detail-page">
-
                 <div className="col-md-6">
                     <img src={product.imagen} alt={product.imagen}
                         className="d-block img-thumbnail rounded mt-4 w-100"
