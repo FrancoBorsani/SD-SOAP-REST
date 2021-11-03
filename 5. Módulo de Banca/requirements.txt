@@ -1,0 +1,2 @@
+spyne
+mysql-connector-python
