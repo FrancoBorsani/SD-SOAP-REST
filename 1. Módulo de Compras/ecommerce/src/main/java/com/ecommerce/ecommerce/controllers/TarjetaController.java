@@ -26,7 +26,7 @@ public class TarjetaController {
 	@Qualifier("userRepository")
 	private IUserRepository userRepository;
 	
-	
+	/* REEMPLAZADO POR EL MÉTODO QUE SE ENCUENTRA EN EL PACKAGE API -> TarjetaRestController
 	@PostMapping("/altaTarjeta")
 	public RedirectView altaTarjeta( @ModelAttribute("tarjeta") Tarjeta newTarjeta, RedirectAttributes redirectAttrs) {
 		
@@ -43,7 +43,7 @@ public class TarjetaController {
 		redirectAttrs.addFlashAttribute("mensaje","Tarjeta registrada");
 
 		return new RedirectView("/profile");
-	}
+	}*/
 	
 	
 	
