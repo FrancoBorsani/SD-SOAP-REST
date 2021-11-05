@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
-
-import { Button, Card, CardBody, Form, Input, InputGroupAddon, InputGroupText, InputGroup, Container,
-  Col, CardTitle, Row, CardHeader } from "reactstrap";
+import {
+  Button, Card, CardBody, Form, Input, InputGroupAddon, InputGroupText, InputGroup,
+  Col, CardTitle, Row, CardHeader
+} from "reactstrap";
 
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { DataContext } from "store/GlobalState";
 import { postData } from "utils/fetchData";
+import Layout from "components/Layout/Layout";
 
 function LoginPage() {
 
@@ -27,8 +29,8 @@ function LoginPage() {
     e.preventDefault();
 
     const response = await postData('auth/signin', userData);
-    
-    if(response.error) return dispatch({ type: 'NOTIFY', payload: { error: 'Usuario o contraseña incorrectos.' } }) 
+
+    if (response.error) return dispatch({ type: 'NOTIFY', payload: { error: 'Usuario o contraseña incorrectos.' } })
 
     dispatch({
       type: 'AUTH', payload: {
@@ -46,7 +48,7 @@ function LoginPage() {
   if (auth.user) return <Redirect to="/" />
 
   return (
-    <Container>
+    <Layout>
       <Row className="justify-content-center">
         <Col md="6">
           <Card className="card p-3">
@@ -92,6 +94,7 @@ function LoginPage() {
                         name="username"
                         value={userData.username}
                         onChange={handleChangeInput}
+                        required
                       ></Input>
                     </InputGroup>
                     <InputGroup>
@@ -107,6 +110,7 @@ function LoginPage() {
                         value={userData.password}
                         onChange={handleChangeInput}
                         autoComplete="on"
+                        required
                       ></Input>
                     </InputGroup>
                   </Col>
@@ -116,7 +120,7 @@ function LoginPage() {
                   Login
                 </Button>
                 <h6 className="text-center mb-4">
-                  <Link className="link" to="/registro">
+                  <Link className="text-dark" to="/registro">
                     Registrarse
                   </Link>
                 </h6>
@@ -125,7 +129,7 @@ function LoginPage() {
           </Card>
         </Col>
       </Row>
-    </Container>
+    </Layout>
   );
 }
 

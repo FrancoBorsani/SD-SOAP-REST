@@ -1,8 +1,11 @@
+import Layout from "components/Layout/Layout";
 import OrdersTable from "components/OrdersTable";
 
 const Orders = () => {
     return (
-        <OrdersTable />
+        <Layout>
+            <OrdersTable />
+        </Layout>
     )
 }
 

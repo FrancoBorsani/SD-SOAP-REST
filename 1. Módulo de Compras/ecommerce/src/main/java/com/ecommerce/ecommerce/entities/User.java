@@ -1,7 +1,6 @@
 package com.ecommerce.ecommerce.entities;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;

@@ -12,7 +12,7 @@ const CartItem = ({ item, dispatch, cart }) => {
                 <div className="col">
                     <div className="row">
                         <Link to={`/product/${item.idProducto}`}>
-                            { item.descripcionLarga }
+                            { item.descripcion }
                         </Link>
                     </div>
                 </div>
@@ -24,7 +24,7 @@ const CartItem = ({ item, dispatch, cart }) => {
                         -
                     </button>
 
-                    <button href="#" className="border mr-1">{ item.cantidad }</button>
+                    <button className="border mr-1">{ item.cantidad }</button>
 
                     <button onClick={() => dispatch(increase(cart, item.idProducto))} style={{ cursor: 'pointer', border: 'none' }}
                         disabled={item.stock === item.cantidad ? true : false}
@@ -38,7 +38,7 @@ const CartItem = ({ item, dispatch, cart }) => {
                     <span className="close" style={{ cursor: 'pointer' }}
                     onClick={() => dispatch({
                         type: 'ADD_MODAL',
-                        payload: [{data: cart, id: item.idProducto, title: item.descripcionCorta, type: 'ADD_CART'}]
+                        payload: [{data: cart, id: item.idProducto, title: item.nombre, type: 'ADD_CART'}]
                     })}
                     >&#10005;</span>
                 </div>

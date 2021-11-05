@@ -63,7 +63,6 @@ const Filter = ({ order, setOrder, handleChangeSearch, keyword, categories, cate
             </div>
             <input type="range" className="form-control mt-1" />
             <hr />            
-            <button className="btn btn-lg btn-block btn-primary mt-5">Actualizar resultados</button>
         </div>
     )
 }

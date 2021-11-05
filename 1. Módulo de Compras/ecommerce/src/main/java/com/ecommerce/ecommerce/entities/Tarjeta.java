@@ -27,7 +27,6 @@ public class Tarjeta {
 	@JoinColumn(name="user_id", nullable=false)
 	private User user;
 	
-	
 	public Tarjeta() {}
 	
 	public Tarjeta(int id, String tipo, String numero, User user) {
