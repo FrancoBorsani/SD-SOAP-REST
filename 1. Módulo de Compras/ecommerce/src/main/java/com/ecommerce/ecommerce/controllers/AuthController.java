@@ -60,7 +60,7 @@ public class AuthController {
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 				        
-        return ResponseEntity.ok(new LoginResponse(token, new UserResponse(user.getUsername(), user.getNombre(), user.getApellido(), user.getDni(), user.getEmail(), user.getTelefono(), roles)));
+        return ResponseEntity.ok(new LoginResponse(token, new UserResponse(user.getId(), user.getUsername(), user.getNombre(), user.getApellido(), user.getDni(), user.getEmail(), user.getTelefono(), roles)));
        
     }
 

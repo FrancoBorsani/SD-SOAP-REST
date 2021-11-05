@@ -1,4 +1,5 @@
 import CartItem from 'components/CartItem'
+import Layout from 'components/Layout/Layout'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { DataContext } from 'store/GlobalState'
@@ -26,24 +27,26 @@ const CartPage = () => {
 
     if (cart.length === 0) {
         return (
-            <div className="container-fluid mt-100">
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="card-body cart">
-                            <div className="col-sm-12 empty-cart-cls text-center"> <img src="https://i.imgur.com/dCdflKN.png" alt="cart_empty" width="130" height="130" className="img-fluid mb-4 mr-3"/>
-                                <h3><strong>El Carrito Esta Vacio</strong></h3>
-                                <h4>Parece que aún no ha hecho su elección...</h4>
-                                <Link to="/" className="btn btn-info cart-btn-transform m-3">Seguir Comprando</Link>
+            <Layout>
+                <div className="mt-100">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="card-body cart">
+                                <div className="col-sm-12 empty-cart-cls text-center"> <img src="https://i.imgur.com/dCdflKN.png" alt="cart_empty" width="130" height="130" className="img-fluid mb-4 mr-3"/>
+                                    <h3><strong>El Carrito Esta Vacio</strong></h3>
+                                    <h4>Parece que aún no ha hecho su elección...</h4>
+                                    <Link to="/" className="btn btn-info cart-btn-transform m-3">Seguir Comprando</Link>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Layout>
         )
     }
 
     return (
-        <div className="container clear-filter">
+        <Layout>
             <div className="row justify-content-center">
                 <div className="col-md-12 text-secondary table-responsive my-3">
                     <div className="checkout card">
@@ -78,8 +81,8 @@ const CartPage = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Layout>   
     )
 }
 
-export default CartPage
+export default CartPage;

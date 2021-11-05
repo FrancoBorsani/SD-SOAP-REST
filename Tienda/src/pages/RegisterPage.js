@@ -1,7 +1,8 @@
+import Layout from "components/Layout/Layout";
 import React, { useContext, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Button, Card, CardHeader, CardBody, CardTitle, Form, Input, InputGroupAddon,
-  InputGroupText, InputGroup, Container, Row, Col} from "reactstrap";
+  InputGroupText, InputGroup, Row, Col} from "reactstrap";
 import { DataContext } from "store/GlobalState";
 import { postData } from "utils/fetchData";
 
@@ -31,7 +32,7 @@ function RegisterPage() {
   if (auth.user) return <Redirect to="/" />
 
   return (
-    <Container>
+    <Layout>
       <Row className="justify-content-center">
         <Col md="6">            
           <Card className="card p-3">
@@ -83,6 +84,7 @@ function RegisterPage() {
                         name="nombre"
                         value={userData.nombre}
                         onChange={handleChangeInput}
+                        required
                       ></Input>
                     </InputGroup>
                   </Col>
@@ -99,6 +101,7 @@ function RegisterPage() {
                         name="apellido"
                         value={userData.apellido}
                         onChange={handleChangeInput}
+                        required
                       ></Input>
                     </InputGroup>
                   </Col>
@@ -117,6 +120,7 @@ function RegisterPage() {
                         name="email"
                         value={userData.email}
                         onChange={handleChangeInput}
+                        required
                       ></Input>
                     </InputGroup>
                   </Col>
@@ -133,6 +137,7 @@ function RegisterPage() {
                         name="dni"
                         value={userData.dni}
                         onChange={handleChangeInput}
+                        required
                       ></Input>
                     </InputGroup>
                   </Col>
@@ -151,6 +156,7 @@ function RegisterPage() {
                         name="username"
                         value={userData.username}
                         onChange={handleChangeInput}
+                        required
                       ></Input>
                     </InputGroup>
                   </Col>
@@ -168,6 +174,7 @@ function RegisterPage() {
                         value={userData.password}
                         onChange={handleChangeInput}
                         autoComplete="on"
+                        required
                       ></Input>
                     </InputGroup>
                   </Col>
@@ -181,7 +188,7 @@ function RegisterPage() {
                 </Button>
                 <h6 className="text-center mb-4">
                   <Link
-                    className="link"
+                    className="text-dark"
                     to="/login"
                   >
                     Login Now
@@ -192,7 +199,7 @@ function RegisterPage() {
           </Card>
         </Col>
       </Row>
-    </Container>
+    </Layout>
   );
 }
 

@@ -1,3 +1,4 @@
+import Layout from "components/Layout/Layout";
 import Adresses from "components/Profile/Adresses";
 import CreditCards from "components/Profile/CreditCards";
 import { useContext } from "react";
@@ -22,7 +23,7 @@ const ProfilePage = () => {
     }
 
     return (
-        <div className="container">
+        <Layout>
             <div className="bg-white shadow rounded-lg d-block d-sm-flex">
                 <div className="profile-tab-nav border-right">
                     <div className="p-4">
@@ -156,7 +157,7 @@ const ProfilePage = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Layout>
     )
 }
 

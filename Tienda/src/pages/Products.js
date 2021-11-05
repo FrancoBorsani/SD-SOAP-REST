@@ -1,8 +1,11 @@
+import Layout from "components/Layout/Layout";
 import ProductsTable from "components/ProductsTable";
 
 const Products = () => {
     return (
-        <ProductsTable />
+        <Layout>
+            <ProductsTable />
+        </Layout>
     )
 }
 

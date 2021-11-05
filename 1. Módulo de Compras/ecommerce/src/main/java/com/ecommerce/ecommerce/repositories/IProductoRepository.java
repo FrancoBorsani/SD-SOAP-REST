@@ -14,13 +14,16 @@ public interface IProductoRepository extends JpaRepository<Producto, Serializabl
 
     public abstract Producto findByIdProducto(long idProducto);
     
-    @Query(nativeQuery=true,value="SELECT * FROM Producto as p where p.visible = true and p.stock > 0")
+    @Query(nativeQuery=true,value="SELECT * FROM Producto as p where p.stock > 0")
     public List<Producto> getAllProductosVisibles();
     
-    @Query("SELECT p FROM Producto p WHERE CONCAT(p.descripcionCorta, ' ', p.descripcionLarga) LIKE %?1% and p.visible = true and p.stock > 0")
+    @Query("SELECT p FROM Producto p WHERE CONCAT(p.nombre, ' ', p.descripcion) LIKE %?1% and p.stock > 0")
     public abstract List<Producto> searchProduct(String keyword);
     
-    @Query(nativeQuery=true,value="SELECT * FROM Producto as p WHERE p.categoria_id_categoria = (:categoria) and p.visible = true and p.stock > 0")
+    @Query(nativeQuery=true,value="SELECT * FROM Producto as p WHERE p.categoria_id_categoria = (:categoria) and p.stock > 0")
     public abstract List<Producto> findByCategoria(String categoria);
+    
+    @Query(nativeQuery=true,value="SELECT * FROM Producto as p WHERE p.vendedor_id = (:idVendedor) and p.stock > 0")
+    public abstract List<Producto> findByVendedor(String idVendedor);
 
 }

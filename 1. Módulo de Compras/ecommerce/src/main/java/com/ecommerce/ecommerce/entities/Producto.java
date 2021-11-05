@@ -10,55 +10,55 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="producto")
+@Table(name = "producto")
 public class Producto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idProducto;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long idProducto;
+	
+	@Column(name = "nombre")
+	private String nombre;
 
-    @Column(name = "precio")
-    private double precio;
-    
-    @Column(name = "descripcioncorta")
-    private String descripcionCorta;
+	@Column(name = "descripcion")
+	private String descripcion;
 
-    @Column(name = "descipcionlarga")
-    private String descripcionLarga;
+	@Column(name = "precio")
+	private double precio;
 
-    @Column(name = "visible")
-    private boolean visible;
-    
-    @Column(name = "imagen")
-    private String imagen;
-    
-    @Column(name = "stock")
-    private int stock;
-    
-    @OneToOne(cascade = CascadeType.MERGE)
+	@Column(name = "imagen")
+	private String imagen;
+
+	@Column(name = "stock")
+	private int stock;
+
+	@Column(name = "cantidadVendida")
+	private int cantidadVendida;
+
+	@Column(name = "formaDePago")
+	private String formaDePago;
+	
+	@OneToOne(cascade = CascadeType.MERGE)
 	private Categoria categoria;
 	
-    public boolean isVisible() {
-		return visible;
-	}
+	@OneToOne(cascade = CascadeType.MERGE)
+	private User vendedor;
 
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
+	public Producto() {}
 
-	public Producto() { }
-
-	public Producto(long idProducto, double precio, String descripcionCorta, String descripcionLarga, boolean visible,
-			String imagen, int stock, Categoria categoria) {
+	public Producto(long idProducto, double precio, String nombre, String descripcion, String imagen, int stock,
+			Categoria categoria, int cantidadVendida, String formaDePago, User vendedor) {
 		super();
 		this.idProducto = idProducto;
 		this.precio = precio;
-		this.descripcionCorta = descripcionCorta;
-		this.descripcionLarga = descripcionLarga;
-		this.visible = visible;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
 		this.imagen = imagen;
 		this.stock = stock;
 		this.categoria = categoria;
+		this.cantidadVendida = cantidadVendida;
+		this.formaDePago = formaDePago;
+		this.vendedor = vendedor;
 	}
 
 	public String getImagen() {
@@ -70,36 +70,36 @@ public class Producto {
 	}
 
 	public long getIdProducto() {
-        return idProducto;
-    }
+		return idProducto;
+	}
 
-    public void setIdProducto(long idProducto) {
-        this.idProducto = idProducto;
-    }
+	public void setIdProducto(long idProducto) {
+		this.idProducto = idProducto;
+	}
 
-    public double getPrecio() {
-        return precio;
-    }
+	public double getPrecio() {
+		return precio;
+	}
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
 
-    public String getDescripcionCorta() {
-        return descripcionCorta;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setDescripcionCorta(String descripcionCorta) {
-        this.descripcionCorta = descripcionCorta;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public String getDescripcionLarga() {
-        return descripcionLarga;
-    }
+	public String getDescripcion() {
+		return descripcion;
+	}
 
-    public void setDescripcionLarga(String descripcionLarga) {
-        this.descripcionLarga = descripcionLarga;
-    }
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
 	public int getStock() {
 		return stock;
@@ -108,7 +108,7 @@ public class Producto {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-	
+
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -117,11 +117,35 @@ public class Producto {
 		this.categoria = categoria;
 	}
 
+	public int getCantidadVendida() {
+		return cantidadVendida;
+	}
+
+	public void setCantidadVendida(int cantidadVendida) {
+		this.cantidadVendida = cantidadVendida;
+	}
+
+	public String getFormaDePago() {
+		return formaDePago;
+	}
+
+	public void setFormaDePago(String formaDePago) {
+		this.formaDePago = formaDePago;
+	}
+
+	public User getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(User vendedor) {
+		this.vendedor = vendedor;
+	}
+
 	@Override
 	public String toString() {
-		return "Producto [idProducto=" + idProducto + ", precio=" + precio + ", descripcionCorta=" + descripcionCorta
-				+ ", descripcionLarga=" + descripcionLarga + ", visible=" + visible + ", imagen=" + imagen + ", stock="
-				+ stock + ", categoria=" + categoria + "]";
+		return "Producto [idProducto=" + idProducto + ", precio=" + precio + ", nombre=" + nombre + ", descripcion="
+				+ descripcion + ", imagen=" + imagen + ", stock=" + stock + ", cantidadVendida=" + cantidadVendida
+				+ ", categoria=" + categoria + "]";
 	}
-	
+
 }

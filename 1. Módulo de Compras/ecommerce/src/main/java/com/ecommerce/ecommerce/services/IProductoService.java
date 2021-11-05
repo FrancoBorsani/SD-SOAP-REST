@@ -14,6 +14,8 @@ public interface IProductoService {
     
     public List<Producto> searchProduct(String keyword);
     
-    public List<Producto> findByCategoria(String categoria);
+    public List<Producto> findByCategoria(String idCategoria);
+    
+    public List<Producto> findByVendedor(String idVendedor);
     
 }

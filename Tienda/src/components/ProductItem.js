@@ -29,8 +29,8 @@ const ProductItem = ({ product }) => {
             <div className="card p-2">
                 <img className="card-img-top" src={product.imagen} alt={product.imagen} />
                 <div className="card-body">
-                    <h5 className="card-title text-capitalize" title={product.descripcionCorta}>
-                        {product.descripcionCorta}
+                    <h5 className="card-title text-capitalize">
+                        {product.nombre}
                     </h5>
 
                     <div className="row justify-content-between mx-0">
@@ -42,7 +42,7 @@ const ProductItem = ({ product }) => {
                         }
                     </div>
 
-                    {product.descripcionLarga}
+                    {product.descripcion}
                         
                     <div className="row justify-content-between mx-0">
                         {userLink()}

@@ -2,9 +2,10 @@ package com.ecommerce.ecommerce.security;
 
 import java.util.List;
 
-import javax.persistence.Column;
 
 public class UserResponse {
+	
+	private long id;
 
 	private String username;
 
@@ -24,9 +25,10 @@ public class UserResponse {
 		super();
 	}
 
-	public UserResponse(String username, String nombre, String apellido, String dni, String email,
+	public UserResponse(long id, String username, String nombre, String apellido, String dni, String email,
 			String telefono, List<String> roles) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -34,6 +36,15 @@ public class UserResponse {
 		this.email = email;
 		this.telefono = telefono;
 		this.roles = roles;
+	}
+	
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -90,12 +101,6 @@ public class UserResponse {
 
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
-	}
-
-	@Override
-	public String toString() {
-		return "UserResponse [username=" + username + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
-				+ ", email=" + email + ", telefono=" + telefono + ", roles=" + roles + "]";
 	}
 
 }

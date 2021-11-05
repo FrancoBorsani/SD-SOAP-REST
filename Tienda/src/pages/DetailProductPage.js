@@ -1,3 +1,4 @@
+import Layout from "components/Layout/Layout";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router"
 import { Container, Spinner } from "reactstrap";
@@ -31,7 +32,7 @@ const DetailProduct = () => {
     )
 
     return (
-        <div className="container clear-filter">
+        <Layout>
             <div className="row detail-page">
                 <div className="col-md-6">
                     <img src={product.imagen} alt={product.imagen}
@@ -41,7 +42,7 @@ const DetailProduct = () => {
 
                 <div className="col-md-6 mt-3">
                     <div className="row d-flex justify-content-between mx-0">
-                        <h2 className="text-uppercase">{product.descripcionCorta}</h2>
+                        <h2 className="text-uppercase">{product.nombre}</h2>
                         <h5 className="text-danger">${product.precio}</h5>
                     </div>
 
@@ -53,10 +54,10 @@ const DetailProduct = () => {
                                 <h6 className="text-danger">Stock: Out Stock</h6>
                         }
 
-                        <h6 className="text-danger">Vendidos: {product.sold} 30</h6>
+                        <h6 className="text-danger">Vendidos: {product.cantidadVendida}</h6>
                     </div>
 
-                    <div className="my-2">{product.descripcionLarga}</div>
+                    <div className="my-2">{product.descripcion}</div>
 
                     <div className="my-2">{product.categoria.nombre}</div>
 
@@ -71,7 +72,7 @@ const DetailProduct = () => {
                     </button>
                 </div>
             </div>
-        </div>
+        </Layout>    
     )
 }
 
