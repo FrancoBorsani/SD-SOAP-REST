@@ -22,5 +22,8 @@ public interface IProductoRepository extends JpaRepository<Producto, Serializabl
     
     @Query(nativeQuery=true,value="SELECT * FROM Producto as p WHERE p.categoria_id_categoria = (:categoria) and p.stock > 0")
     public abstract List<Producto> findByCategoria(String categoria);
+    
+    @Query(nativeQuery=true,value="SELECT * FROM Producto as p WHERE p.vendedor_id = (:idVendedor) and p.stock > 0")
+    public abstract List<Producto> findByVendedor(String idVendedor);
 
 }

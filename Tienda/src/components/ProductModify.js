@@ -67,6 +67,7 @@ const ProductModify = () => {
                         <label>Nombre</label>
                         <input type="text" name="nombre" value={product.nombre}
                             placeholder="Nombre" className="form-control w-100"
+                            disabled={product.cantidadVendida > 0 ? true : false}
                         />
                     </div>
                     <div className="row">
@@ -76,6 +77,7 @@ const ProductModify = () => {
                                 <input type="number" name="precio" value={product.precio}
                                     placeholder="Precio" className="form-control w-100"
                                     onChange={handleChangeInput}
+                                    disabled={product.cantidadVendida > 0 ? true : false}
                                 />
                             </div>
                         </div>
@@ -91,15 +93,25 @@ const ProductModify = () => {
                         </div>
                     </div>
 
-                    <textarea className="form-control" name="descripcion" id="descripcion" cols="30" rows="2"
-                        placeholder="Descripcion" value={product.descripcion} onChange={handleChangeInput}
+                    <textarea className="form-control" 
+                        name="descripcion" 
+                        id="descripcion" 
+                        cols="30" 
+                        rows="2"
+                        placeholder="Descripcion" 
+                        value={product.descripcion} 
+                        onChange={handleChangeInput}
+                        disabled={product.cantidadVendida > 0 ? true : false}
                     />
 
                     <div className="row">
                         <div className="col-md-6">
                             <div className="input-group-prepend my-3">
-                                <select name="category" id="category" value={product.categoria}
-                                    onChange={handleChangeInput} className="form-control text-capitalize py-2">
+                                <select name="category" id="category" 
+                                    value={product.categoria}
+                                    onChange={handleChangeInput} 
+                                    className="form-control text-capitalize py-2"
+                                    disabled={product.cantidadVendida > 0 ? true : false}>
                                     <option value="all">All products</option>
                                     {   /*
                                         categories.map(category => (

@@ -1,4 +1,4 @@
-const Filter = ({ order, setOrder, handleChangeSearch, keyword, categories, categorySelected, handleChangeCategory }) => {
+const Filter = ({ order, setOrder, handleChangeSearch, keyword, categories, categorySelected, handleChangeCategory, rangeOfPrice, handleChangeRangeOfPrice }) => {
 
     return (
         <div className="col-md-4 col-lg-3 mt-3">
@@ -58,10 +58,9 @@ const Filter = ({ order, setOrder, handleChangeSearch, keyword, categories, cate
             <hr />            
             <h6 className="text-uppercase mb-3 font-weight-bold">Precio</h6>
             <div className="d-flex">
-                <input type="number" className="form-control" value="50" id="price-min-control" />
-                <input type="number" className="form-control" value="150" id="price-max-control" />
+                <input type="number" className="form-control" value={rangeOfPrice.minPrice} id="price-min-control" name="minPrice" onChange={handleChangeRangeOfPrice} />
+                <input type="number" className="form-control" value={rangeOfPrice.maxPrice} id="price-max-control" name="maxPrice" onChange={handleChangeRangeOfPrice} />
             </div>
-            <input type="range" className="form-control mt-1" />
             <hr />            
         </div>
     )

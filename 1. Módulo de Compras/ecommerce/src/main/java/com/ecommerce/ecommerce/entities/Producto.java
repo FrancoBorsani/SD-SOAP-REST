@@ -40,11 +40,14 @@ public class Producto {
 	
 	@OneToOne(cascade = CascadeType.MERGE)
 	private Categoria categoria;
+	
+	@OneToOne(cascade = CascadeType.MERGE)
+	private User vendedor;
 
 	public Producto() {}
 
 	public Producto(long idProducto, double precio, String nombre, String descripcion, String imagen, int stock,
-			Categoria categoria, int cantidadVendida, String formaDePago) {
+			Categoria categoria, int cantidadVendida, String formaDePago, User vendedor) {
 		super();
 		this.idProducto = idProducto;
 		this.precio = precio;
@@ -55,6 +58,7 @@ public class Producto {
 		this.categoria = categoria;
 		this.cantidadVendida = cantidadVendida;
 		this.formaDePago = formaDePago;
+		this.vendedor = vendedor;
 	}
 
 	public String getImagen() {
@@ -127,6 +131,14 @@ public class Producto {
 
 	public void setFormaDePago(String formaDePago) {
 		this.formaDePago = formaDePago;
+	}
+
+	public User getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(User vendedor) {
+		this.vendedor = vendedor;
 	}
 
 	@Override

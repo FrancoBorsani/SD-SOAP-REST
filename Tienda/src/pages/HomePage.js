@@ -13,6 +13,7 @@ function HomePage() {
   const [order, setOrder] = useState("");
   const [keyword, setKeyword] = useState("");
   const [categorySelected, setCategorySelected] = useState("");
+  const [rangeOfPrice, setRangeOfPrice] = useState({ minPrice: 0, maxPrice: 10000 });
 
   useEffect(() => {
 
@@ -59,6 +60,14 @@ function HomePage() {
 
   }
 
+  const handleChangeRangeOfPrice = e => {
+
+    const { name, value } = e.target;
+    setRangeOfPrice({ ...rangeOfPrice, [name]: value });
+
+  }
+
+
   if (order === "Precio ascendente") {
     products.sort((a, b) => parseFloat(a.precio) - parseFloat(b.precio));
   } else if (order === "Precio descendente") {
@@ -86,6 +95,8 @@ function HomePage() {
           keyword={keyword}
           categorySelected={categorySelected}
           handleChangeCategory={handleChangeCategory}
+          rangeOfPrice={rangeOfPrice}
+          handleChangeRangeOfPrice={handleChangeRangeOfPrice}
         />
         <div className="col-md-9">
           <div className="row justify-content-center">

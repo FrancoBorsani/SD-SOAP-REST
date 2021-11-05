@@ -42,9 +42,13 @@ public class ProductoService implements IProductoService{
 	}
 	
     @Override
-    public List<Producto> findByCategoria(String categoria) {
-        return productoRepository.findByCategoria(categoria);
+    public List<Producto> findByCategoria(String idCategoria) {
+        return productoRepository.findByCategoria(idCategoria);
     }
-
+    
+    @Override
+    public List<Producto> findByVendedor(String idVendedor) {
+        return productoRepository.findByVendedor(idVendedor);
+    }
 
 }

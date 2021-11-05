@@ -61,6 +61,13 @@ public class ProductoRestController {
    
     }
     
-    
+    @GetMapping("/getByVendedor")
+    public ResponseEntity<List<Producto>> getByVendedor(@RequestParam(name="idVendedor") String idVendedor) {
+    	
+    	List<Producto> productos = productoService.findByVendedor(idVendedor);
+    	    	
+    	return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+   
+    }
 
 }

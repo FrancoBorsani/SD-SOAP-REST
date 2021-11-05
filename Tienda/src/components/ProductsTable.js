@@ -1,23 +1,30 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { DataContext } from "store/GlobalState";
 import { getData } from "utils/fetchData";
 
 const ProductsTable = () => {
 
     const [products, setProducts] = useState([]);
 
+    const { state } = useContext(DataContext);
+
+    const { auth } = state;
+
     useEffect(() => {
-        getData("productos")
+        getData(`productos/getByVendedor?idVendedor=${auth.user.id}`)
             .then(res => {
                 setProducts(res);
             })
             .catch(err => console.log(err));
-    }, [])
+    }, []);
+
+    if (!auth.user.roles.includes('ROLE_ADMIN')) return null;
 
     return (
         <div className="container clear-filter">
             <div className="d-flex justify-content-between">
-                <h3 className="text-uppercase pt-1">Tus productos</h3>
+                <h3 className="text-uppercase pt-1">Mis productos</h3>
                 <Link to="products/create">
                     <button className="btn btn-success"> + Agregar Producto</button>
                 </Link>
