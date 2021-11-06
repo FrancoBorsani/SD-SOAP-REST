@@ -11,6 +11,11 @@ public class LoginResponse {
 		this.user = user;
 	}
 
+	public LoginResponse(UserResponse user) {
+		super();
+		this.user = user;
+	}
+
 	public String getToken() {
 		return token;
 	}

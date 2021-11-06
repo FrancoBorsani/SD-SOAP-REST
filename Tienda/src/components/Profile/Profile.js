@@ -1,6 +1,4 @@
 import { useContext, useState } from "react";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
 import { DataContext } from "store/GlobalState";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
@@ -27,7 +25,7 @@ const Profile = () => {
                     <div className="img-circle text-center mb-3">
                         <img className="shadow" src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg" alt="profile" />
                     </div>
-                    <h4 className="text-center text-capitalize">{auth.user.username}</h4>
+                    <h4 className="text-center text-capitalize">{auth.user?.username}</h4>
                 </div>
                 <div className="nav flex-column nav-pills">
                     <Nav tabs className="nav flex-column nav-pills">
@@ -38,8 +36,9 @@ const Profile = () => {
                                         currentActiveTab === '1'
                                 })}
                                 onClick={() => { toggle('1'); }}
+                                style={{cursor: 'pointer'}}
                             >
-                                Cuentas
+                                Cuenta
                             </NavLink>
                         </NavItem>
                         <NavItem>
@@ -49,6 +48,7 @@ const Profile = () => {
                                         currentActiveTab === '2'
                                 })}
                                 onClick={() => { toggle('2'); }}
+                                style={{cursor: 'pointer'}}
                             >
                                 Direcciones
                             </NavLink>
@@ -60,6 +60,7 @@ const Profile = () => {
                                         currentActiveTab === '3'
                                 })}
                                 onClick={() => { toggle('3'); }}
+                                style={{cursor: 'pointer'}}
                             >
                                 Tarjetas
                             </NavLink>

@@ -1,11 +1,15 @@
 const baseURL = "http://localhost:8080/api/v1"
 
 export const getData = async (url, token) => {
+
+    const headers = token ? {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }  : { 'Content-Type': 'application/json' }
+
     const res = await fetch(`${baseURL}/${url}`, {
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: headers,
     })
 
     const data = await res.json()
@@ -15,11 +19,14 @@ export const getData = async (url, token) => {
 
 export const postData = async (url, post, token) => {
 
+    const headers = token ? {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }  : { 'Content-Type': 'application/json' }
+
     const res = await fetch(`${baseURL}/${url}`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify(post)
     })
 

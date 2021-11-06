@@ -107,11 +107,9 @@ function IndexNavbar() {
       <Navbar className="navbar-secondary" expand="lg" color="info" sticky="top">
         <Container>
           <div className="navbar-translate">
-            <Link to="/">
-              <NavbarBrand target="_blank" id="navbar-brand">
+              <NavbarBrand id="navbar-brand" tag={Link} to="/">
                 ECOMMERCE
               </NavbarBrand>
-            </Link>
             <button
               className="navbar-toggler navbar-toggler"
               onClick={() => {

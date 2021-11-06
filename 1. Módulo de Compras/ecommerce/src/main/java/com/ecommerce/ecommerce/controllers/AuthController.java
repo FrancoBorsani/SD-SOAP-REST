@@ -63,5 +63,20 @@ public class AuthController {
         return ResponseEntity.ok(new LoginResponse(token, new UserResponse(user.getId(), user.getUsername(), user.getNombre(), user.getApellido(), user.getDni(), user.getEmail(), user.getTelefono(), roles)));
        
     }
+    
+    @PostMapping("/checkUser")
+    public ResponseEntity<?> checkUser() {
+    	
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        
+        User user = userRepository.findByUsername(currentPrincipalName);       
+       
+        List<String> roles = user.getUserRoles().stream()
+        		.map(item -> item.getRole())
+        		.collect(Collectors.toList());
+                
+        return  ResponseEntity.ok(new LoginResponse(new UserResponse(user.getId(), user.getUsername(), user.getNombre(), user.getApellido(), user.getDni(), user.getEmail(), user.getTelefono(), roles)));
+    }
 
 }

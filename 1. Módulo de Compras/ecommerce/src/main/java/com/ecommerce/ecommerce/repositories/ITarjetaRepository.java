@@ -16,8 +16,8 @@ public interface ITarjetaRepository extends JpaRepository<Tarjeta, Serializable>
 	/*
 	@Query(nativeQuery=true,value="select * from Tarjeta where numero=(:numero)")
 	public User findByNumero(String numero);
-	
+	*/
 	@Query(nativeQuery = true, value = "select * from Tarjeta where user_id=(:id)")
 	public List<Tarjeta> findByIdUser(int id);
-	*/
+	
 }

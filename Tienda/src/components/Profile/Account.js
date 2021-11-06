@@ -1,7 +1,7 @@
 const Account = ({ auth }) => {
     return (
         <div className="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-            <h3 className="mb-4">Account Settings</h3>
+            <h3 className="mb-4">Configuración de cuenta</h3>
             <div className="row">
                 <div className="col-md-6">
                     <div className="form-group">
