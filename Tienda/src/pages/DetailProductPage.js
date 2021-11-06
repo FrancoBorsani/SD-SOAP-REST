@@ -18,8 +18,8 @@ const DetailProduct = () => {
 
     useEffect(() => {
         getData(`productos/${id}`).then(res => {
-            setProduct(res)
-            setLoading(false)
+            setProduct(res);
+            setLoading(false);
         })
     }, [id]);
 
@@ -76,4 +76,4 @@ const DetailProduct = () => {
     )
 }
 
-export default DetailProduct
+export default DetailProduct;

@@ -4,6 +4,7 @@ export const ClientRoutes =  {
     REGISTER : "/registro",
     PROFILE : "/profile",
     CART : "/cart",
+    CHECKOUT : "/checkout",
     PRODUCT_DETAIL : "/product/:id",
     PRODUCTS_LIST : "/my/products",
     PRODUCT_CREATE : "/my/products/create",

@@ -16,12 +16,12 @@ const CartPage = () => {
         const getTotal = () => {
             const res = cart.reduce((prev, item) => {
                 return prev + (item.precio * item.cantidad)
-            }, 0)
+            }, 0);
 
-            setTotal(res)
+            setTotal(res);
         }
 
-        getTotal()
+        getTotal();
 
     }, [cart]);
 

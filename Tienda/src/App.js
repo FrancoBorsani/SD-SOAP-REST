@@ -14,6 +14,7 @@ import ProductCreatePage from "pages/ProductCreatePage";
 import { ClientRoutes } from 'helpers/enums'
 import ProductModifyPage from "pages/ProductModifyPage";
 import NotFound from "components/NotFound";
+import WizardPage from "pages/WizardPage";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
         <Route path={ClientRoutes.PRODUCT_CREATE} component={ProductCreatePage} exact />
         <Route path={ClientRoutes.PRODUCT_MODIFY} component={ProductModifyPage} exact />
         <Route path={ClientRoutes.ORDERS_LIST} component={Orders} exact />
+        <Route path={ClientRoutes.CHECKOUT} component={WizardPage} exact />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

@@ -17,7 +17,7 @@ const ProductsTable = () => {
                 setProducts(res);
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [auth.user.id]);
 
     if (!auth.user.roles.includes('ROLE_ADMIN')) return null;
 

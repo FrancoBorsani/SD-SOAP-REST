@@ -20,16 +20,16 @@ const Filter = ({ order, setOrder, handleChangeSearch, keyword, categories, cate
             </div>
 
             {
-                categories.map(c => (
-                    <div className="mt-2 mb-2 pl-2">
+                categories.map(category => (
+                    <div className="mt-2 mb-2 pl-2" key={category.idCategoria}>
                         <div className="form-check">
                             <input type="radio" className="form-check-control" 
                                 name="category-selected"
-                                checked={ categorySelected == c.idCategoria }
-                                value={c.idCategoria}
+                                checked={ categorySelected == category.idCategoria }
+                                value={category.idCategoria}
                                 onChange={handleChangeCategory}
                             />
-                            <label className="form-check-label">{ c.nombre }</label>
+                            <label className="form-check-label">{ category.nombre }</label>
                         </div>
                     </div>
                 ))

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 const OrdersTable = () => {
     const [orders] = useState([
@@ -46,7 +47,7 @@ const OrdersTable = () => {
                             orders.map((order, index) => (
                                 <tr key={index}>
                                     <td className="p-2">
-                                        <a className="text-dark">{order.id}</a>
+                                        <Link className="text-dark" to="/">{order.id}</Link>
                                     </td>
                                     <td className="p-2">{new Date(order.createdAt).toLocaleDateString()}</td>
                                     <td className="p-2">${order.total}</td>
