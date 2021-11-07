@@ -26,25 +26,4 @@ public class TarjetaController {
 	@Qualifier("userRepository")
 	private IUserRepository userRepository;
 	
-	/* REEMPLAZADO POR EL MÉTODO QUE SE ENCUENTRA EN EL PACKAGE API -> TarjetaRestController
-	@PostMapping("/altaTarjeta")
-	public RedirectView altaTarjeta( @ModelAttribute("tarjeta") Tarjeta newTarjeta, RedirectAttributes redirectAttrs) {
-		
-		String username = "";
-	    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    if( principal instanceof UserDetails) {
-	    	username = ((UserDetails)principal).getUsername();
-	    }
-	    
-	    newTarjeta.setUser(userRepository.findByUsername(username));
-		
-		tarjetaRepository.save(newTarjeta);		
-
-		redirectAttrs.addFlashAttribute("mensaje","Tarjeta registrada");
-
-		return new RedirectView("/profile");
-	}*/
-	
-	
-	
 }

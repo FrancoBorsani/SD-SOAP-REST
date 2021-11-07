@@ -27,52 +27,11 @@ public class PerfilService implements IPerfilService{
 	@Autowired
 	@Qualifier("userRoleRepository")
 	private IUserRoleRepository userRoleRepository;
-
-/*	@Override
-	public List<Perfil> getAll() {
-		return perfilRepository.findAll();
-	}
-	
-	@Override
-	public Perfil findById(int id) {
-		return perfilRepository.findById(id);
-	}
-
-	@Override
-	public boolean remove(int id) {
-		try {
-			perfilRepository.deleteById(id);;
-			return true;
-		}catch(Exception e) {
-			return false;
-		}
-	}
-*/
 		
 	@Override
 	public Perfil addNewProfile(User usuario) {
 		return perfilRepository.save(new Perfil(usuario.getId(), usuario.getUsername(),userRoleRepository.findByIdUser(usuario.getId()).getRole(),
 				usuario.getNombre(), usuario.getApellido() ,usuario.getDni()));
 	}
-/*
-	@Override
-	public Perfil updateProfile(Perfil newProfile){
-		Perfil oldProfile = perfilRepository.getById(newProfile.getId());
-		newProfile.setUsername(oldProfile.getUsername());
-		newProfile.setUserRol(oldProfile.getUserRol());
-		return perfilRepository.save(newProfile);
-	}
-	
-	@Override
-	public Perfil updateProfile(Perfil profileToModif, String username, MultipartFile imagen , String aboutMe )throws IOException {
-		remove(profileToModif.getId());
-		//modifico el perfil con el nuevo username
-		profileToModif.setUsername(username);
-		String nuevaImagen = "id="+String.valueOf(profileToModif.getId())+"_"+ imagen.getOriginalFilename();//agregamos la ruta de la imagen con el id del usuario para poder diferenciarla de las imagenes de otros usuarios
-		
-		remove(profileToModif.getId());
-		return perfilRepository.save(profileToModif); 
-	}
-*/
 
 }

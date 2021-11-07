@@ -24,9 +24,6 @@ public class DireccionRestController {
 	@Autowired
 	UsuarioService usuarioService;
 
-//	@Autowired
-//    PerfilService perfilService;
-
 	@Autowired
 	DomicilioService domicilioService;
 

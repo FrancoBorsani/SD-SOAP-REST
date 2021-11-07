@@ -9,6 +9,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class TestController {
+	
+	//MÉTODO PARA COMPROBAR (CON UN REQUEST) QUE LOS TOKENS ESTÁN ANDANDO
+	
 	@GetMapping("/testeando")
 	public String test() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

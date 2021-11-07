@@ -37,12 +37,6 @@ public class UserService implements UserDetailsService {
 		}
 		
 		return buildUser(user, buildGrantedAuthorities(user.getUserRoles()));
-        
-        
-    //    if (user == null) {
-    //        throw new UsernameNotFoundException("Username Not found" + username);
-    //    }
-    //    return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
     
     private User buildUser(com.ecommerce.ecommerce.entities.User user, List<GrantedAuthority> grantedAuthorities) {
