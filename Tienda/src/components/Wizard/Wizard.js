@@ -2,31 +2,63 @@ import CartItem from "components/CartItem";
 import AddressForm from "components/Wizard/AddressForm";
 import PaymentForm from "components/Wizard/PaymentForm";
 import { useContext, useState } from "react";
+import { useHistory } from "react-router";
 import { DataContext } from "store/GlobalState";
+import { postData } from "utils/fetchData";
 
 const Wizard = () => {
 
-    const steps = ["Dirección de entrega", "Forma de pago", "¡Ultimo paso!"];
+    const steps = ["Dirección de entrega", "Forma de pago", "Confirmar Pedido"];
     const [activeStep, setActiveStep] = useState(0);
 
     const [address, setAddress] = useState("");
 
     const [paymentMethod, setPaymentMethod] = useState("");
 
-    const { state } = useContext(DataContext);
+    const { state, dispatch } = useContext(DataContext);
 
-    const { cart } = state;
+    const { cart, auth } = state;
+
+    const router = useHistory();
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         if (activeStep === steps.length - 1) {
-            alert('Checkout Finished!');
+            handleOrder();
         }
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
+
+    const handleOrder = async () => {
+
+        const total = cart.reduce((prev, item) => {
+            return prev + (item.precio * item.cantidad);
+        }, 0);
+
+        const listaItems = [];
+
+        cart.forEach(item => {
+            listaItems.push({ producto: item, cantidad: item.cantidad });
+        });
+
+        const order = {
+            listaItems: listaItems,
+            total: total,
+            vendedor: cart[0].vendedor
+        }
+
+        const response = await postData(`pedido/agregar`, order, auth.token);
+
+        if(response.error) return alert('Error inesperado. Por favor intente más tarde.');
+
+        dispatch({ type: 'ADD_CART', payload: [] });
+
+        return router.push('/my/orders');
+
+    }
 
     function getStepContent(stepIndex) {
         switch (stepIndex) {
@@ -87,11 +119,11 @@ const Wizard = () => {
                                     (activeStep === 0 && !address) ||
                                     (activeStep === 1 && !paymentMethod)
                                 }
-                                className="btn btn-dark"
+                                className="btn btn-dark py-2"
                                 onClick={handleNext}
                             >
                                 {
-                                    activeStep === steps.length - 1 ? "Finalizar" : "Siguiente"
+                                    activeStep === steps.length - 1 ? "Confirmar compra" : "Siguiente"
                                 }
                             </button>
                         </div>

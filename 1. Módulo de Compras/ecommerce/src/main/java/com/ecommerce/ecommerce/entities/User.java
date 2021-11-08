@@ -48,6 +48,7 @@ public class User {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
 		
+	@JsonIgnore
 	@Column(name="enabled")
 	private boolean enabled;
 		

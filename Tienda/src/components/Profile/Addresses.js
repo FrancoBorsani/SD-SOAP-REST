@@ -24,7 +24,7 @@ const Adresses = () => {
 
     useEffect(() => {
 
-        getData(`direccion/getDomicilioDeUsuario`, auth.token)
+        getData(`direccion/getDomiciliosDeUsuario`, auth.token)
             .then(res => {
                 setAddresses(res);
             })

@@ -28,7 +28,6 @@ public class RegistroRestController {
 	
 	@Autowired
 	IUserRoleRepository userRoleRepository;
-
 	
 	@Autowired
     PerfilService perfilService;

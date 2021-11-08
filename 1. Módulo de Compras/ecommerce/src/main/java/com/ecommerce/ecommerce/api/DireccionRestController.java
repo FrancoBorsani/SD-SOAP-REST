@@ -41,7 +41,7 @@ public class DireccionRestController {
 		return this.domicilioService.guardarDomicilio(newDomicilio);
 	}
 
-	@GetMapping("/getDomicilioDeUsuario")
+	@GetMapping("/getDomiciliosDeUsuario")
 	public List<Domicilio> getDomiciliosDeUsuario() {
 		String username = "";
 

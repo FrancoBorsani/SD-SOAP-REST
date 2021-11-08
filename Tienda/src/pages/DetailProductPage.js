@@ -17,10 +17,13 @@ const DetailProduct = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        getData(`productos/${id}`).then(res => {
+        getData(`productos/${id}`)
+        .then(res => {
             setProduct(res);
             setLoading(false);
         })
+        .catch(e => console.log(e));
+
     }, [id]);
 
     if (loading) return (

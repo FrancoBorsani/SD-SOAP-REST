@@ -1,5 +1,6 @@
 package com.ecommerce.ecommerce.entities;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,6 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "pedido")
 public class Pedido {
@@ -21,27 +27,44 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCompra;
 	
-	@Column(name = "idComprador")
-	private int comprador;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "comprador_id", nullable=false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private User comprador;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="user_id", nullable=false)
+	@JoinColumn(name="vendedor_id", nullable=false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private User vendedor;
 
 	@Column(name = "total")
 	private double total;
 
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="pedido")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedido")
 	private Set<Item> listaItems;
+	
+	@Column(name = "createdat")
+	@CreationTimestamp
+	private LocalDateTime createdAt;
+
+	@Column(name = "updatedat")
+	@UpdateTimestamp
+	private LocalDateTime updatedAt;
 
 	public Pedido() {}
 
-	public Pedido(long idCompra, int comprador, User vendedor, double total) {
+	public Pedido(long idCompra, User comprador, User vendedor, double total) {
 		super();
 		this.idCompra = idCompra;
 		this.comprador = comprador;
 		this.vendedor = vendedor;
 		this.total = total;
+	}
+
+	public Pedido(double total, Set<Item> listaItems) {
+		super();
+		this.total = total;
+		this.listaItems = listaItems;
 	}
 
 	public long getIdCompra() {
@@ -52,11 +75,11 @@ public class Pedido {
 		this.idCompra = idCompra;
 	}
 
-	public int getComprador() {
+	public User getComprador() {
 		return comprador;
 	}
 
-	public void setComprador(int comprador) {
+	public void setComprador(User comprador) {
 		this.comprador = comprador;
 	}
 
@@ -84,11 +107,25 @@ public class Pedido {
 		this.listaItems = listaItems;
 	}
 
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
 	@Override
 	public String toString() {
 		return "Pedido [idCompra=" + idCompra + ", total=" + total + "]";
 	}
-
-
 	
 }

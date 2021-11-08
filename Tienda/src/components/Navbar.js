@@ -42,9 +42,11 @@ function IndexNavbar() {
 
   const userRouter = () => {
     return (
-      <DropdownItem tag={Link} to="/my/orders">
-        Mis compras
-      </DropdownItem>
+      <>
+        <DropdownItem tag={Link} to="/my/orders">
+          Mis compras
+        </DropdownItem>
+      </>
     )
   }
 
@@ -74,7 +76,7 @@ function IndexNavbar() {
         </DropdownToggle>
         <DropdownMenu aria-labelledby="navbarDropdown" right>
           <DropdownItem header tag="a">
-            Dropdown header
+            {auth.user.username}
           </DropdownItem>
           <DropdownItem tag={Link} to="/profile">
             Perfil

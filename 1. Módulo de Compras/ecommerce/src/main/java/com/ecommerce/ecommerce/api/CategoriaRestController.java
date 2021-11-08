@@ -30,7 +30,7 @@ public class CategoriaRestController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> getProductById(@PathVariable("id") int idCategoria) {
+    public ResponseEntity<Categoria> getCategoriaById(@PathVariable("id") int idCategoria) {
     	
     	Categoria categoria = categoriaService.getCategoriaById(idCategoria);
     	

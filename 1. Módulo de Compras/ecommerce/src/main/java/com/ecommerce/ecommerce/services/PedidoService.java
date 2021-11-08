@@ -1,5 +1,7 @@
 package com.ecommerce.ecommerce.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,18 @@ public class PedidoService {
 	
 	public Pedido guardarPedido(Pedido pedido) {
 		return pedidoRepository.save(pedido);			
+	}
+	
+	public List<Pedido> getAllPedidos() {
+		return pedidoRepository.findAll();
+	}
+	
+	public List<Pedido> findByVendedor(long idVendedor) {
+		return pedidoRepository.findByVendedor(idVendedor);			
+	}
+	
+	public List<Pedido> findByComprador(long idComprador) {
+		return pedidoRepository.findByComprador(idComprador);			
 	}
 
 }

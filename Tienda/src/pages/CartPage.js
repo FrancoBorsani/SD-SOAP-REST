@@ -1,16 +1,22 @@
 import CartItem from 'components/CartItem'
 import Layout from 'components/Layout/Layout'
 import { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { DataContext } from 'store/GlobalState'
+import { getData } from 'utils/fetchData'
+import { ClientRoutes } from '../helpers/enums'
 
 const CartPage = () => {
 
     const { state, dispatch } = useContext(DataContext);
 
-    const { cart } = state;
+    const { cart, auth } = state;
 
     const [total, setTotal] = useState(0);
+    
+    const [error, setError] = useState("");
+    
+    const router = useHistory();
 
     useEffect(() => {
         const getTotal = () => {
@@ -24,6 +30,18 @@ const CartPage = () => {
         getTotal();
 
     }, [cart]);
+
+    const handleRedirectCheckout = async () => {
+
+        const cards = await getData(`tarjeta/getTarjetasDeUsuario`, auth.token);
+
+        const addresses = await getData(`direccion/getDomicilioDeUsuario`, auth.token);
+
+        if(addresses.length === 0 || cards.length === 0) return setError("Para realizar una compra debe tener registrado una tarjeta y una dirección.");
+
+        router.push(ClientRoutes.CHECKOUT);
+
+    }
 
     if (cart.length === 0) {
         return (
@@ -48,6 +66,17 @@ const CartPage = () => {
     return (
         <Layout>
             <div className="row justify-content-center">
+
+                {
+                    error && (
+                        <div className="col-md-12">
+                            <div className="alert alert-danger" >
+                                {error} Puede registrarlas <Link to="/profile">aquí.</Link>
+                            </div>
+                        </div>
+                    )
+                }
+
                 <div className="col-md-12 text-secondary table-responsive my-3">
                     <div className="checkout card">
                         <div className="row">
@@ -75,7 +104,7 @@ const CartPage = () => {
                                     <div className="col">TOTAL PRICE</div>
                                     <div className="col text-right">$ {total}</div>
                                 </div> 
-                                <button className="btn-dark">CHECKOUT</button>
+                                <button className="btn btn-dark py-2" onClick={handleRedirectCheckout}>CHECKOUT</button>
                             </div>
                         </div>
                     </div>
