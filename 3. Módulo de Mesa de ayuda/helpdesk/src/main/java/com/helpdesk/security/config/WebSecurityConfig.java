@@ -66,6 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/reclamo").permitAll()
+                .antMatchers("/denuncia").permitAll()
 
                 // allow anonymous resource requests
                 .antMatchers(
@@ -78,6 +80,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                 ).permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/reclamo").permitAll()
+                .antMatchers("/denuncia").permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter
