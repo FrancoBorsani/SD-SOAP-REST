@@ -1,6 +1,11 @@
 package com.ecommerce.ecommerce.api;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +16,7 @@ import com.ecommerce.ecommerce.entities.UserRole;
 import com.ecommerce.ecommerce.implementation.PerfilService;
 import com.ecommerce.ecommerce.implementation.UserRoleService;
 import com.ecommerce.ecommerce.repositories.IUserRoleRepository;
+import com.ecommerce.ecommerce.security.UserResponse;
 //import com.ecommerce.ecommerce.entities.UserRole;
 //import com.ecommerce.ecommerce.implementation.PerfilService;
 import com.ecommerce.ecommerce.services.UsuarioService;
@@ -45,9 +51,16 @@ public class RegistroRestController {
 	}
 	
 	
-	@PostMapping("/updateProfile")
-	public User updateProfile(@RequestBody User user) {
-			return this.usuarioService.actualizarUsuario(user);
+	@PostMapping("/update")
+	public ResponseEntity<UserResponse> updateProfile(@RequestBody User user) {
+			
+		User userActualizado = this.usuarioService.actualizarUsuario(user);
+		
+        List<String> roles = userActualizado.getUserRoles().stream()
+        		.map(item -> item.getRole())
+        		.collect(Collectors.toList());
+		
+		return new ResponseEntity<UserResponse>(new UserResponse(userActualizado.getId(), userActualizado.getUsername(), userActualizado.getNombre(), userActualizado.getApellido(), userActualizado.getDni(), userActualizado.getEmail(), userActualizado.getTelefono(), roles), HttpStatus.ACCEPTED);
 	}
 	
 }

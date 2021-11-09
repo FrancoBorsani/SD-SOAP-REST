@@ -22,6 +22,7 @@ import com.ecommerce.ecommerce.services.UsuarioService;
 @RequestMapping("api/v1/pedido")
 @CrossOrigin("*")
 public class PedidoRestController {
+	
 	@Autowired
 	UsuarioService usuarioService;
 

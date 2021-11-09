@@ -55,8 +55,18 @@ public class UsuarioService {
 	}
 	
 	
-	public User actualizarUsuario(User usuario) {
-		return usuarioRepository.save(usuario);	
+	public User actualizarUsuario(User usuarioRequest) {
+		
+		User usuarioModificado = this.traerUser(usuarioRequest.getId());
+		
+		usuarioModificado.setNombre(usuarioRequest.getNombre());
+		usuarioModificado.setApellido(usuarioRequest.getApellido());
+		usuarioModificado.setDni(usuarioRequest.getDni());
+		usuarioModificado.setTelefono(usuarioRequest.getTelefono());
+		usuarioModificado.setUsername(usuarioRequest.getUsername());
+		usuarioModificado.setEmail(usuarioRequest.getEmail());
+		
+		return usuarioRepository.save(usuarioModificado);	
 	}
 	
 
