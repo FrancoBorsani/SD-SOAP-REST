@@ -1,18 +1,10 @@
-//
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantaci�n de la referencia de enlace (JAXB) XML v2.2.8-b130911.1802 
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Todas las modificaciones realizadas en este archivo se perder�n si se vuelve a compilar el esquema de origen. 
-// Generado el: 2021.11.08 a las 11:42:27 PM ART 
-//
-
 
 package com.ecommerce.ecommerce.modulo_banca_soap;
 
 import java.math.BigInteger;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -22,18 +14,18 @@ import javax.xml.bind.annotation.XmlType;
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="validar_limite_mensual">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="nro_tarjeta" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
- *         &lt;element name="tipo_tarjeta" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="total_a_pagar" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
- *         &lt;element name="total_gastado" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="validar_limite_mensual"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="nro_tarjeta" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/&gt;
+ *         &lt;element name="tipo_tarjeta" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="total_a_pagar" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/&gt;
+ *         &lt;element name="total_gastado" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -47,24 +39,24 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ValidarLimiteMensual {
 
-    @XmlElementRef(name = "nro_tarjeta", namespace = "modulo_banca_soap", type = JAXBElement.class, required = false)
-    protected JAXBElement<BigInteger> nroTarjeta;
-    @XmlElementRef(name = "tipo_tarjeta", namespace = "modulo_banca_soap", type = JAXBElement.class, required = false)
-    protected JAXBElement<String> tipoTarjeta;
-    @XmlElementRef(name = "total_a_pagar", namespace = "modulo_banca_soap", type = JAXBElement.class, required = false)
-    protected JAXBElement<BigInteger> totalAPagar;
-    @XmlElementRef(name = "total_gastado", namespace = "modulo_banca_soap", type = JAXBElement.class, required = false)
-    protected JAXBElement<BigInteger> totalGastado;
+    @XmlElement(name = "nro_tarjeta")
+    protected BigInteger nroTarjeta;
+    @XmlElement(name = "tipo_tarjeta")
+    protected String tipoTarjeta;
+    @XmlElement(name = "total_a_pagar")
+    protected BigInteger totalAPagar;
+    @XmlElement(name = "total_gastado")
+    protected BigInteger totalGastado;
 
     /**
      * Obtiene el valor de la propiedad nroTarjeta.
      * 
      * @return
      *     possible object is
-     *     {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
+     *     {@link BigInteger }
      *     
      */
-    public JAXBElement<BigInteger> getNroTarjeta() {
+    public BigInteger getNroTarjeta() {
         return nroTarjeta;
     }
 
@@ -73,10 +65,10 @@ public class ValidarLimiteMensual {
      * 
      * @param value
      *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
+     *     {@link BigInteger }
      *     
      */
-    public void setNroTarjeta(JAXBElement<BigInteger> value) {
+    public void setNroTarjeta(BigInteger value) {
         this.nroTarjeta = value;
     }
 
@@ -85,10 +77,10 @@ public class ValidarLimiteMensual {
      * 
      * @return
      *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     {@link String }
      *     
      */
-    public JAXBElement<String> getTipoTarjeta() {
+    public String getTipoTarjeta() {
         return tipoTarjeta;
     }
 
@@ -97,10 +89,10 @@ public class ValidarLimiteMensual {
      * 
      * @param value
      *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     {@link String }
      *     
      */
-    public void setTipoTarjeta(JAXBElement<String> value) {
+    public void setTipoTarjeta(String value) {
         this.tipoTarjeta = value;
     }
 
@@ -109,10 +101,10 @@ public class ValidarLimiteMensual {
      * 
      * @return
      *     possible object is
-     *     {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
+     *     {@link BigInteger }
      *     
      */
-    public JAXBElement<BigInteger> getTotalAPagar() {
+    public BigInteger getTotalAPagar() {
         return totalAPagar;
     }
 
@@ -121,10 +113,10 @@ public class ValidarLimiteMensual {
      * 
      * @param value
      *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
+     *     {@link BigInteger }
      *     
      */
-    public void setTotalAPagar(JAXBElement<BigInteger> value) {
+    public void setTotalAPagar(BigInteger value) {
         this.totalAPagar = value;
     }
 
@@ -133,10 +125,10 @@ public class ValidarLimiteMensual {
      * 
      * @return
      *     possible object is
-     *     {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
+     *     {@link BigInteger }
      *     
      */
-    public JAXBElement<BigInteger> getTotalGastado() {
+    public BigInteger getTotalGastado() {
         return totalGastado;
     }
 
@@ -145,10 +137,10 @@ public class ValidarLimiteMensual {
      * 
      * @param value
      *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
+     *     {@link BigInteger }
      *     
      */
-    public void setTotalGastado(JAXBElement<BigInteger> value) {
+    public void setTotalGastado(BigInteger value) {
         this.totalGastado = value;
     }
 
