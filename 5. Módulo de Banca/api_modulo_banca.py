@@ -26,7 +26,7 @@ def make_query(query):
 
   
 class UsuarioService(ServiceBase):
-    @rpc(Integer, Unicode, Unicode, Integer, _returns=Integer)
+    @rpc(Integer(nullable=False), Unicode(nullable=False), Unicode(nullable=False), Integer(nullable=False), _returns=Integer(nullable=False))
     def validar_tarjeta(ctx, nro_tarjeta, nombre, apellido, dni):
         """
         Valida que la informacion que registro el cliente coincida con el de la base de datos.
@@ -42,7 +42,7 @@ class UsuarioService(ServiceBase):
             tarjetas_usuario = []
         return 1 if nro_tarjeta in tarjetas_usuario else 0
 
-    @rpc(Integer, Unicode, Integer, Integer, _returns=Integer)
+    @rpc(Integer(nullable=False), Unicode(nullable=False), Integer(nullable=False), Integer(nullable=False), _returns=Integer(nullable=False))
     def validar_limite_mensual(ctx, nro_tarjeta, tipo_tarjeta, total_a_pagar, total_gastado):
         """
         Valida si la compra a realizar con el medio de pago elegido no supera el limite mensual (teniendo en cuenta todas las compras del mes) y si es el caso,
@@ -67,6 +67,7 @@ class UsuarioService(ServiceBase):
             return 1
         except Exception as e:
             print(e)
+            return 0
 
 
 application = Application([UsuarioService], 'modulo_banca_soap',

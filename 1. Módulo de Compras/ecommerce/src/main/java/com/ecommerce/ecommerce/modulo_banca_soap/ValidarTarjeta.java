@@ -1,18 +1,10 @@
-//
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantaci�n de la referencia de enlace (JAXB) XML v2.2.8-b130911.1802 
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Todas las modificaciones realizadas en este archivo se perder�n si se vuelve a compilar el esquema de origen. 
-// Generado el: 2021.11.08 a las 11:42:27 PM ART 
-//
-
 
 package com.ecommerce.ecommerce.modulo_banca_soap;
 
 import java.math.BigInteger;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -22,18 +14,18 @@ import javax.xml.bind.annotation.XmlType;
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="validar_tarjeta">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="nro_tarjeta" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
- *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="apellido" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="dni" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="validar_tarjeta"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="nro_tarjeta" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/&gt;
+ *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="apellido" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="dni" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -47,24 +39,21 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ValidarTarjeta {
 
-    @XmlElementRef(name = "nro_tarjeta", namespace = "modulo_banca_soap", type = JAXBElement.class, required = false)
-    protected JAXBElement<BigInteger> nroTarjeta;
-    @XmlElementRef(name = "nombre", namespace = "modulo_banca_soap", type = JAXBElement.class, required = false)
-    protected JAXBElement<String> nombre;
-    @XmlElementRef(name = "apellido", namespace = "modulo_banca_soap", type = JAXBElement.class, required = false)
-    protected JAXBElement<String> apellido;
-    @XmlElementRef(name = "dni", namespace = "modulo_banca_soap", type = JAXBElement.class, required = false)
-    protected JAXBElement<BigInteger> dni;
+    @XmlElement(name = "nro_tarjeta")
+    protected BigInteger nroTarjeta;
+    protected String nombre;
+    protected String apellido;
+    protected BigInteger dni;
 
     /**
      * Obtiene el valor de la propiedad nroTarjeta.
      * 
      * @return
      *     possible object is
-     *     {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
+     *     {@link BigInteger }
      *     
      */
-    public JAXBElement<BigInteger> getNroTarjeta() {
+    public BigInteger getNroTarjeta() {
         return nroTarjeta;
     }
 
@@ -73,10 +62,10 @@ public class ValidarTarjeta {
      * 
      * @param value
      *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
+     *     {@link BigInteger }
      *     
      */
-    public void setNroTarjeta(JAXBElement<BigInteger> value) {
+    public void setNroTarjeta(BigInteger value) {
         this.nroTarjeta = value;
     }
 
@@ -85,10 +74,10 @@ public class ValidarTarjeta {
      * 
      * @return
      *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     {@link String }
      *     
      */
-    public JAXBElement<String> getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
@@ -97,10 +86,10 @@ public class ValidarTarjeta {
      * 
      * @param value
      *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     {@link String }
      *     
      */
-    public void setNombre(JAXBElement<String> value) {
+    public void setNombre(String value) {
         this.nombre = value;
     }
 
@@ -109,10 +98,10 @@ public class ValidarTarjeta {
      * 
      * @return
      *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     {@link String }
      *     
      */
-    public JAXBElement<String> getApellido() {
+    public String getApellido() {
         return apellido;
     }
 
@@ -121,10 +110,10 @@ public class ValidarTarjeta {
      * 
      * @param value
      *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     {@link String }
      *     
      */
-    public void setApellido(JAXBElement<String> value) {
+    public void setApellido(String value) {
         this.apellido = value;
     }
 
@@ -133,10 +122,10 @@ public class ValidarTarjeta {
      * 
      * @return
      *     possible object is
-     *     {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
+     *     {@link BigInteger }
      *     
      */
-    public JAXBElement<BigInteger> getDni() {
+    public BigInteger getDni() {
         return dni;
     }
 
@@ -145,10 +134,10 @@ public class ValidarTarjeta {
      * 
      * @param value
      *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
+     *     {@link BigInteger }
      *     
      */
-    public void setDni(JAXBElement<BigInteger> value) {
+    public void setDni(BigInteger value) {
         this.dni = value;
     }
 

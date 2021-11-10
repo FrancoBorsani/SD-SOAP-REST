@@ -8,9 +8,6 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 @Configuration
 public class SoapConfiguration {
 
-    @Autowired
-    private SoapClient client;
-
     @Bean
     public Jaxb2Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
@@ -20,6 +17,7 @@ public class SoapConfiguration {
 
     @Bean
     public SoapClient soapClient(Jaxb2Marshaller marshaller) {
+        SoapClient client = new SoapClient();
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;
