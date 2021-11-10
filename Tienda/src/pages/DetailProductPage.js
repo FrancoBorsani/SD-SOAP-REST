@@ -1,4 +1,5 @@
 import Layout from "components/Layout/Layout";
+import Report from "components/Report";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router"
 import { Container, Spinner } from "reactstrap";
@@ -60,19 +61,20 @@ const DetailProduct = () => {
                         <h6 className="text-danger">Vendidos: {product.cantidadVendida}</h6>
                     </div>
 
-                    <div className="my-2">{product.descripcion}</div>
-
-                    <div className="my-2">{product.categoria.nombre}</div>
+                    <div className="my-2">{product.descripcion} - {product.categoria.nombre}</div>
 
                     <div className="my-2">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo error sed obcaecati autem quas explicabo rerum delectus? Accusantium doloribus esse eaque non sint? Accusantium laboriosam praesentium dolores. Deleniti architecto harum saepe alias deserunt a, quibusdam veniam eaque sint ratione aspernatur.
                     </div>
-
-                    <button type="button" className="btn-dark d-block my-3 px-5 py-2 w-100"
-                        disabled={product.stock === 0 ? true : false}
-                        onClick={() => dispatch(addToCart(product, cart))}>
-                        Comprar
-                    </button>
+                    
+                    <div className="row justify-content-center px-3">
+                        <button type="button" className="btn-dark d-block mt-3 mb-1 px-5 py-2 w-100"
+                            disabled={product.stock === 0 ? true : false}
+                            onClick={() => dispatch(addToCart(product, cart))}>
+                            Comprar
+                        </button>
+                        <Report/>
+                    </div>
                 </div>
             </div>
         </Layout>    

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import {
   Button, Card, CardBody, Form, Input, InputGroupAddon, InputGroupText, InputGroup,
-  Col, CardTitle, Row, CardHeader
+  Col, CardTitle, Row, CardHeader, Alert
 } from "reactstrap";
 
 import { Link, Redirect, useHistory } from "react-router-dom";
@@ -13,6 +13,8 @@ function LoginPage() {
 
   const initialState = { username: '', password: '' };
   const [userData, setUserData] = useState(initialState);
+
+  const [message, setMessage] = useState(''); 
 
   const { state, dispatch } = useContext(DataContext);
 
@@ -30,7 +32,7 @@ function LoginPage() {
 
     const response = await postData('auth/signin', userData);
 
-    if (response.error) return dispatch({ type: 'NOTIFY', payload: { error: 'Usuario o contraseña incorrectos.' } })
+    if (response.error) return setMessage('Usuario o contraseña incorrectos.');
 
     dispatch({
       type: 'AUTH', payload: {
@@ -50,6 +52,13 @@ function LoginPage() {
   return (
     <Layout>
       <Row className="justify-content-center">
+        {
+          message && (
+            <Col md="10">
+              <Alert className="rounded" color="danger">{message}</Alert>
+            </Col>
+          )
+        }
         <Col md="6">
           <Card className="card p-3">
             <Form className="form" onSubmit={handleSubmit}>

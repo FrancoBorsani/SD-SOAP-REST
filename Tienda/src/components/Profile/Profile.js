@@ -27,6 +27,7 @@ const Profile = () => {
                     </div>
                     <h4 className="text-center text-capitalize">{auth.user?.username}</h4>
                 </div>
+                
                 <div className="nav flex-column nav-pills">
                     <Nav tabs className="nav flex-column nav-pills">
                         <NavItem>

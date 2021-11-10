@@ -10,4 +10,6 @@ export const ClientRoutes =  {
     PRODUCT_CREATE : "/my/products/create",
     PRODUCT_MODIFY : "/my/products/edit/:id",
     ORDERS_LIST : "/my/orders",
+    CLAIMS_LIST : "/my/claims",
+    CLAIM_LIST : "/my/claims/create",
 }

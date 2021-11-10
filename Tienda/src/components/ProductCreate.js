@@ -24,9 +24,7 @@ const ProductCreate = () => {
         { name: 'Ambos' }
     ]
 
-    const { state, dispatch } = useContext(DataContext);
-
-    const { auth } = state;
+    const { dispatch } = useContext(DataContext);
 
     useEffect(() => {
 
@@ -47,11 +45,6 @@ const ProductCreate = () => {
 
         e.preventDefault();
 
-        /*
-        if (auth.user.role !== 'admin')
-            return dispatch({ type: 'NOTIFY', payload: { error: 'Authentication is not valid.' } })
-        */
-
         if (!title || !price || !inStock || !description || !category === 'all')
             return dispatch({ type: 'NOTIFY', payload: { error: 'Please add all fields.' } });
 
@@ -59,8 +52,9 @@ const ProductCreate = () => {
 
         dispatch({ type: 'NOTIFY', payload: { loading: true } })
 
-        const res = await postData('product', { ...product, images: [...imgOldURL, ...media] }, auth.token)
-        if (res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
+        const res = await postData('product', product)
+
+        if (res.error) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
 
         return dispatch({ type: 'NOTIFY', payload: { success: res.msg } }) */
 

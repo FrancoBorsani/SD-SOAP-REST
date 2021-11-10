@@ -1,8 +1,10 @@
 import Layout from "components/Layout/Layout";
 import React, { useContext, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Button, Card, CardHeader, CardBody, CardTitle, Form, Input, InputGroupAddon,
-  InputGroupText, InputGroup, Row, Col} from "reactstrap";
+import {
+  Button, Card, CardHeader, CardBody, CardTitle, Form, Input, InputGroupAddon,
+  InputGroupText, InputGroup, Row, Col, Alert
+} from "reactstrap";
 import { DataContext } from "store/GlobalState";
 import { postData } from "utils/fetchData";
 
@@ -11,7 +13,9 @@ function RegisterPage() {
   const initialState = { nombre: '', apellido: '', dni: '', username: '', email: '', password: '' }
   const [userData, setUserData] = useState(initialState)
 
-  const { state, dispatch } = useContext(DataContext)
+  const [message, setMessage] = useState({});
+
+  const { state } = useContext(DataContext)
 
   const { auth } = state
 
@@ -22,10 +26,18 @@ function RegisterPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    
-    await postData('registro/create', userData);
 
-    dispatch({ type: 'NOTIFY', payload: { success: 'Registrado correctamente.' } })
+    const response = await postData('registro/create', userData);
+
+    if (response.error) return setMessage({ 
+      text: 'Error inesperado por favor intente más tarde.',
+      color: 'danger'
+    });
+
+    setMessage({
+      text: 'Usted se ha registrado exitosamente.',
+      color: 'success'
+    })
 
   }
 
@@ -34,7 +46,14 @@ function RegisterPage() {
   return (
     <Layout>
       <Row className="justify-content-center">
-        <Col md="6">            
+        {
+          message.text && (
+            <Col md="10">
+              <Alert className="rounded" color={message.color}>{message.text}</Alert>
+            </Col>
+          )
+        }
+        <Col md="6">
           <Card className="card p-3">
             <Form onSubmit={handleSubmit} className="form">
               <CardHeader className="text-center">
@@ -92,7 +111,7 @@ function RegisterPage() {
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="now-ui-icons text_caps-small"></i>
+                          <i className="now-ui-icons users_circle-08"></i>
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
@@ -164,7 +183,7 @@ function RegisterPage() {
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="now-ui-icons ui-1_email-85"></i>
+                          <i className="now-ui-icons text_caps-small"></i>
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input

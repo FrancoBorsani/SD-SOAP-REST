@@ -25,6 +25,7 @@ const Filter = ({ order, setOrder, handleChangeSearch, keyword, categories, cate
                         <div className="form-check">
                             <input type="radio" className="form-check-control" 
                                 name="category-selected"
+                                // eslint-disable-next-line 
                                 checked={ categorySelected == category.idCategoria }
                                 value={category.idCategoria}
                                 onChange={handleChangeCategory}
