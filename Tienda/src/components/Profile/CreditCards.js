@@ -64,10 +64,10 @@ const CreditCards = () => {
 
                     }
 
-                    <ul class="list-group w-100 mb-4">
+                    <ul className="list-group w-100 mb-4">
                         {
                             cards.map(card => (
-                                <li class="list-group-item">{card.numero + ' - ' +  card.tipo}</li>
+                                <li className="list-group-item" key={card.id}>{card.numero + ' - ' +  card.tipo}</li>
                             ))
                         }
                     </ul>

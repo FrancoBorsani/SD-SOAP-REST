@@ -66,10 +66,10 @@ const Adresses = () => {
 
                     }
 
-                    <ul class="list-group w-100 mb-4">
+                    <ul className="list-group w-100 mb-4">
                         {
                             addresses.map(address => (
-                                <li class="list-group-item"> { address.calle + " " + address.numero + ", " + address.codigoPostal + " " + address.provincia } </li>
+                                <li className="list-group-item" key={address.id}> { address.calle + " " + address.numero + ", " + address.codigoPostal + " " + address.provincia } </li>
                             ))
                         }
                     </ul>
