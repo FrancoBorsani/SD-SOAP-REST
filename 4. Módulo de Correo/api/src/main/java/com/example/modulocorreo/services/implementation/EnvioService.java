@@ -1,6 +1,7 @@
 package com.example.modulocorreo.services.implementation;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,5 +47,16 @@ public class EnvioService implements IEnvioService {
 	public Envio findByCodigoDeSeguimiento(String codigoDeSeguimiento) {
 		return envioRepository.findByCodigoDeSeguimiento(codigoDeSeguimiento);
 	}
+	
+	@Override
+	public List<Envio> searchEnvio(String keyword) {
+		return envioRepository.searchEnvio(keyword);
+	}
+
+	@Override
+	public List<Map<Integer, String>> cantidadDeEnviosPorEstado() {
+		return envioRepository.cantidadDeEnviosPorEstado();
+	}
+	
 }
 

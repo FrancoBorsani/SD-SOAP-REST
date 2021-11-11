@@ -27,6 +27,8 @@ public class User {
 	@Column(name="apellido", nullable=false, length=45)
 	private String apellido;
 	
+	@Column(name="documento", nullable=false, length=45)
+	private String documento;
 	
 	@Column(name="email",nullable = false)
 	private String email;
@@ -38,13 +40,14 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String username, String password, String nombre, String apellido, String email) {
+	public User(String username, String password, String nombre, String apellido, String email, String documento) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
+		this.documento = documento;
 	}
 
 	public String getNombre() {
@@ -71,6 +74,14 @@ public class User {
 		this.email = email;
 	}
 
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -93,6 +104,12 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", nombre=" + nombre
+				+ ", apellido=" + apellido + ", documento=" + documento + ", email=" + email + "]";
 	}
 
 }

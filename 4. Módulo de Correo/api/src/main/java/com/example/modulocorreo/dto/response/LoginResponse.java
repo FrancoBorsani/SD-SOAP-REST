@@ -7,18 +7,20 @@ public class LoginResponse {
 	private String nombre;
 	private String apellido;
 	private String email;
+	private String documento;
 
 	public LoginResponse() {
 		super();
 	}
 
-	public LoginResponse(String jwt, String username, String nombre, String apellido, String email) {
+	public LoginResponse(String jwt, String username, String nombre, String apellido, String email, String documento) {
 		super();
 		this.jwt = jwt;
 		this.username = username;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
+		this.documento = documento;
 	}
 
 	public String getJwt() {
@@ -62,10 +64,18 @@ public class LoginResponse {
 		this.email = email;
 	}
 
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
 	@Override
 	public String toString() {
 		return "LoginResponse [jwt=" + jwt + ", username=" + username + ", nombre=" + nombre + ", apellido=" + apellido
-				+ ", email=" + email + "]";
+				+ ", email=" + email + ", documento=" + documento + "]";
 	}
 
 }

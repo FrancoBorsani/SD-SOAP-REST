@@ -48,6 +48,7 @@ public class EnvioRestController {
 			@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Envio.class))) }))
 	@GetMapping("")
 	public ResponseEntity<List<Envio>> getAllEnvios() {
+		
 		return ResponseEntity.ok(envioService.getAll());
 	}
 
@@ -102,8 +103,7 @@ public class EnvioRestController {
 
 	@Operation(summary = "Actualizar estado de envio en curso.")
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateEstadoDeEnvio(@PathVariable("id") int idEnvio,
-			@RequestParam(name = "estado") String estado) {
+	public ResponseEntity<?> updateEstadoDeEnvio(@PathVariable("id") int idEnvio) {
 
 		Envio envio = envioService.findById(idEnvio);
 
@@ -111,12 +111,28 @@ public class EnvioRestController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(new ApiMessageResponse(false, "Envio no encontrado."));
 
-		envio.setEstado(estado);
+		//envio.setEstado(estado);
 
 		Envio envioActualizado = envioService.insertOrUpdate(envio);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body((new InsertOrUpdateEnvioResponse(
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body((new InsertOrUpdateEnvioResponse(
 				new ApiMessageResponse(true, "Envio del envio actualizado correctamente."), envioActualizado)));
+	}
+	
+	@Operation(summary = "Buscar los envíos por su código de seguimiento, estado o DNI del destinatario.")
+    @GetMapping("/search")
+    public ResponseEntity<List<Envio>> searchEnvio(@RequestParam(name="keyword") String keyword) {
+    	
+    	List<Envio> envios = envioService.searchEnvio(keyword);
+    	    	
+    	return new ResponseEntity<List<Envio>>(envios, HttpStatus.OK);
+    }
+	
+	@Operation(summary = "Listar cantidad envios por estado.")
+	@GetMapping("/cantidad/enviosPorEstado")
+	public ResponseEntity<List<?>> getCantidadDeEnviosPorEstado() {
+		
+		return ResponseEntity.ok(envioService.cantidadDeEnviosPorEstado());
 	}
 
 }
