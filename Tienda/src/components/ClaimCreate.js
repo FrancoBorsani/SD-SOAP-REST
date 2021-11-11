@@ -26,10 +26,21 @@ const ClaimCreate = () => {
         setClaim({ ...claim, [name]: value })
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
 
-        alert('OK!');
+        const response = await fetch(`http://localhost:8083/reclamo`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(claim),
+        })
+
+        const data = await response.json();
+
+        console.log(data);
+
     }
 
     return (
