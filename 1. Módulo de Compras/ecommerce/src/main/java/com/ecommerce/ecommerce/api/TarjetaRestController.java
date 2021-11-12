@@ -2,22 +2,22 @@ package com.ecommerce.ecommerce.api;
 
 import java.util.List;
 
+import com.ecommerce.ecommerce.banca.BancaSoapClient;
+import com.ecommerce.ecommerce.entities.User;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ecommerce.ecommerce.entities.Tarjeta;
 import com.ecommerce.ecommerce.services.TarjetaService;
 import com.ecommerce.ecommerce.services.UsuarioService;
 
 @RestController
-@RequestMapping("api/v1/tarjeta")
+@RequestMapping("/api/v1/tarjeta")
 @CrossOrigin("*")
 public class TarjetaRestController {
 
@@ -27,17 +27,30 @@ public class TarjetaRestController {
 	@Autowired
 	TarjetaService tarjetaService;
 
+	@Autowired
+	BancaSoapClient banca;
+
 	@PostMapping("/agregar")
-	public Tarjeta createTarjeta(@RequestBody Tarjeta tarjeta) {
+	public ResponseEntity<Tarjeta> createTarjeta(@RequestBody Tarjeta tarjeta){
 		String username = "";
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
 			username = ((UserDetails) principal).getUsername();
 		}
 
-		tarjeta.setUser(usuarioService.traerUser(username));
+		User u = usuarioService.traerUser(username);
 
-		return tarjetaService.guardarTarjeta(tarjeta);
+		tarjeta.setUser(u);
+		String validacion = banca.validar_tarjeta(Long.valueOf(tarjeta.getNumero()), u.getNombre(), u.getApellido(), Long.valueOf(u.getDni()));
+
+		if (validacion.equals("1")){
+			return new ResponseEntity<>(tarjetaService.guardarTarjeta(tarjeta), HttpStatus.OK);
+		}
+		else{
+			throw new RuntimeException("La tarjeta no le pertenece.");
+		}
+
+
 	}
 
 	@GetMapping("/getTarjetasDeUsuario")

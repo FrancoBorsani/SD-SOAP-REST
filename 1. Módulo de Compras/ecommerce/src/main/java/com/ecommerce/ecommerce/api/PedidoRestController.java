@@ -3,6 +3,7 @@ package com.ecommerce.ecommerce.api;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ecommerce.ecommerce.banca.BancaSoapClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +30,10 @@ public class PedidoRestController {
 	@Autowired
 	PedidoService pedidoService;
 
+	@Autowired
+	BancaSoapClient banca;
+
+
 	@PostMapping("/agregar")
 	public Pedido agregarPedido(@RequestBody Pedido newPedido) {
 		
@@ -38,8 +43,11 @@ public class PedidoRestController {
 		if (principal instanceof UserDetails) {
 			username = ((UserDetails) principal).getUsername();
 		}
-		
-		newPedido.setComprador(usuarioService.traerUser(username));
+
+		User u = usuarioService.traerUser(username);
+		newPedido.setComprador(u);
+
+		//String validacion = banca.validar_limite_mensual(Long.valueOf(), tipo_tarjeta, newPedido.getTotal(), total_gastado);
 		
 		return this.pedidoService.guardarPedido(newPedido);
 	}

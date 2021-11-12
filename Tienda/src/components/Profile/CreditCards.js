@@ -40,9 +40,8 @@ const CreditCards = () => {
         e.preventDefault();
 
         const response = await postData('tarjeta/agregar', card, auth.token);
-
         if (response.error) return dispatch({ type: 'NOTIFY', payload: { error: 'Error inesperado. Por favor intente más tarde.' } })
-        
+
         setCards([...cards, response]);
 
     }
@@ -78,11 +77,14 @@ const CreditCards = () => {
                     <div className="col-md-6">
                         <div className="form-group">
                             <label>Tipo</label>
-                            <input type="text" className="form-control" 
+                            <select className="form-control" 
                                 name="tipo"
                                 value={card.tipo}
                                 onChange={handleChangeInput}
-                            />
+                            >
+                            <option value="credito">Credito</option>
+                            <option value="credito">Debito</option>
+                            </select>
                         </div>
                     </div>
                     <div className="col-md-6">

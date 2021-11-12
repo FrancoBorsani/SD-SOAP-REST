@@ -1,13 +1,20 @@
 import logging
 from wsgiref.simple_server import make_server
 
-from spyne import Application, rpc, ServiceBase, Integer, Unicode, AnyDict
+from spyne import Application, rpc, ServiceBase, Integer, Unicode
 from spyne.protocol.soap import Soap11
 from spyne.server.wsgi import WsgiApplication
 import mysql.connector
 
 DB_NAME = "modulo_banca"
 
+class CorsService(ServiceBase):
+    origin = '*'
+
+def _on_method_return_object(ctx):
+    ctx.transport.resp_headers['Access-Control-Allow-Origin'] = ctx.descriptor.service_class.origin
+
+CorsService.event_manager.add_listener('method_return_object', _on_method_return_object)
 
 def make_query(query):
     try:
@@ -25,7 +32,7 @@ def make_query(query):
         print(e)
 
   
-class UsuarioService(ServiceBase):
+class UsuarioService(CorsService):
     @rpc(Integer(nullable=False), Unicode(nullable=False), Unicode(nullable=False), Integer(nullable=False), _returns=Integer(nullable=False))
     def validar_tarjeta(ctx, nro_tarjeta, nombre, apellido, dni):
         """
@@ -34,13 +41,15 @@ class UsuarioService(ServiceBase):
         @param usuario_info contiene la informacion del usuario.
         @return 1 si la informacion ingresada coincide. Caso contrario, retorna 0.
         """
+        print(nombre)
         try:
             idUsuario = make_query(f"SELECT u.idUsuario FROM usuario u WHERE u.nombre='{nombre}' and u.apellido='{apellido}' and u.dni={dni}")[0][0]
             tarjetas_usuario = make_query(f"SELECT t.numeroTarjeta from tarjeta t where t.idUsuario={idUsuario}")
             tarjetas_usuario = [int(t[0]) for t in tarjetas_usuario]            
         except:
             tarjetas_usuario = []
-        return 1 if nro_tarjeta in tarjetas_usuario else 0
+        finally:
+            return 1 if nro_tarjeta in tarjetas_usuario else 0
 
     @rpc(Integer(nullable=False), Unicode(nullable=False), Integer(nullable=False), Integer(nullable=False), _returns=Integer(nullable=False))
     def validar_limite_mensual(ctx, nro_tarjeta, tipo_tarjeta, total_a_pagar, total_gastado):
