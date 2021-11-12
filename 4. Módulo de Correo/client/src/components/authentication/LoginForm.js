@@ -5,7 +5,6 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-// material
 import {
   Stack,
   TextField,
@@ -17,7 +16,6 @@ import { LoadingButton } from '@mui/lab';
 import { postData } from 'src/utils/fetchData';
 import { DataContext } from 'src/store/GlobalState';
 
-// ----------------------------------------------------------------------
 
 const LoginForm = () => {
 
