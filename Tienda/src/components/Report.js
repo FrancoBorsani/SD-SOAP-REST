@@ -5,10 +5,35 @@ const Report = () => {
 
     const [showModal, setShowModal] = useState(false);
 
+    const [report, setReport] = useState({
+        idProducto: '2', // ID de prueba
+        denuncia: '',
+        categoria: ''
+    })
+
     const reportsTypes = ['Falsificación', 'Producto ilegal', 'Fraude', 'Contenido inapropiado'];
 
-    const handleSubmit = e => {
+    const handleChangeInput = e => {
+        const { name, value } = e.target;
+        setReport({ ...report, [name]: value });
+    }
+
+    const handleSubmit = async e => {
+
         e.preventDefault();
+
+        const response = await fetch(`http://localhost:8083/reclamo`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(report),
+        })
+
+        const data = await response.json();
+
+        console.log(data);
+
     }
 
     return (
@@ -23,8 +48,9 @@ const Report = () => {
 
                             <div className="form-group">
                                 <label>Seleccione el tipo de denuncia:</label>
-                                <select name="categoria" required
-                                    className="form-control rounded text-capitalize py-2 mt-2">
+                                <select name="categoria" value={report.categoria} required
+                                    className="form-control rounded text-capitalize py-2 mt-2"
+                                    onChange={handleChangeInput}>
                                     <option value="">Seleccione tipo de denuncia</option>
                                     {
                                         reportsTypes.map(reportType => (
@@ -33,9 +59,10 @@ const Report = () => {
                                     }
                                 </select>
                             </div>
-                            <textarea className="form-control mb-2" name="reclamo" cols="30" rows="3"
-                                    placeholder="Ingrese su denuncia" required
-                                />
+                            <textarea className="form-control mb-2" name="denuncia" cols="30" rows="3"
+                                value={report.denuncia} placeholder="Ingrese su denuncia" required
+                                onChange={handleChangeInput}
+                            />
 
                             <Button className="w-100" color="info" type="submit">Denunciar publicación</Button>
                     </ModalBody>
