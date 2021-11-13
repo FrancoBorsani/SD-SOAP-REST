@@ -31,7 +31,7 @@ public class BancaSoapClient {
         return callService(xml_parsed, "validar_limite_mensual");
     }
 
-    public String validar_tarjeta(long nro_tarjeta, String nombre, String apellido, long dni) {
+    public String validar_tarjeta(long nro_tarjeta, String tipo_tarjeta, String nombre, String apellido, long dni) {
 
         String xml_parsed="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:mod=\"modulo_banca_soap\">\r\n" +
                 "   <soapenv:Header/>\r\n" +
@@ -39,6 +39,8 @@ public class BancaSoapClient {
                 "      <mod:validar_tarjeta>\r\n" +
                 "         <!--Optional:-->\r\n" +
                 "         <mod:nro_tarjeta>"+ nro_tarjeta +"</mod:nro_tarjeta>\r\n" +
+                "         <!--Optional:-->\r\n" +
+                "         <mod:tipo_tarjeta>"+ tipo_tarjeta +"</mod:tipo_tarjeta>\r\n" +
                 "         <!--Optional:-->\r\n" +
                 "         <mod:nombre>"+ nombre +"</mod:nombre>\r\n" +
                 "         <!--Optional:-->\r\n" +

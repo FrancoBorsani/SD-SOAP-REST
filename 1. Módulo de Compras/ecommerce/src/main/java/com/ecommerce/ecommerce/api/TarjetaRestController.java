@@ -1,10 +1,10 @@
 package com.ecommerce.ecommerce.api;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.ecommerce.ecommerce.banca.BancaSoapClient;
 import com.ecommerce.ecommerce.entities.User;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,13 +41,29 @@ public class TarjetaRestController {
 		User u = usuarioService.traerUser(username);
 
 		tarjeta.setUser(u);
-		String validacion = banca.validar_tarjeta(Long.valueOf(tarjeta.getNumero()), u.getNombre(), u.getApellido(), Long.valueOf(u.getDni()));
+		String validacion = banca.validar_tarjeta(Long.valueOf(tarjeta.getNumero()), tarjeta.getTipo(), u.getNombre(), u.getApellido(), Long.valueOf(u.getDni()));
 
-		if (validacion.equals("1")){
+		List<Tarjeta> listaTarjetas = tarjetaService.findByIdUser(u.getId());
+
+		boolean duplicada = false;
+
+		for(Tarjeta t : listaTarjetas){
+			if (t.getTipo().equals(tarjeta.getTipo()) && t.getNumero().equals(tarjeta.getNumero())){
+				duplicada = true;
+				break;
+			}
+		}
+
+		if (validacion.equals("1") && !duplicada){
 			return new ResponseEntity<>(tarjetaService.guardarTarjeta(tarjeta), HttpStatus.OK);
 		}
+		else if(duplicada){
+			//return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+			throw new RuntimeException("Error: Tarjeta duplicada");
+		}
 		else{
-			throw new RuntimeException("La tarjeta no le pertenece.");
+			//return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			throw new RuntimeException("Datos invalidos: La tarjeta ingresada no coincide con los datos personales del usuario logueado.");
 		}
 
 
@@ -63,6 +79,11 @@ public class TarjetaRestController {
 		}
 
 		return this.tarjetaService.findByIdUser(this.usuarioService.traerUser(username).getId());
+	}
+
+	@GetMapping("/getTarjetaById")
+	public Optional<Tarjeta> getTarjetaById(int idTarjeta) {
+		return this.tarjetaService.findById(1605);
 	}
 
 }

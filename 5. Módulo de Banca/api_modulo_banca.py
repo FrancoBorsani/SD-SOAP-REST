@@ -33,18 +33,16 @@ def make_query(query):
 
   
 class UsuarioService(CorsService):
-    @rpc(Integer(nullable=False), Unicode(nullable=False), Unicode(nullable=False), Integer(nullable=False), _returns=Integer(nullable=False))
-    def validar_tarjeta(ctx, nro_tarjeta, nombre, apellido, dni):
+    @rpc(Integer(nullable=False), Unicode(nullable=False), Unicode(nullable=False), Unicode(nullable=False), Integer(nullable=False), _returns=Integer(nullable=False))
+    def validar_tarjeta(ctx, nro_tarjeta, tipo_tarjeta, nombre, apellido, dni):
         """
         Valida que la informacion que registro el cliente coincida con el de la base de datos.
-        @param tarjeta_info contiene la informacion de la tarjeta.
-        @param usuario_info contiene la informacion del usuario.
         @return 1 si la informacion ingresada coincide. Caso contrario, retorna 0.
         """
         print(nombre)
         try:
             idUsuario = make_query(f"SELECT u.idUsuario FROM usuario u WHERE u.nombre='{nombre}' and u.apellido='{apellido}' and u.dni={dni}")[0][0]
-            tarjetas_usuario = make_query(f"SELECT t.numeroTarjeta from tarjeta t where t.idUsuario={idUsuario}")
+            tarjetas_usuario = make_query(f"SELECT t.numeroTarjeta from tarjeta t where t.idUsuario={idUsuario} and t.tipoTarjeta='{tipo_tarjeta}'")
             tarjetas_usuario = [int(t[0]) for t in tarjetas_usuario]            
         except:
             tarjetas_usuario = []
@@ -56,9 +54,6 @@ class UsuarioService(CorsService):
         """
         Valida si la compra a realizar con el medio de pago elegido no supera el limite mensual (teniendo en cuenta todas las compras del mes) y si es el caso,
         si se cuenta con saldo suficiente.
-        @param tarjeta_info contiene la informacion de la tarjeta.
-        @param total_a_pagar contiene el total de la venta que se quiere pagar.
-        @param total_gastado contiene el total gastado con la tarjeta en el mes.
         @return 1 si la compra puede ser realizada (es decir, que el limite mensual aun no es alcanzado). Caso contrario, retorna 0.
         """
         tipo_tarjeta = tipo_tarjeta.lower()
