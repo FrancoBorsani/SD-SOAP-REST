@@ -50,7 +50,7 @@ const Home = () => {
         setCategorySelected(e.target.value);
 
         let query = e.target.value ? `productos/getByCategoria?idCategoria=${e.target.value}` : "productos";
-
+        
         getData(query)
             .then(res => {
                 setProducts(res);
@@ -107,7 +107,7 @@ const Home = () => {
                             </div>
                         )
                     }
-                    {
+                    {   products.length > 0 &&
                         products.map(product =>
                             <div className="col-md-4" key={product.idProducto}>
                                 <ProductItem product={product} />
