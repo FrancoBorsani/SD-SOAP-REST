@@ -68,7 +68,7 @@ const Account = () => {
                         <input type="text" 
                             className="form-control" 
                             name="nombre" 
-                            value={userData.nombre} 
+                            value={userData && userData.nombre} 
                             onChange={handleChangeInput}
                         />
                     </div>
@@ -79,7 +79,7 @@ const Account = () => {
                         <input type="text" 
                             className="form-control" 
                             name="apellido" 
-                            value={userData.apellido} 
+                            value={userData && userData.apellido} 
                             onChange={handleChangeInput}
                         />
                     </div>
@@ -90,7 +90,7 @@ const Account = () => {
                         <input type="text" 
                             className="form-control" 
                             name="username" 
-                            value={userData.username} 
+                            value={userData && userData.username} 
                             onChange={handleChangeInput}
                         />
                     </div>
@@ -101,7 +101,7 @@ const Account = () => {
                         <input type="text" 
                             className="form-control" 
                             name="email" 
-                            value={userData.email} 
+                            value={userData && userData.email} 
                             onChange={handleChangeInput}
                         />
                     </div>
@@ -112,7 +112,7 @@ const Account = () => {
                         <input type="text" 
                             className="form-control" 
                             name="dni" 
-                            value={userData.dni} 
+                            value={userData && userData.dni} 
                             onChange={handleChangeInput}
                         />
                     </div>
@@ -123,7 +123,7 @@ const Account = () => {
                         <input type="text" 
                             className="form-control"
                             name="telefono" 
-                            value={userData.telefono} 
+                            value={userData && userData.telefono} 
                             onChange={handleChangeInput}
                         />
                     </div>

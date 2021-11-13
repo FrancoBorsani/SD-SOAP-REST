@@ -67,7 +67,7 @@ const Adresses = () => {
                     }
 
                     <ul className="list-group w-100 mb-4">
-                        {
+                        { addresses.length > 0 &&
                             addresses.map(address => (
                                 <li className="list-group-item" key={address.id}> { address.calle + " " + address.numero + ", " + address.codigoPostal + " " + address.provincia } </li>
                             ))

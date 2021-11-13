@@ -67,6 +67,7 @@ const CreditCards = () => {
 
                     <ul className="list-group w-100 mb-4">
                         {
+                            cards.length > 0 &&
                             cards.map(card => (
                                 <li className="list-group-item" key={card.id}>{card.numero + ' - ' +  card.tipo}</li>
                             ))
