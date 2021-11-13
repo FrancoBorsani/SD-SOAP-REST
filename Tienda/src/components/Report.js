@@ -6,7 +6,7 @@ const Report = () => {
     const [showModal, setShowModal] = useState(false);
 
     const [report, setReport] = useState({
-        idProducto: '2', // ID de prueba
+        idProducto: '',
         denuncia: '',
         categoria: ''
     })
@@ -22,7 +22,7 @@ const Report = () => {
 
         e.preventDefault();
 
-        const response = await fetch(`http://localhost:8083/reclamo`, {
+        const response = await fetch(`http://localhost:8083/denuncia`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -103,7 +103,8 @@ public class EnvioRestController {
 
 	@Operation(summary = "Actualizar estado de envio en curso.")
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateEstadoDeEnvio(@PathVariable("id") int idEnvio) {
+	public ResponseEntity<?> updateEstadoDeEnvio(@PathVariable("id") int idEnvio,
+			@RequestParam(name = "estado") String estado) {
 
 		Envio envio = envioService.findById(idEnvio);
 
@@ -111,11 +112,11 @@ public class EnvioRestController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(new ApiMessageResponse(false, "Envio no encontrado."));
 
-		//envio.setEstado(estado);
+		envio.setEstado(estado);
 
 		Envio envioActualizado = envioService.insertOrUpdate(envio);
 
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body((new InsertOrUpdateEnvioResponse(
+		return ResponseEntity.status(HttpStatus.CREATED).body((new InsertOrUpdateEnvioResponse(
 				new ApiMessageResponse(true, "Envio del envio actualizado correctamente."), envioActualizado)));
 	}
 	

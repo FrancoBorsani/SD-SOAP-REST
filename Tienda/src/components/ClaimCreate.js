@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { getData } from "utils/fetchData";
+import { Button, Form, Modal, ModalBody, ModalHeader } from "reactstrap";
 
 const ClaimCreate = () => {
 
@@ -60,7 +61,7 @@ const ClaimCreate = () => {
                                     <option value="">Seleccione un producto</option>
                                     {
                                         products.map(product => (
-                                            <option value={product.id}>{ product.descripcion }</option>
+                                            <option value={product.idProducto}>{product.descripcion}</option>
                                         ))
                                     }
                                 </select>
@@ -70,9 +71,7 @@ const ClaimCreate = () => {
                                 placeholder="Ingrese su reclamo" value={claim.reclamo} onChange={handleChangeInput}
                             />
 
-                            <div className="btn btn-primary w-100">
-                                Realizar reclamo
-                            </div>
+                            <Button className="w-100" color="info" type="submit">Realizar reclamo</Button>
                         </form>
                     </div>
                 </div>

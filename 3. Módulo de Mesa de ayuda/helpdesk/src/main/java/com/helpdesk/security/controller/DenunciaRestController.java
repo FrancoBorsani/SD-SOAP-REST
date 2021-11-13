@@ -2,17 +2,20 @@ package com.helpdesk.security.controller;
 
 import java.util.List;
 
-import com.helpdesk.security.model.Denuncia;
-import com.helpdesk.security.repository.DenunciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.helpdesk.security.model.Denuncia;
+import com.helpdesk.security.repository.DenunciaRepository;
+
 @RestController
 @RequestMapping("/denuncia")
+@CrossOrigin("*")
 public class DenunciaRestController {
 
     @Autowired

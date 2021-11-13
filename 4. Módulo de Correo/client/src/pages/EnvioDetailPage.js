@@ -1,11 +1,12 @@
 import { LoadingButton } from "@mui/lab";
-import { Card, CardHeader, CircularProgress, Container, Divider, FormControl, Grid, InputLabel, MenuItem, Select, Stack, Typography } from "@mui/material";
+import { Alert, Card, CardHeader, CircularProgress, Container, Divider, FormControl, Grid, InputLabel, MenuItem, Select, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Scrollbar from "src/components/Scrollbar";
 import { DataContext } from "src/store/GlobalState";
 import { getData, putData } from "src/utils/fetchData";
+import { fDateTime } from "src/utils/formatTime";
 import Page from '../components/Page';
 import CustomizedSteppers from '../components/Stepper'
 
@@ -15,6 +16,10 @@ const EnvioDetail = () => {
 
     const [envio, setEnvio] = useState({});
     const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState({
+        text: '',
+        color: ''
+    });
 
     const [estado, setEstado] = useState('');
 
@@ -69,17 +74,34 @@ const EnvioDetail = () => {
     const updateEnvio = async e => {
         e.preventDefault();
 
-        const response = await putData(`envios/actualizar/${envio.id}`);
+        const response = await putData(`envios/${envio.id}?estado=${estado}`, null, auth.jwt);
 
-        console.log(response.apiResponse.message);
+        if (response.error) return setMessage({
+            text: 'Error inesperado. Por favor intente más tarde.',
+            color: 'danger'
+        })
 
         setEnvio(response.envio);
+
+        setMessage({
+            text: response.apiResponse.message,
+            color: 'success'
+        })
 
     }
 
     return (
         <Page title="Envios | Módulo-correo">
             <Grid container spacing={3}>
+                {
+                    message.text && (
+                        <Grid item xs={12} sm={12} md={12}>
+                            <Alert severity={message.color}  >
+                                {message.text}
+                            </Alert>
+                        </Grid>
+                    )
+                }
                 <Grid item xs={12} sm={12} md={12}>
                     <Card >
                         <Box sx={{ px: 3, py: 3 }}>
@@ -100,7 +122,7 @@ const EnvioDetail = () => {
                                                 ID ORDEN: {envio.idOrden}
                                             </Typography>
                                             <Typography variant="subtitle2" noWrap>
-                                                FECHA: {envio.createdAt}
+                                                FECHA: {fDateTime(envio.createdAt)}
                                             </Typography>
                                             <Typography variant="subtitle2" noWrap>
                                                 CODIGO DE SEGUIMIENTO: {envio.codigoDeSeguimiento}

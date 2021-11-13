@@ -18,6 +18,7 @@ import Scrollbar from '../components/Scrollbar';
 import { DataContext } from 'src/store/GlobalState';
 import { getData } from 'src/utils/fetchData';
 import { EnvioListHead, EnvioMoreMenu } from '../components/_dashboard/envio';
+import { fDateTime } from 'src/utils/formatTime';
 
 const TABLE_HEAD = [
   { id: 'codigoDeSeguimiento', label: 'Código De Seguimiento', alignRight: false },
@@ -118,7 +119,7 @@ const Envios = () => {
                               </Typography>
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{createdAt}</TableCell>
+                          <TableCell align="left">{fDateTime(createdAt)}</TableCell>
                           <TableCell align="left">{descripcion}</TableCell>
                           <TableCell align="left">{dnidestinatario}</TableCell>
                           <TableCell align="left">
