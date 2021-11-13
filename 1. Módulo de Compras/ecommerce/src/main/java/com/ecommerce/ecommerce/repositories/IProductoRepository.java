@@ -13,7 +13,8 @@ import com.ecommerce.ecommerce.entities.Producto;
 @Repository("productoRepository")
 public interface IProductoRepository extends JpaRepository<Producto, Serializable> {
 
-    public abstract Producto findByIdProducto(long idProducto);
+    @Query("SELECT p from Producto p where p.idProducto = :idProducto")
+    public abstract Producto findByIdProducto(@Param("idProducto") long idProducto);
     
     @Query(nativeQuery=true,value="SELECT * FROM Producto as p where p.stock > 0")
     public List<Producto> getAllProductosVisibles();
