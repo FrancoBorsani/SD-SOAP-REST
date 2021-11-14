@@ -11,7 +11,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/helpdesk?useSSL=false
     username: root
-    password: 2771999
+    password: root
 
   jpa:
     show-sql: false
