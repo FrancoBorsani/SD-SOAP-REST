@@ -17,8 +17,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.helpdesk.security.JwtAuthenticationEntryPoint;
 import com.helpdesk.security.JwtAuthenticationTokenFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
-@SuppressWarnings("SpringJavaAutowiringInspection")
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -49,18 +53,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        List<String> headers = Arrays.asList("Authorization", "Cache-Control", "Content-Type");
+        List<String> origins = Arrays.asList("http://localhost:3000");
+        List<String> methods = Arrays.asList("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE");
+        List<String> exposed = Arrays.asList("Authorization");
+
+        corsConfiguration.setAllowedHeaders(headers);
+        corsConfiguration.setAllowedOrigins(origins);
+        corsConfiguration.setAllowedMethods(methods);
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setExposedHeaders(exposed);
+
         httpSecurity
-                // we don't need CSRF because our token is invulnerable
-                .csrf().disable()
-
+                .cors().configurationSource(request -> corsConfiguration)
+                .and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-
-                // don't create session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-
                 .authorizeRequests()
-                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
 
                 .antMatchers("swagger-ui.html").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
@@ -69,7 +81,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/reclamo").permitAll()
                 .antMatchers("/denuncia").permitAll()
 
-                // allow anonymous resource requests
                 .antMatchers(
                         HttpMethod.GET,
                         "/",
@@ -80,15 +91,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                 ).permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/reclamo").permitAll()
-                .antMatchers("/denuncia").permitAll()
+                .antMatchers(HttpMethod.POST,"/reclamo").permitAll()
+                .antMatchers(HttpMethod.POST,"/denuncia").permitAll()
                 .anyRequest().authenticated();
 
-        // Custom JWT based security filter
-        httpSecurity
-                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-
-        // disable page caching
+        httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         httpSecurity.headers().cacheControl();
     }
 }
