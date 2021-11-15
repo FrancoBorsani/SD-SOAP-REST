@@ -43,6 +43,15 @@ public class User {
 	@Column(name = "telefono", nullable = true)
 	private String telefono;
 	
+	@Column(name = "saldo", nullable = true)
+	private Double saldo;
+	
+	
+	@JsonIgnore
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
+	private Set<Cuentas> cuentas = new HashSet<Cuentas>();
+	
+	
 	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
@@ -80,7 +89,7 @@ public class User {
 		this.telefono = telefono;
 		this.userRoles = userRoles;
 	}
-
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -159,6 +168,23 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+
+	public Double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(Double saldo) {
+		this.saldo = saldo;
+	}
+
+	public Set<Cuentas> getCuentas() {
+		return cuentas;
+	}
+
+	public void setCuentas(Set<Cuentas> cuentas) {
+		this.cuentas = cuentas;
 	}
 
 	@Override
