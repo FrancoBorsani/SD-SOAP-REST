@@ -47,7 +47,8 @@ const Wizard = () => {
         const order = {
             listaItems: listaItems,
             total: total,
-            vendedor: cart[0].vendedor
+            vendedor: cart[0].vendedor,
+            idTarjetaUsada: paymentMethod
         }
 
         const response = await postData(`pedido/agregar`, order, auth.token);

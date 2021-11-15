@@ -50,15 +50,19 @@ public class Pedido {
 	@Column(name = "updatedat")
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
+	
+	@Column(name = "idTarjetaUsada")
+	private int idTarjetaUsada;
 
 	public Pedido() {}
 
-	public Pedido(long idCompra, User comprador, User vendedor, double total) {
+	public Pedido(long idCompra, User comprador, User vendedor, double total, int idTarjetaUsada) {
 		super();
 		this.idCompra = idCompra;
 		this.comprador = comprador;
 		this.vendedor = vendedor;
 		this.total = total;
+		this.idTarjetaUsada = idTarjetaUsada;
 	}
 
 	public Pedido(double total, Set<Item> listaItems) {
@@ -67,6 +71,13 @@ public class Pedido {
 		this.listaItems = listaItems;
 	}
 
+	public Pedido(double total, Set<Item> listaItems, int idTarjetaUsada) {
+		super();
+		this.total = total;
+		this.listaItems = listaItems;
+		this.idTarjetaUsada = idTarjetaUsada;
+	}
+	
 	public long getIdCompra() {
 		return idCompra;
 	}
@@ -121,6 +132,14 @@ public class Pedido {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	public int getIdTarjetaUsada() {
+		return idTarjetaUsada;
+	}
+
+	public void setIdTarjetaUsada(int idTarjetaUsada) {
+		this.idTarjetaUsada = idTarjetaUsada;
 	}
 
 	@Override
