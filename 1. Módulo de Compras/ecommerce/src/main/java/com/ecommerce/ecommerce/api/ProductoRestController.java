@@ -66,5 +66,14 @@ public class ProductoRestController {
     	return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
    
     }
+    
+    @GetMapping("/getByRangeOfPrice")
+    public ResponseEntity<List<Producto>> getByRangeOfPrice(@RequestParam(name="min") double min, @RequestParam(name="max") double max) {
+    	
+    	List<Producto> productos = productoService.findByRangeOfPrice(min, max);
+    	    	
+    	return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+   
+    }
 
 }

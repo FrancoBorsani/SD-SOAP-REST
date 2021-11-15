@@ -50,5 +50,10 @@ public class ProductoService implements IProductoService{
     public List<Producto> findByVendedor(String idVendedor) {
         return productoRepository.findByVendedor(idVendedor);
     }
+    
+    @Override
+    public List<Producto> findByRangeOfPrice(double min, double max) {
+        return productoRepository.findByRangeOfPrice(min, max);
+    }
 
 }
