@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,8 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
-import com.ecommerce.ecommerce.security.JwtRequestFilter;
 import com.ecommerce.ecommerce.implementation.UserService;
+import com.ecommerce.ecommerce.security.JwtRequestFilter;
 
 
 @Configuration
@@ -49,15 +50,51 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setExposedHeaders(List.of("Authorization"));
-
+        
+        
     	security.cors().configurationSource(request -> corsConfiguration).
     	and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		
-		.authorizeRequests().antMatchers("/api/v1/auth/signin", "/api/v1/registro/create", "/home", "/registro", "/iniciar", "/api/v1/productos", "/api/v1/productos/*", "/api/v1/categorias", "/api/v1/categorias/*").permitAll()
+		.authorizeRequests().antMatchers("/api/v1/auth/signin", "/api/v1/registro/create", "/home", "/registro", "/iniciar", "/api/v1/productos", "/api/v1/productos/*", "/api/v1/categorias", "/api/v1/categorias/*", "/swagger-ui.html",  "swagger-ui.html", "/swagger-resources/**", "/v2/**", "/webjars/**").permitAll()
+		.antMatchers(
+			                HttpMethod.GET,
+			                "/",
+			                "/*.html",
+			                "/favicon.ico",
+			                "/**/*.html",
+			                "/**/*.css",
+			                "/**/*.js"
+			        ).permitAll()
+		
 		.anyRequest().authenticated();
         
+    	
+    //    .antMatchers("/denuncia").permitAll()
+
+    //    .antMatchers(
+    //            HttpMethod.GET,
+    //            "/",
+    //            "/*.html",
+     //           "/favicon.ico",
+     //           "/**/*.html",
+     //           "/**/*.css",
+     //           "/**/*.js"
+    //    ).permitAll()
+    //    .antMatchers("/auth/**").permitAll()
+    //    .antMatchers(HttpMethod.POST,"/reclamo").permitAll()
+    //    .antMatchers(HttpMethod.POST,"/denuncia").permitAll()
+    //    .anyRequest().authenticated();
+        
+    	
+    	
+    	
+    	
         security.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        
+        
+        
+        
     }
 
     @Bean
