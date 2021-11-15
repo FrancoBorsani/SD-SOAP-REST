@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ecommerce.ecommerce.banca.BancaSoapClient;
+import com.ecommerce.ecommerce.entities.Producto;
 import com.ecommerce.ecommerce.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +27,7 @@ public class TarjetaRestController {
 	UsuarioService usuarioService;
 
 	@Autowired
+	@Qualifier("tarjetaService")
 	TarjetaService tarjetaService;
 
 	@Autowired
@@ -41,7 +44,7 @@ public class TarjetaRestController {
 		User u = usuarioService.traerUser(username);
 
 		tarjeta.setUser(u);
-		String validacion = banca.validar_tarjeta(Long.valueOf(tarjeta.getNumero()), tarjeta.getTipo(), u.getNombre(), u.getApellido(), Long.valueOf(u.getDni()));
+		String validacion = banca.validar_tarjeta(tarjeta.getNumero(), tarjeta.getTipo(), u.getNombre(), u.getApellido(), Long.valueOf(u.getDni()));
 
 		List<Tarjeta> listaTarjetas = tarjetaService.findByIdUser(u.getId());
 
@@ -82,8 +85,10 @@ public class TarjetaRestController {
 	}
 
 	@GetMapping("/getTarjetaById")
-	public Optional<Tarjeta> getTarjetaById(int idTarjeta) {
-		return this.tarjetaService.findById(1605);
+	public ResponseEntity<Tarjeta> getTarjetaById(@RequestParam(name="idTarjeta") long idTarjeta) {
+		Tarjeta tarjeta = tarjetaService.findById((int) idTarjeta);
+		System.out.println(tarjeta);
+		return new ResponseEntity<Tarjeta>(tarjeta, HttpStatus.OK);
 	}
 
 }

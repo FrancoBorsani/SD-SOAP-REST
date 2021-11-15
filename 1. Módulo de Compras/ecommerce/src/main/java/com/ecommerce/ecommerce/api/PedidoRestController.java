@@ -47,7 +47,10 @@ public class PedidoRestController {
 		User u = usuarioService.traerUser(username);
 		newPedido.setComprador(u);
 
-		//String validacion = banca.validar_limite_mensual(Long.valueOf(), tipo_tarjeta, newPedido.getTotal(), total_gastado);
+		int totalGastado = 0; // getTotalGastado();
+
+		String validacion = banca.validar_limite_mensual(newPedido.getTarjetaUsada().getNumero(), newPedido.getTarjetaUsada().getTipo(),
+				(int) newPedido.getTotal(), totalGastado);
 		
 		return this.pedidoService.guardarPedido(newPedido);
 	}
