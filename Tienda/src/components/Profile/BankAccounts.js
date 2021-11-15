@@ -92,7 +92,7 @@ const BankAccounts = () => {
                             <label>Banco</label>
                             <input type="text" className="form-control"
                                 name="banco"
-                                value={bankAccount.numero}
+                                value={bankAccount.banco}
                                 onChange={handleChangeInput}
                             />
                         </div>
