@@ -63,13 +63,7 @@ const OrdersTable = () => {
                                     <td className="p-2">{order.vendedor.username}</td>
                                     <td className="p-2">{order.comprador.username}</td>
                                     <td className="p-2">${order.total}</td>
-                                    <td className="p-2">
-                                        {
-                                            order.delivered
-                                                ? <i className="fas fa-check text-success"></i>
-                                                : <i className="fas fa-times text-danger"></i>
-                                        }
-                                    </td>
+                                    <td className="p-2">{order.estadoDeEnvio}</td>
                                     <td className="p-2">
                                         <Link className="text-dark" to={`/my/orders/${order.idCompra}`}>Ver</Link>
                                     </td>

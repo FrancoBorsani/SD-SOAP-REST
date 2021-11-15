@@ -24,14 +24,18 @@ const AddressForm = ({ address, setAddress }) => {
     }, [auth.token])
 
     return (
-        <div className="my-3">
+        <div>
+
+            <h4 className="mt-1">Dirección de entrega</h4>
+            <hr />
+
             <label>Seleccione la dirección adonde se enviara su pedido:</label>
             <select name="address" id="address" value={address}
                 className="form-control text-capitalize py-2 mt-2" onChange={e=> setAddress(e.target.value)}>
                 <option value="">Seleccione una dirección adonde se enviara su pedido</option>
                 {
                     addresses && addresses.length > 0 && addresses.map(address => (
-                        <option value={address.id}>{ address.calle + " " + address.numero + ", " + address.codigoPostal + " " + address.provincia }</option>
+                        <option key={address.id} value={address.calle + " " + address.numero + ", " + address.codigoPostal + " " + address.provincia}>{ address.calle + " " + address.numero + ", " + address.codigoPostal + " " + address.provincia }</option>
                     ))
                 }
                 

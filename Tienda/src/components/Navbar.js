@@ -46,6 +46,9 @@ function IndexNavbar() {
         <DropdownItem tag={Link} to="/my/orders">
           Mis compras
         </DropdownItem>
+        <DropdownItem tag={Link} to="/my/claims/create">
+          Mis reclamos
+        </DropdownItem>
       </>
     )
   }

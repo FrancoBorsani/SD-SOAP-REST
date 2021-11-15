@@ -4,7 +4,7 @@ import { useState } from "react";
 import { DataContext } from "store/GlobalState";
 import { getData } from "utils/fetchData";
 
-const PaymentForm = ({ paymentMethod, setPaymentMethod }) => {
+const PaymentForm = ({ paymentMethod, setPaymentMethod, setPaymentMethodInfo }) => {
 
     const { state } = useContext(DataContext);
 
@@ -21,17 +21,29 @@ const PaymentForm = ({ paymentMethod, setPaymentMethod }) => {
 
         getCards();
 
-    }, [auth.token])
+    }, [auth.token]);
+
+    const handleChangeInput = e => {
+
+        setPaymentMethod(e.target.value);
+
+        setPaymentMethodInfo(e.target.options[e.target.selectedIndex].text)
+
+    }
 
     return (
-        <div className="my-3">
+        <div>
+            
+            <h4 className="mt-1">Forma de pago</h4>
+            <hr />
+
             <label>Seleccione el metodo de Pago:</label>
             <select name="address" id="address" value={paymentMethod}
-                className="form-control text-capitalize py-2 mt-2" onChange={e => setPaymentMethod(e.target.value)}>
+                className="form-control text-capitalize py-2 mt-2" onChange={e => handleChangeInput(e)}>
                 <option value="">Seleccione el metodo de Pago</option>
                 {   
                     cards && cards.length > 0 && cards.map(card => (
-                        <option value={card.id}>{card.numero + ' - ' +  card.tipo}</option>
+                        <option key={card.id} value={card.id}>{card.numero + ' - ' +  card.tipo}</option>
                     ))
                 }   
             </select>
