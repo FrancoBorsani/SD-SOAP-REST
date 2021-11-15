@@ -15,6 +15,8 @@ const Wizard = () => {
 
     const [paymentMethod, setPaymentMethod] = useState("");
 
+    const [paymentMethodInfo, setPaymentMethodInfo] = useState("");
+
     const { state, dispatch } = useContext(DataContext);
 
     const { cart, auth } = state;
@@ -69,10 +71,13 @@ const Wizard = () => {
                 );
             case 1:
                 return (
-                    <PaymentForm paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
+                    <PaymentForm paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} setPaymentMethodInfo={setPaymentMethodInfo} />
                 );
             case 2:
                 return (
+                    <>
+                    <h4 className="mt-1">Resumen</h4>
+                    <hr />
                     <div className="row justify-content-center" style={{ overflowY: 'scroll', maxHeight: '200px' }}>
                         <div className="col-md-8">
                             {
@@ -83,12 +88,13 @@ const Wizard = () => {
                         </div>
                         <div className="col-md-3">
                             <p>Dirección: {address}</p>
-                            <p>Metodo de pago: {paymentMethod}</p>
+                            <p>Metodo de pago: {paymentMethodInfo}</p>
                         </div>
                     </div>
+                    </>
                 );
             default:
-                return "Unknown stepIndex";
+                return "Unknown step";
         }
     }
 

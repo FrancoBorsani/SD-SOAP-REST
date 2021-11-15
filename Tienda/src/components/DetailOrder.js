@@ -53,7 +53,7 @@ const DetailOrder = () => {
                             <p>Email: {order.comprador?.email}</p>
                             <p>Domicilio: {order.domicilio}</p>
                             <p>Telefono: {order.comprador?.telefono}</p>
-                            <p>Estado: {order.estado}</p>
+                            <p>Estado: {order.estadoDeEnvio}</p>
 
                         </div>
 

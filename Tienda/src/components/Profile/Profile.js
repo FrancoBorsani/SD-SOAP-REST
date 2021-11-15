@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import Account from "./Account";
 import Addresses from "./Addresses";
 import CreditCards from "./CreditCards";
+import BankAccounts from "./BankAccounts";
 
 const Profile = () => {
 
@@ -63,7 +64,7 @@ const Profile = () => {
                                 onClick={() => { toggle('3'); }}
                                 style={{cursor: 'pointer'}}
                             >
-                                Tarjetas
+                                { auth.user?.roles.includes('ROLE_ADMIN') ? 'Cuentas Bancarias' : 'Tarjetas' }
                             </NavLink>
                         </NavItem>
                     </Nav>
@@ -88,7 +89,7 @@ const Profile = () => {
                 <TabPane tabId="3">
                     <Row>
                         <Col sm="12">
-                            <CreditCards />
+                            { auth.user?.roles.includes('ROLE_ADMIN') ? <BankAccounts/> : <CreditCards /> }
                         </Col>
                     </Row>
                 </TabPane>

@@ -141,16 +141,18 @@ public class PedidoRestController {
 		
     	Pedido pedido = pedidoService.findByIdCompra(idCompra);
     	
+    	System.out.println(pedido);
+    	
     	if(pedido == null ) return new ResponseEntity<Pedido>(pedido, HttpStatus.NOT_FOUND);
     	
+    	System.out.println(pedido.getCodigoDeSeguimiento());
+    	
     	EnvioResponse envio = CorreoRestClient.callGetEnvioByCodigoAPI(pedido.getCodigoDeSeguimiento());
-    	
-    	System.out.println(envio);
-    	
+    	    	
     	if(envio != null) {
     		pedido.setEstadoDeEnvio(envio.getEstado());
     		pedidoService.guardarPedido(pedido);
-    	}
+    	} 
 
 		return new ResponseEntity<Pedido>(pedido, pedido == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 		

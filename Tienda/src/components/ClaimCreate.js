@@ -1,25 +1,35 @@
 import { useEffect } from "react";
+import { useContext } from "react";
 import { useState } from "react";
+import { Container, Spinner } from "reactstrap";
+import { DataContext } from "store/GlobalState";
 import { getData } from "utils/fetchData";
 
 const ClaimCreate = () => {
 
-    const [products, setProducts] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const { state } = useContext(DataContext);
+
+    const { auth } = state;
+
+    useEffect(() => {
+
+        getData(`pedido/getByVendedorOCliente`, auth.token)
+            .then(res => {
+                setOrders(res);
+                console.log(res);
+                setLoading(false);
+            })
+            .catch(e => console.log(e))
+
+    }, [auth.token]);
 
     const [claim, setClaim] = useState({
         idCompra: '',
         reclamo: ''
     });
-
-    useEffect(() => {
-
-        getData("productos")
-            .then(res => {
-                setProducts(res);
-            })
-            .catch(err => console.log(err));
-
-    }, []);
 
     const handleChangeInput = e => {
         const { name, value } = e.target
@@ -43,6 +53,14 @@ const ClaimCreate = () => {
 
     }
 
+    if (loading) return (
+        <div className="page-header clear-filter">
+            <Container>
+                <Spinner color="info" />
+            </Container>
+        </div>
+    )
+
     return (
         <div className="row justify-content-center">
             <div className="col-md-10">
@@ -54,23 +72,23 @@ const ClaimCreate = () => {
                     <div className="card-body">
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
-                                <label>Seleccione el producto sobre cual quiere hacer el reclamo:</label>
-                                <select name="idCompra" value={claim.idCompra}
+                                <label>Seleccione la compra sobre cual quiere hacer el reclamo:</label>
+                                <select name="idCompra" value={claim.idCompra} required
                                     className="form-control text-capitalize py-2 mt-2" onChange={handleChangeInput}>
-                                    <option value="">Seleccione un producto</option>
+                                    <option value="">Seleccione una compra</option>
                                     {
-                                        products.map(product => (
-                                            <option value={product.idProducto}>{product.descripcion}</option>
+                                        orders && orders.length > 0 && orders.map(order => (
+                                            <option value={order.idCompra}>{order.idCompra}</option>
                                         ))
                                     }
                                 </select>
                             </div>
 
-                            <textarea className="form-control" name="reclamo" cols="30" rows="3"
+                            <textarea className="form-control" name="reclamo" cols="30" rows="3" required
                                 placeholder="Ingrese su reclamo" value={claim.reclamo} onChange={handleChangeInput}
                             />
 
-                            <button className="w-100" color="info" type="submit">Realizar reclamo</button>
+                            <button className="btn btn-primary rounded w-100" color="info" type="submit">Realizar reclamo</button>
                         </form>
                     </div>
                 </div>
