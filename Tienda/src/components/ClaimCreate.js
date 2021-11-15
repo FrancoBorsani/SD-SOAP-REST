@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { getData } from "utils/fetchData";
-import { Button, Form, Modal, ModalBody, ModalHeader } from "reactstrap";
 
 const ClaimCreate = () => {
 
@@ -71,7 +70,7 @@ const ClaimCreate = () => {
                                 placeholder="Ingrese su reclamo" value={claim.reclamo} onChange={handleChangeInput}
                             />
 
-                            <Button className="w-100" color="info" type="submit">Realizar reclamo</Button>
+                            <button className="w-100" color="info" type="submit">Realizar reclamo</button>
                         </form>
                     </div>
                 </div>

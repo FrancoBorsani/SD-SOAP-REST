@@ -89,19 +89,14 @@ const CartPage = () => {
                                 }
                             </div>
                             <div className="col-md-4 summary">
-                                <h5>Summary</h5>
+                                <h5>Resumen</h5>
                                 <hr />
                                 <div className="row">
                                     <span className="text-uppercase">ITEMS {cart.length}</span>
                                     <div className="col text-right">$ {total}</div>
                                 </div>
-                                <form>
-                                    <p>SHIPPING</p> <select>
-                                        <option className="text-muted">Standard-Delivery- $0.00</option>
-                                    </select>
-                                </form>
-                                <div className="row">
-                                    <div className="col">TOTAL PRICE</div>
+                                <div className="row mt-2">
+                                    <span className="text-uppercase">PRECIO TOTAL</span>
                                     <div className="col text-right">$ {total}</div>
                                 </div> 
                                 <button className="btn btn-dark py-2" onClick={handleRedirectCheckout}>CHECKOUT</button>

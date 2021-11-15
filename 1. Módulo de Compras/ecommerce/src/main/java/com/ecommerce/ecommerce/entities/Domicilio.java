@@ -33,8 +33,6 @@ public class Domicilio {
 	@JoinColumn(name="user_id", nullable=false)
 	private User user;
 	
-	
-	
 	public Domicilio() {}
 	
 	public Domicilio(int id, String calle, String numero, String codigoPostal, String provincia, User user) {

@@ -57,7 +57,7 @@ const Wizard = () => {
 
         dispatch({ type: 'ADD_CART', payload: [] });
 
-        return router.push('/my/orders');
+        router.push('/my/orders');
 
     }
 

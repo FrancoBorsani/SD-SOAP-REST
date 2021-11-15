@@ -73,7 +73,7 @@ const DetailProduct = () => {
                             onClick={() => dispatch(addToCart(product, cart))}>
                             Comprar
                         </button>
-                        <Report/>
+                        <Report idProducto={product.idProducto} descripcion={product.descripcion} />
                     </div>
                 </div>
             </div>

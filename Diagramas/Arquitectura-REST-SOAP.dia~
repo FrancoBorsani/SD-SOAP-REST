@@ -2499,7 +2499,7 @@
         <dia:point val="27.7,11.8563"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="27.7,-1.59473;45.2877,12.3858"/>
+        <dia:rectangle val="27.575,-1.59473;45.2877,11.9813"/>
       </dia:attribute>
       <dia:attribute name="bez_points">
         <dia:point val="27.7,11.8563"/>
@@ -2516,15 +2516,6 @@
       </dia:attribute>
       <dia:attribute name="line_width">
         <dia:real val="0.25"/>
-      </dia:attribute>
-      <dia:attribute name="start_arrow">
-        <dia:enum val="22"/>
-      </dia:attribute>
-      <dia:attribute name="start_arrow_length">
-        <dia:real val="0.5"/>
-      </dia:attribute>
-      <dia:attribute name="start_arrow_width">
-        <dia:real val="0.5"/>
       </dia:attribute>
       <dia:attribute name="end_arrow">
         <dia:enum val="22"/>

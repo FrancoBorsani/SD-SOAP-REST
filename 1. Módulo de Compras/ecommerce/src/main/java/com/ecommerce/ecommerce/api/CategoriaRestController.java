@@ -34,11 +34,7 @@ public class CategoriaRestController {
     	
     	Categoria categoria = categoriaService.getCategoriaById(idCategoria);
     	
-		if (categoria == null) {
-			return new ResponseEntity<Categoria>(categoria, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<Categoria>(categoria, HttpStatus.OK);
-		}
+		return new ResponseEntity<Categoria>(categoria, categoria == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
    
     }
     

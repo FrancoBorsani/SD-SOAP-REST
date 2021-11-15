@@ -40,7 +40,7 @@ public class Pedido {
 	@Column(name = "total")
 	private double total;
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedido")
+	@OneToMany(mappedBy="pedido")	
 	private Set<Item> listaItems;
 	
 	@Column(name = "createdat")
@@ -53,15 +53,22 @@ public class Pedido {
 	
 	@Column(name = "idTarjetaUsada")
 	private int idTarjetaUsada;
+	
+	@Column(name = "estadoDeEnvio")
+	private String estadoDeEnvio;
+	
+	@Column(name = "codigoDeSeguimiento")
+	private String codigoDeSeguimiento;
 
 	public Pedido() {}
 
-	public Pedido(long idCompra, User comprador, User vendedor, double total, int idTarjetaUsada) {
+	public Pedido(long idCompra, User comprador, User vendedor, double total, Set<Item> listaItems, int idTarjetaUsada) {
 		super();
 		this.idCompra = idCompra;
 		this.comprador = comprador;
 		this.vendedor = vendedor;
 		this.total = total;
+		this.listaItems = listaItems;
 		this.idTarjetaUsada = idTarjetaUsada;
 	}
 
@@ -142,9 +149,27 @@ public class Pedido {
 		this.idTarjetaUsada = idTarjetaUsada;
 	}
 
+	public String getEstadoDeEnvio() {
+		return estadoDeEnvio;
+	}
+
+	public void setEstadoDeEnvio(String estadoDeEnvio) {
+		this.estadoDeEnvio = estadoDeEnvio;
+	}
+
+	public String getCodigoDeSeguimiento() {
+		return codigoDeSeguimiento;
+	}
+
+	public void setCodigoDeSeguimiento(String codigoDeSeguimiento) {
+		this.codigoDeSeguimiento = codigoDeSeguimiento;
+	}
+
 	@Override
 	public String toString() {
-		return "Pedido [idCompra=" + idCompra + ", total=" + total + "]";
+		return "Pedido [idCompra=" + idCompra + ", comprador=" + comprador + ", vendedor=" + vendedor + ", total="
+				+ total + ", listaItems=" + listaItems + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
+				+ ", idTarjetaUsada=" + idTarjetaUsada + "]";
 	}
 	
 }

@@ -12,7 +12,7 @@ const Home = () => {
     const [order, setOrder] = useState("");
     const [keyword, setKeyword] = useState("");
     const [categorySelected, setCategorySelected] = useState("");
-    const [rangeOfPrice, setRangeOfPrice] = useState({ minPrice: 0, maxPrice: 10000 });
+    const [rangeOfPrice, setRangeOfPrice] = useState({ minPrice: 0, maxPrice: 1000000 });
 
     useEffect(() => {
 
@@ -59,10 +59,19 @@ const Home = () => {
 
     }
 
-    const handleChangeRangeOfPrice = e => {
 
+    const handleChangeRangeOfPrice = e => {
+        
         const { name, value } = e.target;
         setRangeOfPrice({ ...rangeOfPrice, [name]: value });
+
+        let query = e.target.value ? `productos/getByRangeOfPrice?min=${rangeOfPrice.minPrice}&max=${rangeOfPrice.maxPrice}` : "productos";
+
+        getData(query)
+            .then(res => {
+                setProducts(res);
+            })
+            .catch(err => console.log(err));
 
     }
 

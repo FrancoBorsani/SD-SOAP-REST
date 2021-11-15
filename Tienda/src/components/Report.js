@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { Button, Form, Modal, ModalBody, ModalHeader } from "reactstrap";
 
-const Report = () => {
+const Report = ({ idProducto, descripcion }) => {
 
     const [showModal, setShowModal] = useState(false);
 
@@ -12,6 +13,10 @@ const Report = () => {
     })
 
     const reportsTypes = ['Falsificación', 'Producto ilegal', 'Fraude', 'Contenido inapropiado'];
+
+    useEffect(() => {
+        report.idProducto = idProducto;
+    }, [idProducto, report]);
 
     const handleChangeInput = e => {
         const { name, value } = e.target;
@@ -38,7 +43,6 @@ const Report = () => {
 
     return (
         <>
-
             <span onClick={() => setShowModal(true)} style={{ textDecorationLine: 'underline' }}>Denunciar</span>
 
             <Modal isOpen={showModal} fade={true} toggle={() => setShowModal(false)}>
@@ -47,9 +51,11 @@ const Report = () => {
                     <ModalBody>
 
                             <div className="form-group">
+                                <label>Publicación:</label>
+                                <input className="form-control rounded mb-2" type="text" value={descripcion} disabled />
                                 <label>Seleccione el tipo de denuncia:</label>
                                 <select name="categoria" value={report.categoria} required
-                                    className="form-control rounded text-capitalize py-2 mt-2"
+                                    className="form-control rounded text-capitalize py-2"
                                     onChange={handleChangeInput}>
                                     <option value="">Seleccione tipo de denuncia</option>
                                     {

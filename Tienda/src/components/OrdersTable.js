@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { Container, Spinner } from "reactstrap";
 import { DataContext } from "store/GlobalState";
 import { getData } from "utils/fetchData";
 
 const OrdersTable = () => {
     
     const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const { state } = useContext(DataContext);
 
@@ -18,14 +20,23 @@ const OrdersTable = () => {
         getData(`pedido/getByVendedorOCliente`, auth.token)
             .then(res => {
                 setOrders(res);
+                setLoading(false);
             })
             .catch(e => console.log(e))
 
     }, [auth.token]);
 
+    if (loading) return (
+        <div className="page-header clear-filter">
+            <Container>
+                <Spinner color="info" />
+            </Container>
+        </div>
+    )
+
     return (
         <div className="container clear-filter">
-            <h3 className="text-uppercase">Mis Ordenes</h3>
+            <h3 className="text-uppercase">{ auth.user && auth.user.roles.includes('ROLE_ADMIN') ? 'Mis ventas' : 'Mis ordenes' }</h3>
             <div className="my-3">
                 <table className="table-bordered table-hover w-100 text-uppercase">
 
@@ -36,17 +47,17 @@ const OrdersTable = () => {
                             <td className="p-2">Vendedor</td>
                             <td className="p-2">Comprador</td>
                             <td className="p-2">total</td>
-                            <td className="p-2">ESTADO</td>
-                            <td className="p-2">pagado</td>
+                            <td className="p-2">Estado</td>
+                            <td className="p-2">Detalle</td>
                         </tr>
                     </thead>
 
                     <tbody>
                         {
-                            orders.map((order, index) => (
+                            orders && orders.length > 0 && orders.map((order, index) => (
                                 <tr key={index}>
                                     <td className="p-2">
-                                        <Link className="text-dark" to="/">{order.idCompra}</Link>
+                                        <Link className="text-dark" to={`/${order.idCompra}`}>{order.idCompra}</Link>
                                     </td>
                                     <td className="p-2">{new Date(order.createdAt).toLocaleDateString()}</td>
                                     <td className="p-2">{order.vendedor.username}</td>
@@ -60,11 +71,7 @@ const OrdersTable = () => {
                                         }
                                     </td>
                                     <td className="p-2">
-                                        {
-                                            order.paid
-                                                ? <i className="fas fa-check text-success"></i>
-                                                : <i className="fas fa-times text-danger"></i>
-                                        }
+                                        <Link className="text-dark" to={`/my/orders/${order.idCompra}`}>Ver</Link>
                                     </td>
                                 </tr>
                             ))

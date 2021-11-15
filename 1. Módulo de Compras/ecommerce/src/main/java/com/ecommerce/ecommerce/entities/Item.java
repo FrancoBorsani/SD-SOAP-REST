@@ -73,10 +73,4 @@ public class Item {
 		this.pedido = pedido;
 	}
 
-	@Override
-	public String toString() {
-		return "Item [idItem=" + idItem + ", producto=" + producto + ", cantidad=" + cantidad + ", carrito=" + pedido
-				+ "]" + "\n";
-	}
-	
 }

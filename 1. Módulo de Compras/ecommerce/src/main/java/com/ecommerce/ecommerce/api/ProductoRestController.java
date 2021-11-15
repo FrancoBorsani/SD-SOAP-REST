@@ -27,6 +27,7 @@ public class ProductoRestController {
 	
     @GetMapping("")
     public List<Producto> getAllProductos() {
+    	    	    	
     	return productoService.getAllProductosVisibles();
     }
     
@@ -35,12 +36,8 @@ public class ProductoRestController {
     	
     	Producto producto = productoService.getProductoById(idProducto);
     	
-		if (producto == null) {
-			return new ResponseEntity<Producto>(producto, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<Producto>(producto, HttpStatus.OK);
-		}
-   
+		return new ResponseEntity<Producto>(producto, producto == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+		
     }
     
     @GetMapping("/search")
@@ -65,6 +62,15 @@ public class ProductoRestController {
     public ResponseEntity<List<Producto>> getByVendedor(@RequestParam(name="idVendedor") String idVendedor) {
     	
     	List<Producto> productos = productoService.findByVendedor(idVendedor);
+    	    	
+    	return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+   
+    }
+    
+    @GetMapping("/getByRangeOfPrice")
+    public ResponseEntity<List<Producto>> getByRangeOfPrice(@RequestParam(name="min") double min, @RequestParam(name="max") double max) {
+    	
+    	List<Producto> productos = productoService.findByRangeOfPrice(min, max);
     	    	
     	return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
    

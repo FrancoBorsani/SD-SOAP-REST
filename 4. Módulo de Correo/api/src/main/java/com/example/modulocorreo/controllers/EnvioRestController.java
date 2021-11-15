@@ -55,15 +55,14 @@ public class EnvioRestController {
 	@Operation(summary = "Crear un nuevo envio.")
 	@ApiResponses(value = @ApiResponse(responseCode = "201", description = "Envio creado correctamente.", content = {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = Envio.class)) }))
-	@PostMapping("")
+	@PostMapping("/create")
 	public ResponseEntity<?> createEnvio(@Valid @RequestBody CreateEnvioRequest createEnvioRequest) {
 
 		Envio envio = envioService.insertOrUpdate(new Envio(createEnvioRequest.getDescripcion(),
 				Envio.ESTADO_EN_PREPARACION, createEnvioRequest.getDniDestinatario(), UUID.randomUUID().toString(),
 				createEnvioRequest.getVendedor(), createEnvioRequest.getIdOrden()));
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(
-				new InsertOrUpdateEnvioResponse(new ApiMessageResponse(true, "Envio creado correctamente."), envio));
+		return ResponseEntity.status(HttpStatus.CREATED).body(envio);
 	}
 
 	@Operation(summary = "Traer envio por ID.")
