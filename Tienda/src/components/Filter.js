@@ -1,3 +1,5 @@
+import { Button } from "reactstrap";
+
 const Filter = ({ order, setOrder, handleChangeSearch, keyword, categories, categorySelected, handleChangeCategory, rangeOfPrice, handleChangeRangeOfPrice }) => {
 
     return (
@@ -62,6 +64,12 @@ const Filter = ({ order, setOrder, handleChangeSearch, keyword, categories, cate
                 <input type="number" className="form-control" value={rangeOfPrice.minPrice} id="price-min-control" name="minPrice" onChange={handleChangeRangeOfPrice} />
                 <input type="number" className="form-control" value={rangeOfPrice.maxPrice} id="price-max-control" name="maxPrice" onChange={handleChangeRangeOfPrice} />
             </div>
+
+            <Button
+                  className="btn-primary btn-round w-100" color="info" size="lg"  onClick={handleSelectChangeRangeOfPrice}>
+                  Filtrar por precio
+            </Button>
+            
             <hr />            
         </div>
     )

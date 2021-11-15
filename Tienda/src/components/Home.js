@@ -60,13 +60,22 @@ const Home = () => {
     }
 
 
+
     const handleChangeRangeOfPrice = e => {
         
         const { name, value } = e.target;
         setRangeOfPrice({ ...rangeOfPrice, [name]: value });
 
-        let query = e.target.value ? `productos/getByRangeOfPrice?min=${rangeOfPrice.minPrice}&max=${rangeOfPrice.maxPrice}` : "productos";
+    }
 
+    
+    const handleSelectChangeRangeOfPrice = e => {
+
+        const { name, value } = e.target;
+        setRangeOfPrice({ ...rangeOfPrice, [name]: value });
+
+        let query = `productos/getByRangeOfPrice?min=${rangeOfPrice.minPrice}&max=${rangeOfPrice.maxPrice}`;
+  
         getData(query)
             .then(res => {
                 setProducts(res);
@@ -104,6 +113,7 @@ const Home = () => {
                 handleChangeCategory={handleChangeCategory}
                 rangeOfPrice={rangeOfPrice}
                 handleChangeRangeOfPrice={handleChangeRangeOfPrice}
+                handleSelectChangeRangeOfPrice={handleSelectChangeRangeOfPrice}
             />
             <div className="col-md-9">
                 <div className="row justify-content-center">
