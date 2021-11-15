@@ -30,4 +30,5 @@ public class PedidoService {
 		return pedidoRepository.findByComprador(idComprador);			
 	}
 
+	public List<Pedido> findByMonth(int month) { return pedidoRepository.findByMonth(month); }
 }

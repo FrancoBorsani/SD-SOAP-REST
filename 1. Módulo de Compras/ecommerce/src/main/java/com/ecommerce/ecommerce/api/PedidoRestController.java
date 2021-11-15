@@ -1,5 +1,7 @@
 package com.ecommerce.ecommerce.api;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,8 +42,29 @@ public class PedidoRestController {
 	@Autowired
 	TarjetaService tarjetaService;
 
+	public double calcularTotalGastado(int idTarjetaUsada, LocalDateTime fecha){
+		double totalGastado = 0;
+		List<Pedido> pedidosDelMes;
+		try {
+			pedidosDelMes = pedidoService.findByMonth(fecha.getMonthValue());
+		}
+		catch(Exception e){
+			return totalGastado;
+		}
+		if (pedidosDelMes.size()==0){
+			return totalGastado;
+		}
+
+		for(Pedido p : pedidosDelMes){
+			if(p.getIdTarjetaUsada()==idTarjetaUsada){
+				totalGastado+=p.getTotal();
+			}
+		}
+		return totalGastado;
+	}
+
 	@PostMapping("/agregar")
-	public ResponseEntity<Pedido> agregarPedido(@RequestBody Pedido newPedido) {
+	public Pedido agregarPedido(@RequestBody Pedido newPedido) {
 		
 		String username = "";
 		
@@ -53,14 +76,15 @@ public class PedidoRestController {
 		User u = usuarioService.traerUser(username);
 		newPedido.setComprador(u);
 
-		double totalGastado = 0; // getTotalGastado();
-
 		Tarjeta tarjetaUsada = tarjetaService.findById(newPedido.getIdTarjetaUsada());
+		double totalGastado = calcularTotalGastado(newPedido.getIdTarjetaUsada(), newPedido.getCreatedAt());
 		String validacion = banca.validar_limite_mensual(tarjetaUsada.getNumero(), tarjetaUsada.getTipo(),
 				newPedido.getTotal(), totalGastado);
 
+		System.out.println(newPedido.getVendedor());
+
 		if (validacion.equals("1")){
-			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK);
+			return this.pedidoService.guardarPedido(newPedido);
 		}
 		else{
 			if (tarjetaUsada.getTipo().equals("debito")){

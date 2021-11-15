@@ -84,6 +84,7 @@ const CreditCards = () => {
                                 name="tipo"
                                 onChange={handleChangeInput}
                             >
+                            <option value="" disabled selected hidden>Seleccione el tipo de tarjeta</option>
                             <option value="credito">Credito</option>
                             <option value="debito">Debito</option>
                             </select>

@@ -54,7 +54,7 @@ class UsuarioService(CorsService):
         try:
             idUsuario = make_query(f"SELECT u.idUsuario FROM usuario u WHERE u.nombre='{nombre}' AND u.apellido='{apellido}' AND u.dni={dni}")[0][0]
             tarjetas_usuario = make_query(f"SELECT t.numeroTarjeta FROM tarjeta t INNER JOIN cuenta_bancaria c ON c.idUsuario = {idUsuario} WHERE t.tipoTarjeta='{tipo_tarjeta}';")
-            tarjetas_usuario = [t[0] for t in tarjetas_usuario]            
+            tarjetas_usuario = [str(t[0]) for t in tarjetas_usuario]            
         except:
             tarjetas_usuario = []
         finally:

@@ -16,5 +16,8 @@ public interface IPedidoRepository extends JpaRepository<Pedido, Long> {
     
     @Query(nativeQuery=true,value="SELECT * FROM Pedido as p WHERE p.comprador_id = (:idComprador)")
     public abstract List<Pedido> findByComprador(long idComprador);
+
+    @Query(nativeQuery=true,value="SELECT * FROM Pedido as p WHERE MONTH(p.createdat) = (:month)")
+    public abstract List<Pedido> findByMonth(int month);
 	
 }
