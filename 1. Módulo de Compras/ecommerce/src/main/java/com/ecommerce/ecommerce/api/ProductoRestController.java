@@ -27,6 +27,7 @@ public class ProductoRestController {
 	
     @GetMapping("")
     public List<Producto> getAllProductos() {
+    	    	    	
     	return productoService.getAllProductosVisibles();
     }
     

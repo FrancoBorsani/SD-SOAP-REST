@@ -55,7 +55,7 @@ public class EnvioRestController {
 	@Operation(summary = "Crear un nuevo envio.")
 	@ApiResponses(value = @ApiResponse(responseCode = "201", description = "Envio creado correctamente.", content = {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = Envio.class)) }))
-	@PostMapping("")
+	@PostMapping("/create")
 	public ResponseEntity<?> createEnvio(@Valid @RequestBody CreateEnvioRequest createEnvioRequest) {
 
 		Envio envio = envioService.insertOrUpdate(new Envio(createEnvioRequest.getDescripcion(),

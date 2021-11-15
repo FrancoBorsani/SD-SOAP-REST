@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ecommerce.ecommerce.banca.BancaSoapClient;
+import com.ecommerce.ecommerce.correo.CorreoRestClient;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecommerce.ecommerce.entities.Item;
 import com.ecommerce.ecommerce.entities.Pedido;
 import com.ecommerce.ecommerce.entities.User;
 import com.ecommerce.ecommerce.services.PedidoService;
@@ -48,6 +51,19 @@ public class PedidoRestController {
 		newPedido.setComprador(u);
 
 		//String validacion = banca.validar_limite_mensual(Long.valueOf(), tipo_tarjeta, newPedido.getTotal(), total_gastado);
+		
+		
+		/***************************** CREAR ENVIO ASOCIADO AL PEDIDO **************************************/
+		
+		String descripcionPedido = "";
+				
+		for(Item item : newPedido.getListaItems()) {
+			descripcionPedido += item.getProducto().getDescripcion() + " x " + item.getCantidad();
+		}
+				
+		CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), "58", newPedido.getComprador().getApellido() + " " + newPedido.getVendedor().getNombre());
+		
+		/***************************************************************************************************/
 		
 		return this.pedidoService.guardarPedido(newPedido);
 	}
