@@ -9,7 +9,7 @@ from spyne.protocol.http import HttpRpc
 from spyne.protocol.json import JsonDocument
 from spyne.model.complex import Iterable
 from spyne.model.primitive import UnsignedInteger
-from spyne.model.primitive import String,Integer,Float,Integer,Boolean
+from spyne.model.primitive import String,Integer as Integer_spyne,Float,Boolean
 from spyne.server.wsgi import WsgiApplication
 from flask import jsonify
 from sqlalchemy import insert
@@ -38,50 +38,84 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class User( db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     username = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
-    name = db.Column(db.String(1000))
-    lastname = db.Column(db.String(1000))
-    dni = db.Column(db.Integer)
-    saldo = db.Column(db.Float)
-    cuentas = db.relationship('Bank',backref='user',lazy='dynamic')
-    tarjetas = db.relationship('Tarjeta',backref='user',lazy='dynamic')
-    productos = db.relationship('Product',backref='user',lazy='dynamic')
+    nombre = db.Column(db.String(1000))
+    apellido = db.Column(db.String(1000))
+    dni = db.Column(db.String(1000))
+    email = db.Column(db.String(1000))
+    telefono = db.Column(db.String(1000))
+    saldo = db.Column(db.Float, nullable=True)
+    productos = db.relationship('Producto',backref='user',lazy='dynamic')
+    cuentas = db.relationship('Cuentas',backref='user',lazy='dynamic')
+    userRoles = db.relationship('User_role',backref='user',lazy='dynamic')
 
-class Bank(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    cbu = db.Column(db.Integer)
+class User_role(db.Model):
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    role = db.Column(db.String(1000))
+    creatdat = db.Column(db.DateTime)
+    updateat = db.Column(db.DateTime)
+    user_id= db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+class Cuentas(db.Model):
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     banco = db.Column(db.String(1000))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    numero = db.Column(db.String(1000))
+    user_id= db.Column(db.Integer, db.ForeignKey('user.id'))
 
-class Tarjeta(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    numero = db.Column(db.Integer)
-    tipo = db.Column(db.String(1000))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    producto = db.Column(db.Integer, db.ForeignKey('producto.id'))
+    cantidad = db.Column(db.Integer)
+    pedido = db.Column(db.Integer, db.ForeignKey('pedido.id'))
+
+
+
+
+class Pedido(db.Model):
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    codigoDeSeguimiento = db.Column(db.String(1000))
+    idTarjetaUsada = db.Column(db.Integer)
+    cobrado = db.Column(db.Integer,nullable=True)
+    estadoDeEnvio = db.Column(db.String(1000))
+    total = db.Column(db.Float, nullable=True)
+    creatdat = db.Column(db.DateTime)
+    updateat = db.Column(db.DateTime)
+    items = db.relationship('Item',backref='pedido',lazy='dynamic')
+    comprador= db.Column(db.Integer, db.ForeignKey('user.id'))
+    vendedor= db.Column(db.Integer, db.ForeignKey('user.id'))
+
 
 class Categoria(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nombre= db.Column(db.String(100), unique=True)
-    productos = db.relationship('Product',backref='categoria',lazy='dynamic')
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    nombre= db.Column(db.String(100))
+    productos = db.relationship('Producto',backref='categoria',lazy='dynamic')
 
-class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    descripcioncorta = db.Column(db.String(100))
-    descipcionlarga= db.Column(db.String(100))
+class Producto(db.Model):
+    id_producto = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    nombre = db.Column(db.String(100))
+    descripcion= db.Column(db.String(100))
     imagen = db.Column(db.String(100))
     precio = db.Column(db.Float)
-    visible = db.Column(db.Boolean)
     stock = db.Column(db.Integer)
+    cantidad_vendida =  db.Column(db.Integer)
+    forma_de_pago = db.Column(db.String(100))
+    vendedor_id= db.Column(db.Integer, db.ForeignKey('user.id'))
     categoria_id_categoria= db.Column(db.Integer, db.ForeignKey('categoria.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+    def __repr__(self):
+        rep = 'Producto(' + self.nombre + ',' +self.descripcion+','+self.imagen+','+ str(self.precio) +','+ str(self.stock) +','+ str(self.cantidad_vendida) + self.forma_de_pago + ')'
+        return rep
+
 
 db.create_all()
 user_schema = UserSchema()
 product_schema = ProductSchema()
 
-"""
+
 class CorsService(ServiceBase):
     origin = '*'
 
@@ -91,45 +125,20 @@ def _on_method_return_object(ctx):
 
 CorsService.event_manager.add_listener('method_return_object',
                                                         _on_method_return_object)
-"""
+
 #metodos
 
-class Sales(ServiceBase):
+class Sales(CorsService):
     
-    @srpc(String,String,String,String,Integer, _returns=String)
-    def register(nombre, apellido,username,password,dni):
+    @srpc(String,String,String,String,String,String,String, _returns=String)
+    def register(nombre, apellido,username,password,dni,email,telefono):
         user = User.query.filter_by(username=username).first()
         if user:
             return('User already registered')
-        new_user = User(username=username, password=generate_password_hash(password, method='sha256'), name=nombre, lastname=apellido,dni=dni)
+        new_user = User(username=username, password=generate_password_hash(password, method='sha256'), nombre=nombre, apellido=apellido,dni=dni, email=email,telefono=telefono)
         db.session.add(new_user)
         db.session.commit()
-        return('User registered succesfull')
-
-    @srpc(Integer,String,Integer, _returns=String)
-    def add_bank_account(cbu,banco,user_id):
-        new_bank = Bank(banco=banco,cbu=cbu,user_id=user_id)
-        db.session.add(new_bank)
-        db.session.commit()
-        return('New account saved')
-
-    @srpc(Integer,Integer,String,Integer, _returns=String)
-    def send_money(transaccion,cbu,banco,user_id):
-        tmp_user= User.query.filter_by(id=user_id).first()
-        usaldo=tmp_user.saldo
-        if(usaldo>=transaccion):
-            tmp_user.saldo=tmp_user.saldo-transaccion
-            db.session.add(tmp_user)
-            return("Transferencia aceptada")
-        else:
-            return('No tiene suficiente saldo en la cuenta')
-
-    @srpc(_returns= String)
-    def get_accounts():
-        bank = bank.query.all()
-        for i in bank:
-            message = message +";"+bank.banco+","+bank.cbu+","+bank.user_id 
-        return(messsage)
+        return('User registered succesfully')
 
     @srpc(String, _returns=String)
     def publish_category(nombre):
@@ -138,45 +147,98 @@ class Sales(ServiceBase):
         db.session.commit()
         return('Category published')
 
-    """ @srpc(String,String,String,Float,Boolean,Integer,Integer, _returns=String)
-    def edit_product(descripcioncorta, descipcionlarga, imagen, precio, visible, stock, categoria_id_categoria):
-        new_product = Product(descripcioncorta=descripcioncorta, descipcionlarga=descipcionlarga, imagen=imagen, precio=precio, visible=True, stock=stock, categoria_id_categoria=categoria_id_categoria)
+    @srpc(String,String,String,String,Float,Integer_spyne(nullable=False),Integer_spyne(nullable=False),Integer_spyne(nullable=False),Integer_spyne(nullable=False), _returns=String)
+    def publish_product(nombre, descripcion, imagen, forma_de_pago, precio, stock, cantidad_vendida, categoria_id_categoria, vendedor_id):
+        new_product = Producto(nombre=nombre, descripcion=descripcion, forma_de_pago=forma_de_pago, imagen=imagen, precio=precio, stock=stock, cantidad_vendida=cantidad_vendida, categoria_id_categoria=categoria_id_categoria,vendedor_id=vendedor_id)
         db.session.add(new_product)
         db.session.commit()
-        return('Product published')
- """
-    @srpc(_returns=AnyDict)
+        return('Producto published')    
+
+    @srpc(Integer_spyne,String,String,String,String,Float,Integer_spyne,Integer_spyne,Integer_spyne, _returns=String)
+    def edit_product(id,nombre, descripcion, imagen,forma_de_pago, precio, stock, categoria_id_categoria,vendedor_id):
+        try:
+            product = Producto.query.filter_by(id_producto=id).first()
+            product.nombre=nombre
+            product.descripcion=descripcion
+            product.imagen=imagen
+            product.precio=precio
+            product.stock=stock
+            product.forma_de_pago=forma_de_pago
+            product.vendedor_id=vendedor_id
+            product.categoria_id_categoria=categoria_id_categoria
+            db.session.commit()
+            return('Producto Updated')
+        except:
+            return("Product not found.")
+   
+    @srpc(Integer_spyne,_returns=Boolean)
+    def check_edit(id):
+        try:
+            product = Producto.query.filter_by(id_producto=id).first()
+            return(product.id_producto==id)
+        except:
+            return(-1)
+
+    @srpc(_returns=String)
     def get_products():
-        #p_message = []
-        tmp_products = db.session.query(Product).filter_by(visible=True)
-        #tmp = Product.query(all)
-        #print(tmp_products)
-        #for i in tmp_products:
-        #p_message = product_schema.dump(Product)
-        #p_message = json.dumps(tmp_products, cls=AlchemyEncoder)
-        # p_message.append(";"+i.descripcioncorta+","+str(i.precio)+","+str(i.stock)+","+i.descipcionlarga+","+i.categoria.nombre+";" )
-        #print(p_message)
-        return jsonify(tmp_products)
+        product = Producto.query.all()
+        print(json.dumps(repr(product)))
+        return(json.dumps(repr(product)))
 
+    @srpc(Integer_spyne,_returns=String)
+    def get_products_bycat(cat_id):
+        try:
+            product = Producto.query.filter_by(categoria_id_categoria=cat_id).all()
+            print(json.dumps(repr(product)))
+            return(json.dumps(repr(product)))
+        except:
+            return("Products not found.")
+    @srpc(Integer_spyne,_returns=String)
+    def get_products_byuser(usr_id):
+        try:
+            product = Producto.query.filter_by(vendedor_id=usr_id).all()
+            print(json.dumps(repr(product)))
+            return(json.dumps(repr(product)))
+        except:
+            return("Products not found.")
+    @srpc(Integer_spyne,Integer_spyne,_returns=String)
+    def get_products_byusercat(cat_id,usr_id):
+        try:
+            product = Producto.query.filter_by(vendedor_id=usr_id,categoria_id_categoria=cat_id).all()
+            print(json.dumps(repr(product)))
+            return(json.dumps(repr(product)))
+        except:
+            return("Products not found.")
     
-    @srpc(Integer,_returns=String)
-    def get_products_bysalesman(user_id):
-        tmp_products = db.session.query(Product).filter_by(visible=Trueuser_id)
-        #for i in tmp_products:
-        p_message = json.dumps(tmp_products, cls=AlchemyEncoder)
-            #append(";"+i.descripcioncorta+","+str(i.precio)+","+str(i.stock)+","+i.descipcionlarga+","+i.categoria.nombre+";" )
-        print(p_message)
-        return(str(p_message))
-    
+    @srpc(Integer_spyne,_returns=Float)
+    def check_dinero(id):
+        try:
+            pedidos = Pedido.query.filter_by(vendedor_id=id,cobrado=1)
+            for p in pedidos:    
+                saldo = 0
+                duration= p.creatdat-datetime.now()
+                if(duration.days>=2):
+                    saldo+=p.total
+            return(saldo)
+        except:
+            return(float(0))
 
-    @srpc(String,String,String,Float,Boolean,Integer,Integer, _returns=String)
-    def publish_product(descripcioncorta, descipcionlarga, imagen, precio, visible, stock, categoria_id_categoria):
-        new_product = Product(descripcioncorta=descripcioncorta, descipcionlarga=descipcionlarga, imagen=imagen, precio=precio, visible=True, stock=stock, categoria_id_categoria=categoria_id_categoria)
-        db.session.add(new_product)
-        db.session.commit()
-        return('Product published')
+    @srpc(Integer_spyne,_returns=Float)
+    def retirar_dinero(id):
+        try:
+            pedidos = Pedido.query.filter_by(vendedor_id=id,cobrado=1)
+            user = User.query.filter_by(id=id)
+            for p in pedidos:
+                duration= p.creatdat-datetime.now()
+                if(duration.days>=2):
+                    saldo+=p.total
+                    p.cobrado=1
+                user.saldo=user.saldo-saldo
+            return(saldo)
+        except:
+            return(float(0))
 
-"""
+
 if __name__=='__main__':
     from wsgiref.simple_server import make_server
     logging.basicConfig(level=logging.DEBUG)
@@ -194,21 +256,4 @@ if __name__=='__main__':
     logging.info("listening to http://127.0.0.1:8089")
     logging.info("wsdl is at: http://localhost:8089/?wsdl")
     server.serve_forever()
-"""
-application = Application([Sales], 'sales',
-                          in_protocol=Soap11(validator='lxml'),
-                          out_protocol=Soap11())
 
-wsgi_application = WsgiApplication(application)
-
-if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
-    logging.getLogger('spyne.protocol.xml').setLevel(logging.INFO)
-
-    PORT = 8089
-
-    logging.info(f"listening to http://127.0.0.1:{PORT}")
-    logging.info(f"wsdl at: http://localhost:{PORT}/?wsdl")
-
-    server = make_server('127.0.0.1', PORT, wsgi_application)
-    server.serve_forever()

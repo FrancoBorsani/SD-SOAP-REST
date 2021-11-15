@@ -59,6 +59,9 @@ public class Pedido {
 	
 	@Column(name = "codigoDeSeguimiento")
 	private String codigoDeSeguimiento;
+	
+	@Column(name = "cobrado",nullable=true)
+	private int cobrado;
 
 	public Pedido() {}
 

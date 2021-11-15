@@ -31,7 +31,7 @@ app = Flask(__name__)
 CORS(app)
 
 app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/ecommerce'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:test@localhost/ecommerce'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -66,6 +66,20 @@ class Cuentas(db.Model):
     banco = db.Column(db.String(1000))
     numero = db.Column(db.String(1000))
     user_id= db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+class Pedido(db.Model):
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    codigoDeSeguimiento = db.Column(db.String(1000))
+    idTarjetaUsada = db.Column(db.Integer)
+    cobrado = db.Column(db.Integer,nullable=True)
+    estadoDeEnvio = db.Column(db.String(1000))
+    total = db.Column(db.Float, nullable=True)
+    creatdat = db.Column(db.DateTime)
+    updateat = db.Column(db.DateTime)
+    productos = db.relationship('Producto',backref='categoria',lazy='dynamic')
+    comprador= db.Column(db.Integer, db.ForeignKey('user.id'))
+    vendedor= db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
 class Categoria(db.Model):
@@ -172,7 +186,34 @@ class Sales(ServiceBase):
             return(json.dumps(repr(product)))
         except:
             return("Products not found.")
+    
+    @srpc(Integer_spyne,_returns=Float)
+    def check_dinero(id):
+        try:
+            pedidos = Pedido.query.filter_by(vendedor_id=id,cobrado=1)
+            for p in pedidos:    
+                saldo = 0
+                duration= p.creatdat-datetime.now()
+                if(duration.days>=2):
+                    saldo+=p.total
+            return(saldo)
+        except:
+            return(float(0))
 
+    @srpc(Integer_spyne,_returns=Float)
+    def retirar_dinero(id):
+        try:
+            pedidos = Pedido.query.filter_by(vendedor_id=id,cobrado=1)
+            user = User.query.filter_by(id=id)
+            for p in pedidos:
+                duration= p.creatdat-datetime.now()
+                if(duration.days>=2):
+                    saldo+=p.total
+                    p.cobrado=1
+                user.saldo=user.saldo-saldo
+            return(saldo)
+        except:
+            return(float(0))
 
 application = Application([Sales], 'modulo_ventas_soap',
                           in_protocol=Soap11(validator='lxml'),

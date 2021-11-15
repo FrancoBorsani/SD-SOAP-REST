@@ -3,6 +3,7 @@ import { Container, Spinner } from "reactstrap";
 import ProductItem from "components/ProductItem";
 import { getData } from "utils/fetchData";
 import Filter from "components/Filter";
+import axios from 'axios';
 
 const Home = () => {
 
@@ -16,13 +17,19 @@ const Home = () => {
 
     useEffect(() => {
 
-        getData("productos")
-            .then(res => {
-                setProducts(res);
-                setLoading(false);
-            })
-            .catch(err => console.log(err));
+    const url = 'http://localhost:8089/get_products?';
 
+// Axios Test.
+const axiosTest = axios.get
+
+// Axios Test Data.
+axiosTest(url).then(function(axiosTestResult) {
+
+   
+   
+    setProducts(axiosTestResult.data)	
+    console.log(axiosTestResult.data) 
+})
         getData("categorias")
             .then(res => {
                 setCategories(res);

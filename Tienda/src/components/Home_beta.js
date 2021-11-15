@@ -30,7 +30,7 @@ axiosTest(url).then(function(axiosTestResult) {
 
    
    
-    setProducts(axiosTestResult.data)	
+
     console.log(axiosTestResult.data) 
 })
 
