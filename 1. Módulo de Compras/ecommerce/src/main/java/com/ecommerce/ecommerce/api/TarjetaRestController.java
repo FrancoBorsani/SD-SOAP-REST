@@ -1,10 +1,8 @@
 package com.ecommerce.ecommerce.api;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.ecommerce.ecommerce.banca.BancaSoapClient;
-import com.ecommerce.ecommerce.entities.Producto;
 import com.ecommerce.ecommerce.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

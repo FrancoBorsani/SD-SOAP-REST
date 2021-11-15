@@ -10,7 +10,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.ecommerce.ecommerce.implementation.UserService;
-import com.ecommerce.ecommerce.security.JwtUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

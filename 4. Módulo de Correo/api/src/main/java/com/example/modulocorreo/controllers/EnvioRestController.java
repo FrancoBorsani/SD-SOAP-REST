@@ -62,8 +62,7 @@ public class EnvioRestController {
 				Envio.ESTADO_EN_PREPARACION, createEnvioRequest.getDniDestinatario(), UUID.randomUUID().toString(),
 				createEnvioRequest.getVendedor(), createEnvioRequest.getIdOrden()));
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(
-				new InsertOrUpdateEnvioResponse(new ApiMessageResponse(true, "Envio creado correctamente."), envio));
+		return ResponseEntity.status(HttpStatus.CREATED).body(envio);
 	}
 
 	@Operation(summary = "Traer envio por ID.")

@@ -29,5 +29,9 @@ public class PedidoService {
 	public List<Pedido> findByComprador(long idComprador) {
 		return pedidoRepository.findByComprador(idComprador);			
 	}
+	
+    public Pedido findByIdCompra(long idCompra) {
+    	return pedidoRepository.findByIdCompra(idCompra);
+    }
 
 }

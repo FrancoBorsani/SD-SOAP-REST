@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.ecommerce.ecommerce.banca.BancaSoapClient;
 import com.ecommerce.ecommerce.correo.CorreoRestClient;
-
+import com.ecommerce.ecommerce.correo.EnvioResponse;
 import com.ecommerce.ecommerce.entities.Tarjeta;
 import com.ecommerce.ecommerce.services.TarjetaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,8 +73,11 @@ public class PedidoRestController {
 				descripcionPedido += item.getProducto().getDescripcion() + " x " + item.getCantidad();
 			}
 
-			CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), "58",
+			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), "58",
 					newPedido.getComprador().getApellido() + " " + newPedido.getVendedor().getNombre());
+			
+			newPedido.setCodigoDeSeguimiento(envio.getCodigoDeSeguimiento());
+			newPedido.setEstadoDeEnvio(envio.getEstado());
 
 			/***************************************************************************************************/
 
@@ -107,6 +111,26 @@ public class PedidoRestController {
 
 		return pedidos;
 
+	}
+	
+	@GetMapping("/{id}")
+    public ResponseEntity<Pedido> getPedidoById(@PathVariable("id") int idCompra) {
+		
+    	Pedido pedido = pedidoService.findByIdCompra(idCompra);
+    	
+    	if(pedido == null ) return new ResponseEntity<Pedido>(pedido, HttpStatus.NOT_FOUND);
+    	
+    	EnvioResponse envio = CorreoRestClient.callGetEnvioByCodigoAPI(pedido.getCodigoDeSeguimiento());
+    	
+    	System.out.println(envio);
+    	
+    	if(envio != null) {
+    		pedido.setEstadoDeEnvio(envio.getEstado());
+    		pedidoService.guardarPedido(pedido);
+    	}
+
+		return new ResponseEntity<Pedido>(pedido, pedido == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+		
 	}
 
 }

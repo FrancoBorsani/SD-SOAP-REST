@@ -36,12 +36,8 @@ public class ProductoRestController {
     	
     	Producto producto = productoService.getProductoById(idProducto);
     	
-		if (producto == null) {
-			return new ResponseEntity<Producto>(producto, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<Producto>(producto, HttpStatus.OK);
-		}
-   
+		return new ResponseEntity<Producto>(producto, producto == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+		
     }
     
     @GetMapping("/search")

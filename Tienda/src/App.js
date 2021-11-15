@@ -17,6 +17,7 @@ import NotFound from "components/NotFound";
 import WizardPage from "pages/WizardPage";
 import Claims from "pages/Claims";
 import ClaimCreatePage from "pages/ClaimCreatePage";
+import DetailOrderPage from "pages/DetailOrderPage";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path={ClientRoutes.PRODUCT_CREATE} component={ProductCreatePage} exact />
         <Route path={ClientRoutes.PRODUCT_MODIFY} component={ProductModifyPage} exact />
         <Route path={ClientRoutes.ORDERS_LIST} component={Orders} exact />
+        <Route path={ClientRoutes.ORDER_DETAIL} component={DetailOrderPage} exact />
         <Route path={ClientRoutes.CHECKOUT} component={WizardPage} exact />
         <Route path={ClientRoutes.CLAIMS_LIST} component={Claims} exact />
         <Route path={ClientRoutes.CLAIMS_CREATE} component={ClaimCreatePage} exact />

@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class CorreoRestClient {
 	
-	private static final String GET_ENVIO_BY_CODIGO_ENVIO_API = "http://localhost:8083/api/v1/envios/{codigoDeSeguimiento}";
+	private static final String GET_ENVIO_BY_CODIGO_ENVIO_API = "http://localhost:8083/api/v1/envios/codigo/{codigoDeSeguimiento}";
 	
 	private static final String CREATE_ENVIO_API = "http://localhost:8083/api/v1/envios/create";
 
@@ -20,7 +20,7 @@ public class CorreoRestClient {
 		param.put("codigoDeSeguimiento", codigoDeSeguimiento);
 		
 		EnvioResponse response = restTemplate.getForObject(GET_ENVIO_BY_CODIGO_ENVIO_API, EnvioResponse.class, param);
-		
+				
 		return response;
 		
 	}

@@ -11,6 +11,8 @@ import com.ecommerce.ecommerce.entities.Pedido;
 @Repository("pedidoRepository")
 public interface IPedidoRepository extends JpaRepository<Pedido, Long> {
 	
+    public abstract Pedido findByIdCompra(long idCompra);
+	
     @Query(nativeQuery=true,value="SELECT * FROM Pedido as p WHERE p.vendedor_id = (:idVendedor)")
     public abstract List<Pedido> findByVendedor(long idVendedor);
     
