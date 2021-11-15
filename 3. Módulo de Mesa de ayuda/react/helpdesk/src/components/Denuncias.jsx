@@ -32,6 +32,10 @@ class Denuncias extends React.Component {
         return(
             <div className="container">
                 <br/>  
+                <div className="container">
+                    <h3>Denuncias</h3>
+                </div>
+                <br/>
                 <table className="table table-hover table-dark">
                     <thead>
                         <tr>

@@ -155,7 +155,14 @@ public class PedidoRestController {
     	} 
 
 		return new ResponseEntity<Pedido>(pedido, pedido == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
-		
+	}
+
+	@GetMapping("/reclamos/{id}")
+    public ResponseEntity<Pedido> getPedidoByIdReclamos(@PathVariable("id") int idCompra) {
+
+    	Pedido pedido = pedidoService.findByIdCompra(idCompra);
+
+		return new ResponseEntity<Pedido>(pedido, pedido == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 
 }
