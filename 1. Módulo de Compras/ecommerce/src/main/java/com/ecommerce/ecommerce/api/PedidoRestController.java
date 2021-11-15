@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ecommerce.ecommerce.banca.BancaSoapClient;
+import com.ecommerce.ecommerce.entities.Tarjeta;
+import com.ecommerce.ecommerce.services.TarjetaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,9 +37,11 @@ public class PedidoRestController {
 	@Autowired
 	BancaSoapClient banca;
 
+	@Autowired
+	TarjetaService tarjetaService;
 
 	@PostMapping("/agregar")
-	public Pedido agregarPedido(@RequestBody Pedido newPedido) {
+	public ResponseEntity<Pedido> agregarPedido(@RequestBody Pedido newPedido) {
 		
 		String username = "";
 		
@@ -47,12 +53,23 @@ public class PedidoRestController {
 		User u = usuarioService.traerUser(username);
 		newPedido.setComprador(u);
 
-		int totalGastado = 0; // getTotalGastado();
+		double totalGastado = 0; // getTotalGastado();
 
-		String validacion = banca.validar_limite_mensual(newPedido.getTarjetaUsada().getNumero(), newPedido.getTarjetaUsada().getTipo(),
-				(int) newPedido.getTotal(), totalGastado);
-		
-		return this.pedidoService.guardarPedido(newPedido);
+		Tarjeta tarjetaUsada = tarjetaService.findById(newPedido.getIdTarjetaUsada());
+		String validacion = banca.validar_limite_mensual(tarjetaUsada.getNumero(), tarjetaUsada.getTipo(),
+				newPedido.getTotal(), totalGastado);
+
+		if (validacion.equals("1")){
+			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK);
+		}
+		else{
+			if (tarjetaUsada.getTipo().equals("debito")){
+				throw new RuntimeException("Error: Saldo insuficiente.");
+			}
+			else{
+				throw new RuntimeException("Error: Esta tarjeta de credito ya supero el limite mensual.");
+			}
+		}
 	}
 	
 	@GetMapping("/getByVendedorOCliente")

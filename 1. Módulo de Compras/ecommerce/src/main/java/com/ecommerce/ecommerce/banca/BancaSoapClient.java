@@ -11,7 +11,7 @@ import java.net.URL;
 @Service
 public class BancaSoapClient {
 
-    public String validar_limite_mensual(String nro_tarjeta, String tipo_tarjeta, int total_a_pagar, int total_gastado) {
+    public String validar_limite_mensual(String nro_tarjeta, String tipo_tarjeta, double total_a_pagar, double total_gastado) {
 
         String xml_parsed="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:mod=\"modulo_banca_soap\">\r\n" +
                 "   <soapenv:Header/>\r\n" +
