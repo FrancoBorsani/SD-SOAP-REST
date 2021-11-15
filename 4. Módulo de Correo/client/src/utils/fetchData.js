@@ -80,3 +80,4 @@ export const deleteData = async (url, token) => {
 
     return data
 }
+
