@@ -1,7 +1,6 @@
 package com.ecommerce.ecommerce.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +23,6 @@ public class TarjetaService {
 		return tarjetaRepository.findByIdUser(idUser);
 	}
 
-	public Optional<Tarjeta> findById(int idTarjeta) {
-		return tarjetaRepository.findById(idTarjeta);
-	}
+	public Tarjeta findById(int idTarjeta) { return tarjetaRepository.findById(idTarjeta); }
 
 }

@@ -11,7 +11,7 @@ import java.net.URL;
 @Service
 public class BancaSoapClient {
 
-    public String validar_limite_mensual(long nro_tarjeta, String tipo_tarjeta, int total_a_pagar, int total_gastado) {
+    public String validar_limite_mensual(String nro_tarjeta, String tipo_tarjeta, double total_a_pagar, double total_gastado) {
 
         String xml_parsed="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:mod=\"modulo_banca_soap\">\r\n" +
                 "   <soapenv:Header/>\r\n" +
@@ -31,7 +31,7 @@ public class BancaSoapClient {
         return callService(xml_parsed, "validar_limite_mensual");
     }
 
-    public String validar_tarjeta(long nro_tarjeta, String tipo_tarjeta, String nombre, String apellido, long dni) {
+    public String validar_tarjeta(String nro_tarjeta, String tipo_tarjeta, String nombre, String apellido, long dni) {
 
         String xml_parsed="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:mod=\"modulo_banca_soap\">\r\n" +
                 "   <soapenv:Header/>\r\n" +
@@ -50,7 +50,45 @@ public class BancaSoapClient {
                 "      </mod:validar_tarjeta>\r\n" +
                 "   </soapenv:Body>\r\n" +
                 "</soapenv:Envelope>";
+
         return callService(xml_parsed, "validar_tarjeta");
+    }
+
+    public String depositar_cuenta_bancaria(String nro_cuenta, double cantidad_a_depositar) {
+
+        String xml_parsed="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:mod=\"modulo_banca_soap\">\r\n" +
+                "   <soapenv:Header/>\n"+
+                "   <soapenv:Body>\n"+
+                "      <mod:depositar_cuenta_bancaria>\n"+
+                "         <!--Optional:-->\n"+
+                "         <mod:nro_cuenta>"+ nro_cuenta +"</mod:nro_cuenta>\n"+
+                "         <!--Optional:-->\n"+
+                "         <mod:cantidad_a_depositar>"+ cantidad_a_depositar +"</mod:cantidad_a_depositar>\n"+
+                "      </mod:depositar_cuenta_bancaria>\n"+
+                "   </soapenv:Body>\n"+
+                "</soapenv:Envelope>\n";
+
+        return callService(xml_parsed, "depositar_cuenta_bancaria");
+    }
+
+    public String transferir_plata_por_reclamo(String nro_cuenta_vendedor, String nro_tarjeta_usada_comprador, double cantidad_a_devolver) {
+
+        String xml_parsed="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:mod=\"modulo_banca_soap\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "      <mod:transferir_plata_por_reclamo>\n" +
+                "         <!--Optional:-->\n" +
+                "         <mod:nro_cuenta_vendedor>"+ nro_cuenta_vendedor +"</mod:nro_cuenta_vendedor>\n" +
+                "         <!--Optional:-->\n" +
+                "         <mod:nro_tarjeta_usada_comprador>"+ nro_tarjeta_usada_comprador +"</mod:nro_tarjeta_usada_comprador>\n" +
+                "         <!--Optional:-->\n" +
+
+                "         <mod:cantidad_a_devolver>"+ cantidad_a_devolver +"</mod:cantidad_a_devolver>\n" +
+                "      </mod:transferir_plata_por_reclamo>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
+
+        return callService(xml_parsed, "transferir_plata_por_reclamo");
     }
 
     public static String callService(String request, String method_name) {
