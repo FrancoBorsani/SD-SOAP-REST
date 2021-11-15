@@ -1,6 +1,6 @@
 import { Button } from "reactstrap";
 
-const Filter = ({ order, setOrder, handleChangeSearch, keyword, categories, categorySelected, handleChangeCategory, rangeOfPrice, handleChangeRangeOfPrice }) => {
+const Filter = ({ order, setOrder, handleChangeSearch, keyword, categories, categorySelected, handleChangeCategory, rangeOfPrice, handleChangeRangeOfPrice, handleSelectChangeRangeOfPrice }) => {
 
     return (
         <div className="col-md-4 col-lg-3 mt-3">
