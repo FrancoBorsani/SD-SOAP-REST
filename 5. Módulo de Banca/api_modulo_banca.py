@@ -45,7 +45,7 @@ def update_row(query):
 
   
 class UsuarioService(CorsService):
-    @rpc(Integer(nullable=False), Unicode(nullable=False), Unicode(nullable=False), Unicode(nullable=False), Integer(nullable=False), _returns=Integer(nullable=False))
+    @rpc(Unicode(nullable=False), Unicode(nullable=False), Unicode(nullable=False), Unicode(nullable=False), Integer(nullable=False), _returns=Integer(nullable=False))
     def validar_tarjeta(ctx, nro_tarjeta, tipo_tarjeta, nombre, apellido, dni):
         """
         Valida que la informacion que registro el cliente coincida con el de la base de datos.
@@ -54,13 +54,13 @@ class UsuarioService(CorsService):
         try:
             idUsuario = make_query(f"SELECT u.idUsuario FROM usuario u WHERE u.nombre='{nombre}' AND u.apellido='{apellido}' AND u.dni={dni}")[0][0]
             tarjetas_usuario = make_query(f"SELECT t.numeroTarjeta FROM tarjeta t INNER JOIN cuenta_bancaria c ON c.idUsuario = {idUsuario} WHERE t.tipoTarjeta='{tipo_tarjeta}';")
-            tarjetas_usuario = [int(t[0]) for t in tarjetas_usuario]            
+            tarjetas_usuario = [t[0] for t in tarjetas_usuario]            
         except:
             tarjetas_usuario = []
         finally:
             return 1 if nro_tarjeta in tarjetas_usuario else 0
 
-    @rpc(Integer(nullable=False), Unicode(nullable=False), Double(nullable=False), Double(nullable=False), _returns=Integer(nullable=False))
+    @rpc(Unicode(nullable=False), Unicode(nullable=False), Double(nullable=False), Double(nullable=False), _returns=Integer(nullable=False))
     def validar_limite_mensual(ctx, nro_tarjeta, tipo_tarjeta, total_a_pagar, total_gastado):
         """
         Valida si la compra a realizar con el medio de pago elegido no supera el limite mensual (teniendo en cuenta todas las compras del mes) y si es el caso,
@@ -72,7 +72,7 @@ class UsuarioService(CorsService):
             return 0
             
         try:
-            limite_mensual = make_query(f"SELECT t.limiteMensual FROM tarjeta t WHERE t.numeroTarjeta={nro_tarjeta} AND t.tipoTarjeta='{tipo_tarjeta}'")[0][0]
+            limite_mensual = make_query(f"SELECT t.limiteMensual FROM tarjeta t WHERE t.numeroTarjeta='{nro_tarjeta}' AND t.tipoTarjeta='{tipo_tarjeta}'")[0][0]
             saldo = make_query(f"SELECT c.saldo FROM cuenta_bancaria c WHERE c.idCuenta = (SELECT t.idCuenta FROM tarjeta t where t.numeroTarjeta='{nro_tarjeta}')")[0][0]
             #Solo para tarjetas de credito.
             if tipo_tarjeta=="credito" and (total_a_pagar+total_gastado) > int(limite_mensual):
