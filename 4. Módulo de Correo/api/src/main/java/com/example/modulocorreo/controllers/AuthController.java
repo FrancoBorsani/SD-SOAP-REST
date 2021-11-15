@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.modulocorreo.dto.request.LoginRequest;
 import com.example.modulocorreo.dto.response.LoginResponse;
+import com.example.modulocorreo.entities.Envio;
 import com.example.modulocorreo.entities.User;
 import com.example.modulocorreo.repositories.IUserRepository;
 import com.example.modulocorreo.services.implementation.UserService;
 import com.example.modulocorreo.utils.JwtUtil;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import javax.validation.Valid;
 
@@ -36,6 +43,9 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/signin")
+	@Operation(summary = "Loguearse en el sistema.")
+	@ApiResponses(value = @ApiResponse(responseCode = "200", content = {
+			@Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class)) }))
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
