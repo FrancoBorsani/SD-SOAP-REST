@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
         List<String> headers = Arrays.asList("Authorization", "Cache-Control", "Content-Type");
-        List<String> origins = Arrays.asList("http://localhost:3000");
+        List<String> origins = Arrays.asList("http://localhost:3002");
         List<String> methods = Arrays.asList("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE");
         List<String> exposed = Arrays.asList("Authorization");
 
