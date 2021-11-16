@@ -35,4 +35,8 @@ public class PedidoService {
     }
 
 	public List<Pedido> findByMonth(int month) { return pedidoRepository.findByMonth(month); }
+	
+	public Pedido actualizarPedido(Pedido pedido) {
+		return pedidoRepository.save(pedido);			
+	}
 }
