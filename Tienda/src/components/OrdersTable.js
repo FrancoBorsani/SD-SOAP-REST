@@ -37,7 +37,7 @@ const OrdersTable = () => {
     return (
         <div className="container clear-filter">
             <h3 className="text-uppercase">{ auth.user && auth.user.roles.includes('ROLE_ADMIN') ? 'Mis ventas' : 'Mis ordenes' }</h3>
-            <div className="my-3">
+            <div className="table-responsive my-3">
                 <table className="table-bordered table-hover w-100 text-uppercase">
 
                     <thead className="bg-light font-weight-bold">
