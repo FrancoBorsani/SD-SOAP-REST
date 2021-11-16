@@ -62,10 +62,13 @@ public class Pedido {
 	
 	@Column(name = "estadoDeCompra", nullable=true)
 	private String estadoDeCompra;
+	
+	@Column(name = "direccionDeEntrega")
+	private String direccionDeEntrega;
 
 	public Pedido() {}
 
-	public Pedido(long idCompra, User comprador, User vendedor, double total, Set<Item> listaItems, int idTarjetaUsada) {
+	public Pedido(long idCompra, User comprador, User vendedor, double total, Set<Item> listaItems, int idTarjetaUsada, String direccionDeEntrega) {
 		super();
 		this.idCompra = idCompra;
 		this.comprador = comprador;
@@ -73,6 +76,7 @@ public class Pedido {
 		this.total = total;
 		this.listaItems = listaItems;
 		this.idTarjetaUsada = idTarjetaUsada;
+		this.direccionDeEntrega = direccionDeEntrega;
 	}
 
 	public Pedido(double total, Set<Item> listaItems) {
@@ -174,6 +178,14 @@ public class Pedido {
 
 	public void setEstadoDeCompra(String estadoDeCompra) {
 		this.estadoDeCompra = estadoDeCompra;
+	}
+
+	public String getDireccionDeEntrega() {
+		return direccionDeEntrega;
+	}
+
+	public void setDireccionDeEntrega(String direccionDeEntrega) {
+		this.direccionDeEntrega = direccionDeEntrega;
 	}
 
 	@Override

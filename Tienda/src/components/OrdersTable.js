@@ -4,10 +4,11 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Container, Spinner } from "reactstrap";
 import { DataContext } from "store/GlobalState";
+import { postData } from "utils/fetchData";
 import { getData } from "utils/fetchData";
 
 const OrdersTable = () => {
-    
+
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -26,6 +27,22 @@ const OrdersTable = () => {
 
     }, [auth.token]);
 
+    const handleCancelOrder = async (idCompra, total) => {
+
+        let confirm = window.confirm('Estas seguro que deseas cancelar el pedido?');
+
+        if (confirm) {
+
+            const response = await postData(`pedido/cancelar?idCompra=${idCompra}&total=${total}`, null, auth.token);
+
+            if (response.error) alert('Error inesperado. Por favor intente más tarde.');
+
+            window.location.reload();
+
+        }
+
+    }
+
     if (loading) return (
         <div className="page-header clear-filter">
             <Container>
@@ -36,7 +53,7 @@ const OrdersTable = () => {
 
     return (
         <div className="container clear-filter">
-            <h3 className="text-uppercase">{ auth.user && auth.user.roles.includes('ROLE_ADMIN') ? 'Mis ventas' : 'Mis ordenes' }</h3>
+            <h3 className="text-uppercase">{auth.user && auth.user.roles.includes('ROLE_ADMIN') ? 'Mis ventas' : 'Mis ordenes'}</h3>
             <div className="table-responsive my-3">
                 <table className="table-bordered table-hover w-100 text-uppercase">
 
@@ -46,9 +63,9 @@ const OrdersTable = () => {
                             <td className="p-2">Fecha</td>
                             <td className="p-2">Vendedor</td>
                             <td className="p-2">Comprador</td>
-                            <td className="p-2">total</td>
+                            <td className="p-2">Total</td>
                             <td className="p-2">Estado</td>
-                            <td className="p-2">Detalle</td>
+                            <td className="p-2">Acciones</td>
                         </tr>
                     </thead>
 
@@ -63,9 +80,22 @@ const OrdersTable = () => {
                                     <td className="p-2">{order.vendedor.username}</td>
                                     <td className="p-2">{order.comprador.username}</td>
                                     <td className="p-2">${order.total}</td>
-                                    <td className="p-2">{order.estadoDeEnvio}</td>
+                                    <td className="p-2">{order.estadoDeCompra === 'Cancelado' ? 'Cancelado' : order.estadoDeEnvio}</td>
                                     <td className="p-2">
-                                        <Link className="text-dark" to={`/my/orders/${order.idCompra}`}>Ver</Link>
+                                        <Link className="text-dark" to={`/my/orders/${order.idCompra}`}>
+                                            Ver
+                                        </Link>
+                                        {
+                                            order.estadoDeCompra === 'Realizado' && order.estadoDeEnvio === 'En Preparación' && (
+                                                <>
+                                                    <span className="mx-1">-</span>
+                                                    <span className="text-dark text-uppercase" style={{ cursor: 'pointer' }} onClick={() => handleCancelOrder(order.idCompra, order.total)}>
+                                                        Cancelar
+                                                    </span>
+                                                </>
+                                            )
+                                        }
+
                                     </td>
                                 </tr>
                             ))

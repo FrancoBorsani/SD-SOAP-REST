@@ -1,6 +1,5 @@
 package com.ecommerce.ecommerce.api;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -137,6 +136,11 @@ public class PedidoRestController {
 
 		List<Pedido> pedidos = roles.get(0) != "ROLE_USER" ? pedidoService.findByComprador(user.getId())
 				: pedidoService.findByVendedor(user.getId());
+		
+		for(Pedido p : pedidos) {
+			p.setEstadoDeEnvio(CorreoRestClient.callGetEnvioByCodigoAPI(p.getCodigoDeSeguimiento()).getEstado());
+			System.out.println(p.getEstadoDeEnvio());
+		}
 
 		return pedidos;
 
@@ -146,13 +150,9 @@ public class PedidoRestController {
     public ResponseEntity<Pedido> getPedidoById(@PathVariable("id") int idCompra) {
 		
     	Pedido pedido = pedidoService.findByIdCompra(idCompra);
-    	
-    	System.out.println(pedido);
-    	
+    	    	
     	if(pedido == null ) return new ResponseEntity<Pedido>(pedido, HttpStatus.NOT_FOUND);
-    	
-    	System.out.println(pedido.getCodigoDeSeguimiento());
-    	
+    	    	
     	EnvioResponse envio = CorreoRestClient.callGetEnvioByCodigoAPI(pedido.getCodigoDeSeguimiento());
     	    	
     	if(envio != null) {
@@ -171,23 +171,24 @@ public class PedidoRestController {
 		return new ResponseEntity<Pedido>(pedido, pedido == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 	
-	@PostMapping("/cancelarPedido")
+	@PostMapping("/cancelar")
 	public ResponseEntity<Pedido> cancelarPedido(@RequestParam(name="idCompra") int idCompra, @RequestParam(name="total") double total) {
-    	Pedido pedido = pedidoService.findByIdCompra(idCompra);
+    	Pedido pedido = pedidoService.findByIdCompra(idCompra); /*
 		Cuentas cuentaVendedor = cuentaService.traerCuentaPorUser(pedido.getVendedor());
 		Tarjeta tarjetaUsada = tarjetaService.findById(pedido.getIdTarjetaUsada());
 		String validacion = banca.transferir_plata_por_reclamo(cuentaVendedor.getNumero(), tarjetaUsada.getNumero() , pedido.getTotal());
-		if (validacion.equals("1")) {
+		if (validacion.equals("1")) { */
 
 			/****************************** MODIFICAR ESTADO DEL ENVÍO A "CANCELADO" **************************************/
+			
 			pedido.setEstadoDeCompra("Cancelado");
 
 			/***************************************************************************************************/
 
-			return new ResponseEntity<>(this.pedidoService.actualizarPedido(pedido), HttpStatus.OK);
+			return new ResponseEntity<>(this.pedidoService.actualizarPedido(pedido), HttpStatus.OK);/*
 		} else {
 				throw new RuntimeException("Error: Se ha producido un problema al intentar cancelar el pedido.");
-		}
+		}*/
 
 	}
 
