@@ -50,10 +50,13 @@ const Wizard = () => {
             listaItems: listaItems,
             total: total,
             vendedor: cart[0].vendedor,
-            idTarjetaUsada: paymentMethod
+            idTarjetaUsada: paymentMethod,
+            direccionDeEntrega: address
         }
 
         const response = await postData(`pedido/agregar`, order, auth.token);
+
+        console.log(response);
 
         if(response.error) return alert('Error inesperado. Por favor intente más tarde.');
 

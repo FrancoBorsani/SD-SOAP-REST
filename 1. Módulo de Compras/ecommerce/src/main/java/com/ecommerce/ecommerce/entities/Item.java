@@ -26,9 +26,9 @@ public class Item {
 	
 	@Column(name = "cantidad")
 	private int cantidad;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_compra", nullable=false)
+
+	@ManyToOne
+	@JoinColumn(name = "fk_pedido", nullable = false, updatable = false)
 	private Pedido pedido;
 
 	public Item() { }

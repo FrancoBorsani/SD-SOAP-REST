@@ -3,6 +3,7 @@ package com.ecommerce.ecommerce.entities;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,7 +41,7 @@ public class Pedido {
 	@Column(name = "total")
 	private double total;
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedido")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="pedido")
 	private Set<Item> listaItems;
 	
 	@Column(name = "createdat")

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommerce.ecommerce.banca.BancaSoapClient;
 import com.ecommerce.ecommerce.correo.CorreoRestClient;
 import com.ecommerce.ecommerce.correo.EnvioResponse;
-import com.ecommerce.ecommerce.entities.Cuentas;
 import com.ecommerce.ecommerce.entities.Item;
 import com.ecommerce.ecommerce.entities.Pedido;
 import com.ecommerce.ecommerce.entities.Tarjeta;
@@ -83,7 +82,7 @@ public class PedidoRestController {
 
 		User u = usuarioService.traerUser(username);
 		newPedido.setComprador(u);
-
+		
 		Tarjeta tarjetaUsada = tarjetaService.findById(newPedido.getIdTarjetaUsada());
 		double totalGastado = calcularTotalGastado(newPedido.getIdTarjetaUsada(), newPedido.getCreatedAt());
 		String validacion = banca.validar_limite_mensual(tarjetaUsada.getNumero(), tarjetaUsada.getTipo(),
@@ -99,8 +98,6 @@ public class PedidoRestController {
 				descripcionPedido += item.getProducto().getDescripcion() + " x " + item.getCantidad();
 			}
 
-			System.out.println(newPedido.getVendedor().toString());
-
 			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), "58",
 					newPedido.getComprador().getApellido() + " " + newPedido.getVendedor().getNombre());
 
@@ -109,7 +106,7 @@ public class PedidoRestController {
 
 			/***************************************************************************************************/
 
-			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK);
+			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK); 
 		} else {
 			if (tarjetaUsada.getTipo().equals("debito")) {
 				throw new RuntimeException("Error: Saldo insuficiente.");
