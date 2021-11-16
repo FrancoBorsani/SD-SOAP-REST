@@ -78,11 +78,8 @@ public class BancaSoapClient {
                 "   <soapenv:Body>\n" +
                 "      <mod:transferir_plata_por_reclamo>\n" +
                 "         <!--Optional:-->\n" +
-                "         <mod:nro_cuenta_vendedor>"+ nro_cuenta_vendedor +"</mod:nro_cuenta_vendedor>\n" +
-                "         <!--Optional:-->\n" +
                 "         <mod:nro_tarjeta_usada_comprador>"+ nro_tarjeta_usada_comprador +"</mod:nro_tarjeta_usada_comprador>\n" +
                 "         <!--Optional:-->\n" +
-
                 "         <mod:cantidad_a_devolver>"+ cantidad_a_devolver +"</mod:cantidad_a_devolver>\n" +
                 "      </mod:transferir_plata_por_reclamo>\n" +
                 "   </soapenv:Body>\n" +

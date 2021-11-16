@@ -10,11 +10,11 @@ DB_NAME = "modulo_banca"
 
 class CorsService(ServiceBase):
     origin = '*'
-
 def _on_method_return_object(ctx):
-    ctx.transport.resp_headers['Access-Control-Allow-Origin'] = ctx.descriptor.service_class.origin
-
-CorsService.event_manager.add_listener('method_return_object', _on_method_return_object)
+    ctx.transport.resp_headers['Access-Control-Allow-Origin'] = \
+                                              ctx.descriptor.service_class.origin
+CorsService.event_manager.add_listener('method_return_object',
+                                                        _on_method_return_object)
 
 def make_query(query):
     try:
@@ -70,7 +70,6 @@ class UsuarioService(CorsService):
         tipo_tarjeta = tipo_tarjeta.lower()
         if tipo_tarjeta not in ["credito","debito"]:
             return 0
-            
         try:
             limite_mensual = make_query(f"SELECT t.limiteMensual FROM tarjeta t WHERE t.numeroTarjeta='{nro_tarjeta}' AND t.tipoTarjeta='{tipo_tarjeta}'")[0][0]
             saldo = make_query(f"SELECT c.saldo FROM cuenta_bancaria c WHERE c.idCuenta = (SELECT t.idCuenta FROM tarjeta t where t.numeroTarjeta='{nro_tarjeta}')")[0][0]
@@ -94,10 +93,9 @@ class UsuarioService(CorsService):
             print(e)
             return 0
 
-    @rpc(Unicode(nullable=False), Unicode(nullable=False), Double(nullable=False), _returns=Integer(nullable=False))
-    def transferir_plata_por_reclamo(ctx, nro_cuenta_vendedor, nro_tarjeta_usada_comprador, cantidad_a_devolver):
+    @rpc(Unicode(nullable=False), Double(nullable=False), _returns=Integer(nullable=False))
+    def transferir_plata_por_reclamo(ctx, nro_tarjeta_usada_comprador, cantidad_a_devolver):
         try:
-            update_row(f"UPDATE cuenta_bancaria c SET c.saldo = c.saldo-{cantidad_a_devolver} where c.numeroCuenta = '{nro_cuenta_vendedor}'")
             update_row(f"UPDATE cuenta_bancaria c SET c.saldo = c.saldo+{cantidad_a_devolver} where c.idCuenta = (SELECT t.idCuenta FROM tarjeta t where t.numeroTarjeta='{nro_tarjeta_usada_comprador}')")
             return 1
         except Exception as e:
