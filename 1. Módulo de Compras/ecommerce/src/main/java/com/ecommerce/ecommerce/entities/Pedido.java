@@ -40,7 +40,7 @@ public class Pedido {
 	@Column(name = "total")
 	private double total;
 
-	@OneToMany(mappedBy="pedido")	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedido")
 	private Set<Item> listaItems;
 	
 	@Column(name = "createdat")
@@ -59,6 +59,9 @@ public class Pedido {
 	
 	@Column(name = "codigoDeSeguimiento")
 	private String codigoDeSeguimiento;
+	
+	@Column(name = "estadoDeCompra", nullable=true)
+	private String estadoDeCompra;
 
 	public Pedido() {}
 
@@ -163,6 +166,14 @@ public class Pedido {
 
 	public void setCodigoDeSeguimiento(String codigoDeSeguimiento) {
 		this.codigoDeSeguimiento = codigoDeSeguimiento;
+	}
+
+	public String getEstadoDeCompra() {
+		return estadoDeCompra;
+	}
+
+	public void setEstadoDeCompra(String estadoDeCompra) {
+		this.estadoDeCompra = estadoDeCompra;
 	}
 
 	@Override
