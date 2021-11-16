@@ -65,17 +65,9 @@ class Cuentas(db.Model):
     numero = db.Column(db.String(1000))
     user_id= db.Column(db.Integer, db.ForeignKey('user.id'))
 
-class Item(db.Model):
-    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-    producto = db.Column(db.Integer, db.ForeignKey('producto.id'))
-    cantidad = db.Column(db.Integer)
-    pedido = db.Column(db.Integer, db.ForeignKey('pedido.id'))
-
-
-
 
 class Pedido(db.Model):
-    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    id_compra = db.Column(db.Integer, primary_key=True,autoincrement=True)
     codigoDeSeguimiento = db.Column(db.String(1000))
     idTarjetaUsada = db.Column(db.Integer)
     cobrado = db.Column(db.Integer,nullable=True)
@@ -83,9 +75,15 @@ class Pedido(db.Model):
     total = db.Column(db.Float, nullable=True)
     creatdat = db.Column(db.DateTime)
     updateat = db.Column(db.DateTime)
-    items = db.relationship('Item',backref='pedido',lazy='dynamic')
+    items = db.relationship('Item',backref='pedidos',lazy='dynamic')
     comprador= db.Column(db.Integer, db.ForeignKey('user.id'))
     vendedor= db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Item(db.Model):
+    id_item = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    producto = db.Column(db.Integer, db.ForeignKey('producto.id'))
+    cantidad = db.Column(db.Integer)
+    pedido = db.Column(db.Integer, db.ForeignKey('pedido.id_compra'))
 
 
 class Categoria(db.Model):
@@ -104,10 +102,8 @@ class Producto(db.Model):
     forma_de_pago = db.Column(db.String(100))
     vendedor_id= db.Column(db.Integer, db.ForeignKey('user.id'))
     categoria_id_categoria= db.Column(db.Integer, db.ForeignKey('categoria.id'))
-
-
     def __repr__(self):
-        rep = 'Producto(' + self.nombre + ',' +self.descripcion+','+self.imagen+','+ str(self.precio) +','+ str(self.stock) +','+ str(self.cantidad_vendida) + self.forma_de_pago + ')'
+        rep = 'Producto(' '['+ self.nombre + ',' +self.descripcion+','+self.imagen+','+ str(self.precio) +','+ str(self.stock) +','+ str(self.cantidad_vendida) + self.forma_de_pago +']' ')'
         return rep
 
 

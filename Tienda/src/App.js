@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import HomePage from "pages/HomePage";
+import HomePage_beta from "pages/HomePage_beta";
 import LoginPage from "pages/LoginPage.js";
 import ProfilePage from "pages/ProfilePage";
 import RegisterPage from "pages/RegisterPage";

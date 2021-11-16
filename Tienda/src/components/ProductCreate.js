@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "store/GlobalState";
 import { getData } from "utils/fetchData";
-
 const ProductCreate = () => {
     
     const initialState = {
@@ -25,6 +24,10 @@ const ProductCreate = () => {
     ]
 
     const { dispatch } = useContext(DataContext);
+
+    	
+
+
 
     useEffect(() => {
 

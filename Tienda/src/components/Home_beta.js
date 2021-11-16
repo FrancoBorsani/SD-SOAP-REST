@@ -1,102 +1,74 @@
-import React, { useEffect, useState } from "react";
 import { Container, Spinner } from "reactstrap";
-import ProductItem from "components/ProductItem";
-import { getData } from "utils/fetchData";
-import Filter from "components/Filter";
 import axios from 'axios';
+import React, { Component } from "react";
 
-const Home = () => {
 
-	const [products, setProducts] = useState([]);
-	const [categories, setCategories] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [order, setOrder] = useState("");
-	const [keyword, setKeyword] = useState("");
-	const [categorySelected, setCategorySelected] = useState("");
-	const [rangeOfPrice, setRangeOfPrice] = useState({ minPrice: 0, maxPrice: 10000 });
-	const lst = [];  
-	const populateData = (data) => {lst.push(data)} 	
-
-    useEffect(() => {
-
-   // Dummy Url.
-const url = 'http://localhost:8089/get_products?'
-
-// Axios Test.
+const url = 'http://localhost:8089/get_products?';
+var myObject  = [];
 const axiosTest = axios.get
 
-// Axios Test Data.
+
 axiosTest(url).then(function(axiosTestResult) {
 
    
-   
-
-    console.log(axiosTestResult.data) 
+    var myObject = JSON.parse(axiosTestResult.data);
+    console.log(myObject)
+        console.log("caca")
+    return JSON.parse(axiosTestResult.data);
 })
+export class Example1 extends Component {
 
+    constructor(props) {
 
+        super(props);
 
-        getData("categorias")
-            .then(res => {
-                setCategories(res);
-            })
-            .catch(err => console.log(err));
+        this.state = {
 
-    }, []);
+            stringData: myObject
 
-    const handleChangeSearch = e => {
-
-axios.get("http://localhost:8089/get_products?")
-.then(response => {
-setProducts(response);		
-console.log(response.data);
-
-})
-
-.catch(function(error) {
-
-console.log(error);
-
-});
-
-    }
-
-    const handleChangeCategory = e => {
-
-        setCategorySelected(e.target.value);
-
-        let query = e.target.value ? `productos/getByCategoria?idCategoria=${e.target.value}` : "productos";
-        
-        getData(query)
-            .then(res => {
-                setProducts(res);
-            })
-            .catch(err => console.log(err));
-
-    }
-
-    const handleChangeRangeOfPrice = e => {
-
-        const { name, value } = e.target;
-        setRangeOfPrice({ ...rangeOfPrice, [name]: value });
+        };
 
     }
 
 
-    if (order === "Precio ascendente") {
-        products.sort((a, b) => parseFloat(a.precio) - parseFloat(b.precio));
-    } else if (order === "Precio descendente") {
-        products.sort((a, b) => parseFloat(b.precio) - parseFloat(a.precio));
+    render() {
+
+        // Parsed valued from string
+
+        const valuesArray = JSON.parse(this.state.stringData);
+
+
+        return (
+
+            <>
+
+                <div>
+
+                    <h3>Using local JSON file Array</h3>
+
+                    <ul>
+
+                        {valuesArray.map(item => {
+
+                            return <li>{item}</li>;
+
+                        })}
+
+                    </ul>
+
+                </div>
+
+            </>
+
+        );
+
     }
 
-    if (loading) return (
-        <div className="page-header clear-filter">
-            <Container>
-                <Spinner color="info" />
-            </Container>
-        </div>
-    )
+}
 
+
+export default Example1;
+/*
     return (
         <div className="row">
             <Filter
@@ -136,4 +108,4 @@ console.log(error);
     )
 }
 
-export default Home;
+export default Home;*/

@@ -26,9 +26,11 @@ const axiosTest = axios.get
 axiosTest(url).then(function(axiosTestResult) {
 
    
-   
+    var myObject = JSON.parse(axiosTestResult.data);
+    console.log(myObject)
+    
     setProducts(axiosTestResult.data)	
-    console.log(axiosTestResult.data) 
+    //console.log(axiosTestResult.data) 
 })
         getData("categorias")
             .then(res => {
