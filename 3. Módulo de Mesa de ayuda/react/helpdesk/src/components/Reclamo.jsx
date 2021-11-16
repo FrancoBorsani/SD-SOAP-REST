@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Header from '../template/Header';
-import {Apiurl} from '../services/apirest';
+import {Apiurl, Ecommerce} from '../services/apirest';
 import axios from 'axios';
 
 import { withRouter } from 'react-router-dom';
@@ -19,7 +19,16 @@ class Reclamo extends React.Component {
         error: false,
         errorMsg: "",
         success:false,
-        successMsg:""
+        successMsg:"",
+        urlCompra: "",
+        pedido:{
+            idPedido: 0,
+            monto: 0,
+            usuario: 0,
+            nombre: "",
+            apellido: "",
+            username: ""
+        }
     }
     
     componentDidMount() {
@@ -31,18 +40,32 @@ class Reclamo extends React.Component {
 
         axios.get(url, {headers:headers, withCredentials:true})
         .then(response => {
-            console.log(response);
             this.setState({
                 form:{
                     decision: response.data.decision,
                     estado: response.data.estado,
                     id: response.data.id,
                     idCompra: response.data.idCompra,
-                    reclamo: response.data.reclamo
+                    reclamo: response.data.reclamo,
                 },
                 success:true,
-                successMsg:"El reclamo ha sido aceptado."
+                successMsg:"El reclamo ha sido aceptado.",
+                urlCompra: Ecommerce + "api/v1/pedido/reclamos/" + response.data.idCompra
+            });
+
+            axios.get(this.state.urlCompra)
+            .then(response => {
+            this.setState({
+                pedido:{
+                    idPedido: response.data.idCompra,
+                    monto: response.data.total,
+                    usuario: response.data.comprador.id,
+                    nombre: response.data.comprador.nombre,
+                    apellido: response.data.comprador.apellido,
+                    username: response.data.comprador.username
+                }
             })
+        })
         });
     }
 
@@ -57,8 +80,10 @@ class Reclamo extends React.Component {
         if(this.state.form.estado === "A Resolver") {
             axios.post(url, this.state.form, {headers:headers, withCredentials:true})
             .then(response => {
+                
                 this.props.history.push("/dashboard");
-            })
+            });
+            
         } else {
             this.setState({
                 error:true,
@@ -102,18 +127,13 @@ class Reclamo extends React.Component {
                     <br/>
                     <form className="form-horizontal" onSubmit={this.handlerSubmit}>
                         <div className="row">
-                            <div className="col-sm-12">
-                                <label className="col-md-2 control-label">Reclamo</label>
-                                <div className="col-md-10">
-                                    <input type="text" className="form-control" name="denuncia" value={this.state.form.reclamo}/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <label className="col-md-2 control-label">Detalle de compra</label>
-                                <div className="col-md-10">
-                                    <input type="text" className="form-control" name="denuncia" value={this.state.form.idCompra}/>
+                            <div className="card" style={{ width: "35rem" }}>
+                                <div className="card-body">
+                                    <h5 className="card-title">Datos de la compra</h5>
+                                    <p className="card-text"><b>Reclamo:</b> {this.state.form.reclamo}</p>
+                                    <p className="card-text"><b>Usuario:</b> {this.state.pedido.username}</p>
+                                    <p className="card-text"><b>Nombre y apellido:</b> {this.state.pedido.nombre} {this.state.pedido.apellido}</p>
+                                    <p className="card-text"><b>Monto de la compra:</b> {this.state.pedido.monto}</p>
                                 </div>
                             </div>
                         </div>

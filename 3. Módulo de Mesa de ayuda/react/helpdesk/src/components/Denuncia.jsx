@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Header from '../template/Header';
-import {Apiurl} from '../services/apirest';
+import {Apiurl, Ecommerce} from '../services/apirest';
 import axios from 'axios';
 
 import { withRouter } from 'react-router-dom';
@@ -20,7 +20,20 @@ class Denuncia extends React.Component {
         error: false,
         errorMsg: "",
         success:false,
-        successMsg:""
+        successMsg:"",
+        urlDenuncia: "",
+        denuncia:{
+            idProducto: 0,
+            nombre: "",
+            descripcion: "",
+            precio: 0,
+            imagen: "",
+            categoria: "",
+            vendedor: "",
+            nombre: "",
+            apellido: "",
+            urlPublicacion: ""
+        }
     }
     
     componentDidMount() {
@@ -42,8 +55,23 @@ class Denuncia extends React.Component {
                     idProducto: response.data.idProducto
                 },
                 success:true,
-                successMsg:"La denuncia ha sido aceptada."
+                successMsg:"La denuncia ha sido aceptada.",
+                urlDenuncia: Ecommerce + "api/v1/productos/denuncia/" + response.data.idProducto
             })
+            axios.get(this.state.urlDenuncia)
+            .then(response => {
+                this.setState({
+                    denuncia:{
+                        nombre: response.data.nombre,
+                        descripcion: response.data.descripcion,
+                        categoria: response.data.categoria.nombre,
+                        vendedor: response.data.vendedor.username,
+                        nombre: response.data.vendedor.nombre,
+                        apellido: response.data.vendedor.apellido,
+                        urlPublicacion: "http://localhost:3000/product/" + this.state.form.idProducto
+                    }
+                })
+            });
         });
     }
 
@@ -56,8 +84,14 @@ class Denuncia extends React.Component {
         if(this.state.form.estado === "A Resolver") {
             axios.post(url, this.state.form, {headers:headers, withCredentials:true})
             .then(response => {
-                this.props.history.push("/dashboard");
+                
+            });
+
+            axios.post(this.state.urlDenuncia)
+            .then(response => {
+                console.log(response);
             })
+
         } else {
             this.setState({
                 error:true,
@@ -75,7 +109,7 @@ class Denuncia extends React.Component {
         if(this.state.form.estado === "A Resolver") {
             axios.post(url, this.state.form, {headers:headers, withCredentials:true})
             .then(response => {
-                this.props.history.push("/dashboard");
+                
             })
         } else {
             this.setState({
@@ -101,29 +135,21 @@ class Denuncia extends React.Component {
                     <br/>
                     <form className="form-horizontal" onSubmit={this.handlerSubmit}>
                         <div className="row">
-                            <div className="col-sm-12">
-                                <label className="col-md-2 control-label">Categoria</label>
-                                <div className="col-md-10">
-                                    <input type="text" className="form-control" name="categoria" value={this.state.form.categoria}/>
+                            <div className="card" style={{ width: "35rem" }}>
+                                <div className="card-body">
+                                    <h5 className="card-title">Datos de la publicación</h5>
+                                    <p className="card-text"><b>Denuncia:</b> {this.state.form.denuncia}</p>
+                                    <p className="card-text"><b>Categoría:</b> {this.state.form.categoria}</p>
+                                    <p className="card-text"><b>Producto:</b> {this.state.denuncia.nombre}</p>
+                                    <p className="card-text"><b>Descripción:</b> {this.state.denuncia.descripcion}</p>
+                                    <p className="card-text"><b>Categoría producto:</b> {this.state.denuncia.categoria}</p>
+                                    <p className="card-text"><b>Vendedor:</b> {this.state.denuncia.vendedor}</p>
+                                    <p className="card-text"><b>Nombre y apellido:</b> {this.state.denuncia.nombre} {this.state.denuncia.apellido}</p>
+                                    <a className="card-text" href={this.state.denuncia.urlPublicacion}><b>Link</b></a>
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <label className="col-md-2 control-label">Denuncia</label>
-                                <div className="col-md-10">
-                                    <input type="text" className="form-control" name="denuncia" value={this.state.form.denuncia}/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <label className="col-md-2 control-label">Link publicación</label>
-                                <div className="col-md-10">
-                                    <a className="link-primary" name="publicacion" value={this.state.form.idProducto}>A</a>
-                                </div>
-                            </div>
-                        </div>
+                                
                         <br/><br/>
                         <button type="submit" className="btn btn-primary" style={{ marginRight: "10px" }} onClick={() => this.aceptar()}>Aceptar</button>
                         <button type="submit" className="btn btn-danger" style={{ marginRight: "10px" }} onClick={() => this.rechazar()}>Rechazar</button>

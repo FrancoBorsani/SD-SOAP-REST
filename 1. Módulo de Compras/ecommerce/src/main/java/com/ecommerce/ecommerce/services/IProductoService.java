@@ -19,5 +19,6 @@ public interface IProductoService {
     public List<Producto> findByVendedor(String idVendedor);
     
     public List<Producto> findByRangeOfPrice(double min, double max);
-    
+
+    void deleteProducto(int idProducto);
 }
