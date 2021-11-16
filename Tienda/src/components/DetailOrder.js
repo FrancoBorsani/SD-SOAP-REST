@@ -40,47 +40,59 @@ const DetailOrder = () => {
         <>
             <div className="row justify-content-center">
 
-                <div key={order.idCompra} className="text-uppercase my-3">
-                    <h2 className="text-break">#Orden {order.idCompra}</h2>
+                <div className="col-md-12">
 
-                    <hr />
+                    <div className="text-uppercase my-3">
+                        <h2 className="text-break">#Orden {order.idCompra}</h2>
 
-                    <div className="row justify-content-between">
-                        <div className="col-md-4">
-                            <h3>Envio</h3>
+                        <hr />
 
-                            <p>Nombre: {order.comprador?.nombre + " " + order.comprador?.apellido}</p>
-                            <p>Email: {order.comprador?.email}</p>
-                            <p>Domicilio: {order.domicilio}</p>
-                            <p>Telefono: {order.comprador?.telefono}</p>
-                            <p>Estado: {order.estadoDeEnvio}</p>
+                        {
+                            order.estadoDeCompra === 'Cancelado' && (
+                                <div className="alert alert-danger">
+                                    Orden cancelada
+                                </div>
+                            )
+                        }
 
-                        </div>
 
-                        <div className="col-md-4">
 
-                            <h3>Pago</h3>
-                            {
-                                order.method && <h6>Method: <em>{order.method}</em> </h6>
-                            }
-                            {
-                                order.paymentId && <p>PaymentId: <em>{order.paymentId}</em> </p>
-                            }
+                        <div className="row justify-content-between">
+                            <div className="col-md-4">
+                                <h3>Envio</h3>
 
-                            <div className={`alert ${order.paid ? 'alert-success' : 'alert-danger'}
-                            d-flex justify-content-between align-items-center`}>
-
-                                Agregen lo que consideren!
+                                <p>Nombre: {order.comprador?.nombre + " " + order.comprador?.apellido}</p>
+                                <p>Email: {order.comprador?.email}</p>
+                                <p>Domicilio: {order.direccionDeEntrega}</p>
+                                <p>Telefono: {order.comprador?.telefono}</p>
+                                <p>Estado: { order.estadoDeCompra === 'Cancelado' ? 'Cancelado' : order.estadoDeEnvio}</p>
 
                             </div>
 
-                        </div>
+                            <div className="col-md-4">
 
-                        <div className="col-md-4">
-                            
-                            <h3>Productos</h3>
+                                <h3>Pago</h3>
+                                {
+                                    order.method && <h6>Method: <em>{order.method}</em> </h6>
+                                }
+                                {
+                                    order.paymentId && <p>PaymentId: <em>{order.paymentId}</em> </p>
+                                }
 
-                            {/*
+                                <div className={`alert ${order.paid ? 'alert-success' : 'alert-danger'}
+                            d-flex justify-content-between align-items-center`}>
+
+                                    Agregen lo que consideren!
+
+                                </div>
+
+                            </div>
+
+                            <div className="col-md-4">
+
+                                <h3>Productos</h3>
+
+                                {/*
                                 order.listaitems.map(item => (
                                     <div className="row border-bottom m-0 p-2 justify-content-between align-items-center"
                                         style={{ maxWidth: '550px' }} key={item._id}>
@@ -98,7 +110,8 @@ const DetailOrder = () => {
                                         </span>
                                     </div>
                                 )) */
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

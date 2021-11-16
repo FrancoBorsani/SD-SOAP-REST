@@ -16,7 +16,7 @@ const CreditCards = () => {
 
     const [cards, setCards] = useState([]);
 
-    const { state, dispatch } = useContext(DataContext);
+    const { state } = useContext(DataContext);
 
     const { auth } = state;
 

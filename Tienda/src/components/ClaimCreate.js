@@ -39,7 +39,7 @@ const ClaimCreate = () => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        const response = await fetch(`http://localhost:8083/reclamo`, {
+        const response = await fetch(`http://localhost:8084/reclamo`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

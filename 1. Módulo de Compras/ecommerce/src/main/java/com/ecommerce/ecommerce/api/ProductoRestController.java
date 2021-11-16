@@ -6,12 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ecommerce.ecommerce.entities.Producto;
 import com.ecommerce.ecommerce.services.IProductoService;
@@ -76,4 +71,23 @@ public class ProductoRestController {
    
     }
 
+    @GetMapping("denuncia/{id}")
+    public ResponseEntity<Producto> getProductByIdDenuncia(@PathVariable("id") int idProducto) {
+
+        Producto producto = productoService.getProductoById(idProducto);
+
+        return new ResponseEntity<Producto>(producto, producto == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+
+    }
+
+    @PostMapping("denuncia/{id}")
+    public boolean deleteProductByIdDenuncia(@PathVariable("id") int idProducto) {
+
+        try {
+            productoService.deleteProducto(idProducto);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

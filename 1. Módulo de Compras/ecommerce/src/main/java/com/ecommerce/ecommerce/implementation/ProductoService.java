@@ -56,4 +56,9 @@ public class ProductoService implements IProductoService{
         return productoRepository.findByRangeOfPrice(min, max);
     }
 
+	@Override
+	public void deleteProducto(int idProducto) {
+		productoRepository.delete(productoRepository.findByIdProducto(idProducto));
+	}
+
 }
