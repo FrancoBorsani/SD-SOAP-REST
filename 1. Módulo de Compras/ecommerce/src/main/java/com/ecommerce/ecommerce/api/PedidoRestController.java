@@ -105,8 +105,10 @@ public class PedidoRestController {
 			newPedido.setEstadoDeEnvio(envio.getEstado());
 
 			/***************************************************************************************************/
+			//Le descuento de la cuenta la plata
+			banca.transferir_plata(tarjetaUsada.getNumero() , -newPedido.getTotal());
 
-			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK); 
+			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK);
 		} else {
 			if (tarjetaUsada.getTipo().equals("debito")) {
 				throw new RuntimeException("Error: Saldo insuficiente.");
@@ -170,11 +172,18 @@ public class PedidoRestController {
 	
 	@PostMapping("/cancelar")
 	public ResponseEntity<Pedido> cancelarPedido(@RequestParam(name="idCompra") int idCompra, @RequestParam(name="total") double total) {
-    	Pedido pedido = pedidoService.findByIdCompra(idCompra); /*
-		Cuentas cuentaVendedor = cuentaService.traerCuentaPorUser(pedido.getVendedor());
+    	Pedido pedido = pedidoService.findByIdCompra(idCompra);
 		Tarjeta tarjetaUsada = tarjetaService.findById(pedido.getIdTarjetaUsada());
-		String validacion = banca.transferir_plata_por_reclamo(cuentaVendedor.getNumero(), tarjetaUsada.getNumero() , pedido.getTotal());
-		if (validacion.equals("1")) { */
+
+		String validacion = "";
+		if (pedido.getEstadoDeCompra()!="Cancelado"){
+			validacion = banca.transferir_plata(tarjetaUsada.getNumero(), pedido.getTotal());
+		}
+		else{
+			throw new RuntimeException("El pedido ya fue cancelado.");
+		}
+
+		if (validacion.equals("1")) {
 
 			/****************************** MODIFICAR ESTADO DEL ENVÍO A "CANCELADO" **************************************/
 			
@@ -182,10 +191,10 @@ public class PedidoRestController {
 
 			/***************************************************************************************************/
 
-			return new ResponseEntity<>(this.pedidoService.actualizarPedido(pedido), HttpStatus.OK);/*
+			return new ResponseEntity<>(this.pedidoService.actualizarPedido(pedido), HttpStatus.OK);
 		} else {
-				throw new RuntimeException("Error: Se ha producido un problema al intentar cancelar el pedido.");
-		}*/
+		throw new RuntimeException("Error: Se ha producido un problema al intentar cancelar el pedido.");
+		}
 
 	}
 
