@@ -97,8 +97,14 @@ public class PedidoRestController {
 			for (Item item : newPedido.getListaItems()) {
 				descripcionPedido += item.getProducto().getDescripcion() + " x " + item.getCantidad();
 			}
+			
+			this.pedidoService.guardarPedido(newPedido);
 
-			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), "58",
+			System.out.println("ID COMPRA:");
+			
+			System.out.println(newPedido.getIdCompra());
+			
+			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), newPedido.getIdCompra(),
 					newPedido.getComprador().getApellido() + " " + newPedido.getVendedor().getNombre());
 
 			newPedido.setCodigoDeSeguimiento(envio.getCodigoDeSeguimiento());

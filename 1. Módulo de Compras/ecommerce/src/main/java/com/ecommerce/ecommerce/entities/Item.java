@@ -28,7 +28,7 @@ public class Item {
 	private int cantidad;
 
 	@ManyToOne
-	@JoinColumn(name = "fk_pedido", nullable = false, updatable = false)
+	@JoinColumn(name = "fk_pedido", nullable = true, updatable = false)
 	private Pedido pedido;
 
 	public Item() { }
