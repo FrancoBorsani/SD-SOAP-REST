@@ -104,7 +104,7 @@ public class PedidoRestController {
 			
 			System.out.println(newPedido.getIdCompra());
 			
-			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), newPedido.getIdCompra(),
+			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), Long.toString(newPedido.getIdCompra()),
 					newPedido.getComprador().getApellido() + " " + newPedido.getVendedor().getNombre());
 
 			newPedido.setCodigoDeSeguimiento(envio.getCodigoDeSeguimiento());
@@ -203,5 +203,31 @@ public class PedidoRestController {
 		}
 
 	}
+	
+	@PostMapping("/devolver")
+	public ResponseEntity<Pedido> devolverPedido(@RequestParam(name="idCompra") int idCompra, @RequestParam(name="total") double total) {
+    	
+    	Pedido pedido = pedidoService.findByIdCompra(idCompra);
+		Tarjeta tarjetaUsada = tarjetaService.findById(pedido.getIdTarjetaUsada());
+		String validacion = "";
 
+		if (pedido.getEstadoDeCompra() != "Reclamado") {
+			validacion = banca.transferir_plata(tarjetaUsada.getNumero(), pedido.getTotal());
+		} else{
+			throw new RuntimeException("El dinero de este pedido ya fue devuelto.");
+		}
+
+		if (validacion.equals("1")) {
+
+			/****************************** MODIFICAR ESTADO DEL ENVÍO A "RECLAMADO" **************************************/
+			
+			pedido.setEstadoDeCompra("Reclamado");
+
+			/***************************************************************************************************/
+
+			return new ResponseEntity<>(this.pedidoService.actualizarPedido(pedido), HttpStatus.OK);
+		} else {
+			throw new RuntimeException("Error: Se ha producido un problema al intentar devolver el dinero del pedido.");
+		}
+	}
 }
