@@ -23,9 +23,12 @@ import com.ecommerce.ecommerce.correo.CorreoRestClient;
 import com.ecommerce.ecommerce.correo.EnvioResponse;
 import com.ecommerce.ecommerce.entities.Item;
 import com.ecommerce.ecommerce.entities.Pedido;
+import com.ecommerce.ecommerce.entities.Producto;
 import com.ecommerce.ecommerce.entities.Tarjeta;
 import com.ecommerce.ecommerce.entities.User;
+import com.ecommerce.ecommerce.repositories.IProductoRepository;
 import com.ecommerce.ecommerce.services.CuentasService;
+import com.ecommerce.ecommerce.services.IProductoService;
 import com.ecommerce.ecommerce.services.PedidoService;
 import com.ecommerce.ecommerce.services.TarjetaService;
 import com.ecommerce.ecommerce.services.UsuarioService;
@@ -49,6 +52,12 @@ public class PedidoRestController {
 	
 	@Autowired
 	CuentasService cuentaService;
+	
+	@Autowired
+	IProductoService productoService;
+
+	@Autowired
+	IProductoRepository productoRepository;
 
 	public double calcularTotalGastado(int idTarjetaUsada, LocalDateTime fecha){
 		double totalGastado = 0;
@@ -93,9 +102,19 @@ public class PedidoRestController {
 			/****************************** CREAR ENVIO ASOCIADO AL PEDIDO **************************************/
 
 			String descripcionPedido = "";
+			
+			Producto producto = null;
 
 			for (Item item : newPedido.getListaItems()) {
 				descripcionPedido += item.getProducto().getDescripcion() + " x " + item.getCantidad();
+				
+				//ACTUALIZAR STOCK DE PRODUCTOS
+				producto = this.productoRepository.traerProductoPorId(item.getProducto().getIdProducto());
+				producto.setCantidadVendida(producto.getCantidadVendida() + item.getCantidad());
+
+				producto.setStock(producto.getStock() - item.getCantidad());
+				
+				this.productoRepository.save(producto);
 			}
 			
 			this.pedidoService.guardarPedido(newPedido);

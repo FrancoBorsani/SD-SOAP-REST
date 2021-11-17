@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.ecommerce.ecommerce.entities.Pedido;
 import com.ecommerce.ecommerce.entities.Producto;
 
 @Repository("productoRepository")
@@ -30,5 +32,7 @@ public interface IProductoRepository extends JpaRepository<Producto, Serializabl
     
     @Query(nativeQuery=true,value="SELECT * FROM Producto as p WHERE p.precio BETWEEN (:min) AND (:max)")
     public abstract List<Producto> findByRangeOfPrice(double min, double max);
-
+    
+    @Query(nativeQuery=true,value="SELECT * FROM Producto as p WHERE p.id_producto = (:idProducto)")
+    public abstract Producto traerProductoPorId(long idProducto);
 }

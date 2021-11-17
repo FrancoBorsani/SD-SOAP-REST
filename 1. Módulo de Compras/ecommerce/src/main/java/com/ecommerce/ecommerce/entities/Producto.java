@@ -38,10 +38,10 @@ public class Producto {
 	@Column(name = "formaDePago")
 	private String formaDePago;
 	
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne
 	private Categoria categoria;
 	
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne
 	private User vendedor;
 
 	public Producto() {}

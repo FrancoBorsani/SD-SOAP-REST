@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ecommerce.ecommerce.entities.Producto;
 import com.ecommerce.ecommerce.repositories.IProductoRepository;
@@ -60,5 +61,11 @@ public class ProductoService implements IProductoService{
 	public void deleteProducto(int idProducto) {
 		productoRepository.delete(productoRepository.findByIdProducto(idProducto));
 	}
+	
+    @Override
+    public Producto traerProductoPorId(long idProducto) {
+    	return productoRepository.traerProductoPorId(idProducto);
+    }
+
 
 }

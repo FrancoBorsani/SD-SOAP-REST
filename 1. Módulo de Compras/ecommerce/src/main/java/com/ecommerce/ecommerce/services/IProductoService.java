@@ -21,4 +21,7 @@ public interface IProductoService {
     public List<Producto> findByRangeOfPrice(double min, double max);
 
     void deleteProducto(int idProducto);
+    
+    public Producto traerProductoPorId(long idProducto);
+
 }

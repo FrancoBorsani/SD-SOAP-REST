@@ -20,7 +20,7 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idItem;
 	
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne(cascade = CascadeType.REFRESH)
 	private Producto producto;
 	
 	@Column(name = "cantidad")
