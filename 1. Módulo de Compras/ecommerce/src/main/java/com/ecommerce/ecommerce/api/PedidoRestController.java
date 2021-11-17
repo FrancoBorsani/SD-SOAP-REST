@@ -82,7 +82,7 @@ public class PedidoRestController {
 
 		User u = usuarioService.traerUser(username);
 		newPedido.setComprador(u);
-		
+		/*
 		Tarjeta tarjetaUsada = tarjetaService.findById(newPedido.getIdTarjetaUsada());
 		double totalGastado = calcularTotalGastado(newPedido.getIdTarjetaUsada(), newPedido.getCreatedAt());
 		String validacion = banca.validar_limite_mensual(tarjetaUsada.getNumero(), tarjetaUsada.getTipo(),
@@ -95,7 +95,7 @@ public class PedidoRestController {
 			String descripcionPedido = "";
 
 			for (Item item : newPedido.getListaItems()) {
-				descripcionPedido += item.getProducto().getDescripcion() + " x " + item.getCantidad();
+				descripcionPedido += item.getProducto().getNombre() + " x " + item.getCantidad() + " - /n";
 			}
 
 			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), "58",
@@ -103,17 +103,18 @@ public class PedidoRestController {
 
 			newPedido.setCodigoDeSeguimiento(envio.getCodigoDeSeguimiento());
 			newPedido.setEstadoDeEnvio(envio.getEstado());
+			
 
 			/***************************************************************************************************/
 
-			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK); 
+			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK); /*
 		} else {
 			if (tarjetaUsada.getTipo().equals("debito")) {
 				throw new RuntimeException("Error: Saldo insuficiente.");
 			} else {
 				throw new RuntimeException("Error: Esta tarjeta de credito ya supero el limite mensual.");
 			}
-		}
+		}*/
 
 	}
 

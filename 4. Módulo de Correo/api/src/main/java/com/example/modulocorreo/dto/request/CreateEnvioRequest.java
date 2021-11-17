@@ -11,10 +11,19 @@ public class CreateEnvioRequest {
     private String dniDestinatario;
     
     @NotBlank
-    private String vendedor;
+    private String idOrden;
     
     @NotBlank
-    private String idOrden;
+    private String vendedor;
+    
+	public CreateEnvioRequest(@NotBlank String descripcion, @NotBlank String dniDestinatario, @NotBlank String idOrden,
+			@NotBlank String vendedor) {
+		super();
+		this.descripcion = descripcion;
+		this.dniDestinatario = dniDestinatario;
+		this.vendedor = vendedor;
+		this.idOrden = idOrden;
+	}
 
 	public String getDescripcion() {
 		return descripcion;
