@@ -33,7 +33,12 @@ function IndexNavbar() {
         </NavItem>
         <NavItem>
           <NavLink to="/registro" tag={Link}>
-            Registro
+            Registro comprador
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/registro_vendedor" tag={Link}>
+            Registro vendedor
           </NavLink>
         </NavItem>
       </>

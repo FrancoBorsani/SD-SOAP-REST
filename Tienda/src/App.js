@@ -5,6 +5,7 @@ import HomePage_beta from "pages/HomePage_beta";
 import LoginPage from "pages/LoginPage.js";
 import ProfilePage from "pages/ProfilePage";
 import RegisterPage from "pages/RegisterPage";
+import RegisterSaler from "pages/RegisterSaler";
 import CartPage from "pages/CartPage";
 import React from "react";
 import DetailProductPage from "pages/DetailProductPage";
@@ -39,9 +40,11 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path={ClientRoutes.HOME} component={HomePage} exact />
+        <Route path={ClientRoutes.HOMEBETA} component={HomePage_beta} exact />
         <Route path={ClientRoutes.PROFILE} component={ProfilePage} exact />
         <Route path={ClientRoutes.LOGIN} component={LoginPage} exact />
         <Route path={ClientRoutes.REGISTER} component={RegisterPage} exact />
+        <Route path={ClientRoutes.REGISTERSALER} component={RegisterSaler} exact />
         <Route path={ClientRoutes.PRODUCT_DETAIL} component={DetailProductPage} exact />
         <Route path={ClientRoutes.CART} component={CartPage} exact />
         <Route path={ClientRoutes.PRODUCTS_LIST} component={Products} exact />

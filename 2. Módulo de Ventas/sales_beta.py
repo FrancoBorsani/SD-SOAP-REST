@@ -13,6 +13,7 @@ from spyne.model.primitive import String,Integer as Integer_spyne,Float,Boolean
 
 from spyne.protocol.soap import Soap11
 from spyne.server.wsgi import WsgiApplication
+from sqlalchemy.ext.declarative import DeclarativeMeta
 
 
 from flask import Flask
@@ -39,12 +40,45 @@ login_manager = LoginManager()
 login_manager.login_view = 'log_in'
 login_manager.init_app(app)
 
-class User(UserMixin, db.Model):
+
+
+def json_serializer(data):
+    return json.dumps(data).encode("utf-8")
+
+def new_alchemy_encoder():
+    _visited_objs = []
+
+    class AlchemyEncoder(json.JSONEncoder):
+        def default(self, obj):
+            if isinstance(obj.__class__, DeclarativeMeta):
+                # don't re-visit self
+                if obj in _visited_objs:
+                    return None
+                _visited_objs.append(obj)
+
+                # an SQLAlchemy class
+                fields = {}
+                for field in [x for x in dir(obj) if not x.startswith('_') and x != 'metadata']:
+                    print( obj.__getattribute__(field))
+                    print("\n")
+                    fields[field] = obj.__getattribute__(field)
+                # a json-encodable dict
+                return fields
+
+            return json.JSONEncoder.default(self, obj)
+
+    return AlchemyEncoder
+
+
+
+
+class User( db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     username = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     nombre = db.Column(db.String(1000))
     apellido = db.Column(db.String(1000))
+    enabled = db.Column(db.Boolean)
     dni = db.Column(db.String(1000))
     email = db.Column(db.String(1000))
     telefono = db.Column(db.String(1000))
@@ -52,6 +86,17 @@ class User(UserMixin, db.Model):
     productos = db.relationship('Producto',backref='user',lazy='dynamic')
     cuentas = db.relationship('Cuentas',backref='user',lazy='dynamic')
     userRoles = db.relationship('User_role',backref='user',lazy='dynamic')
+    def serialize(self):
+            serialize_obj =  {
+            'id' : self.id,
+            'username' : self.username,
+            'password' : self.password,
+            'nombre' : self.nombre,
+            'apellido' : self.apellido,
+            'dni' : self.dni,
+            'email' : self.email,
+            'saldo' : self.saldo}
+            return serialize_obj
 
 class User_role(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
@@ -69,7 +114,7 @@ class Cuentas(db.Model):
 
 
 class Pedido(db.Model):
-    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    id_compra = db.Column(db.Integer, primary_key=True,autoincrement=True)
     codigoDeSeguimiento = db.Column(db.String(1000))
     idTarjetaUsada = db.Column(db.Integer)
     cobrado = db.Column(db.Integer,nullable=True)
@@ -77,13 +122,19 @@ class Pedido(db.Model):
     total = db.Column(db.Float, nullable=True)
     creatdat = db.Column(db.DateTime)
     updateat = db.Column(db.DateTime)
-    productos = db.relationship('Producto',backref='categoria',lazy='dynamic')
+    items = db.relationship('Item',backref='pedidos',lazy='dynamic')
     comprador= db.Column(db.Integer, db.ForeignKey('user.id'))
     vendedor= db.Column(db.Integer, db.ForeignKey('user.id'))
 
+class Item(db.Model):
+    id_item = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    producto = db.Column(db.Integer, db.ForeignKey('producto.id_producto'))
+    cantidad = db.Column(db.Integer)
+    pedido = db.Column(db.Integer, db.ForeignKey('pedido.id_compra'))
+
 
 class Categoria(db.Model):
-    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    id_categoria = db.Column(db.Integer, primary_key=True,autoincrement=True)
     nombre= db.Column(db.String(100))
     productos = db.relationship('Producto',backref='categoria',lazy='dynamic')
 
@@ -97,25 +148,55 @@ class Producto(db.Model):
     cantidad_vendida =  db.Column(db.Integer)
     forma_de_pago = db.Column(db.String(100))
     vendedor_id= db.Column(db.Integer, db.ForeignKey('user.id'))
-    categoria_id_categoria= db.Column(db.Integer, db.ForeignKey('categoria.id'))
+    categoria_id_categoria= db.Column(db.Integer, db.ForeignKey('categoria.id_categoria'))
+    def serialize(self):
+            serialize_obj =  {
+            'id_producto' : self.id_producto,
+            'nombre' : self.nombre,
+            'descripcion' : self.descripcion,
+            'imagen' : self.imagen,
+            'precio' : self.precio,
+            'stock' : self.stock,
+            'cantidad_vendida' : self.cantidad_vendida,
+            'forma_de_pago' : self.forma_de_pago,
+            'vendedor_id' : self.vendedor_id,
+            'categoria_id_categoria' : self.categoria_id_categoria}
+            return serialize_obj
+
     def __repr__(self):
-        rep = 'Producto(' + self.nombre + ',' +self.descripcion+','+self.imagen+','+ str(self.precio) +','+ str(self.stock) +','+ str(self.cantidad_vendida) + self.forma_de_pago + ')'
+        rep = 'Producto(' '['+ self.nombre +','+ str(self.precio) + ','+ str(self.stock) +',' +self.descripcion+','+self.imagen+','+ str(self.cantidad_vendida) + self.forma_de_pago +']' ')'
         return rep
+    #            stringData: '["title", "price", "inStock", "description", "category"]'
 
 db.create_all()
 
 
 class Sales(ServiceBase):
 
-    @srpc(String,String,String,String,String,String,String, _returns=String)
-    def register(nombre, apellido,username,password,dni,email,telefono):
+    @srpc(String,String,String,String,String,String, _returns=String)
+    def register(nombre, apellido,username,password,dni,email):
         user = User.query.filter_by(username=username).first()
         if user:
             return('User already registered')
-        new_user = User(username=username, password=generate_password_hash(password, method='sha256'), nombre=nombre, apellido=apellido,dni=dni, email=email,telefono=telefono)
+        new_user = User(username=username, password=generate_password_hash(password, method='sha256'), nombre=nombre, apellido=apellido,dni=dni, email=email)
         db.session.add(new_user)
         db.session.commit()
         return('User registered succesfully')
+    
+
+    @srpc(_returns=String)
+    def get_users():
+        user = User.query.all()
+        return json.dumps([u.serialize() for u in user]) 
+    @srpc(String,_returns=String)
+    def get_users_by_username(username):
+        user = User.query.filter_by(username=username)
+        return json.dumps([u.serialize() for u in user]) 
+          
+    @srpc(Integer_spyne,_returns=String)
+    def check_user(id):
+        user = User.query.filter_by(id=id)
+        return json.dumps([u.serialize() for u in user])
 
     @srpc(String, _returns=String)
     def publish_category(nombre):
@@ -159,8 +240,7 @@ class Sales(ServiceBase):
     @srpc(_returns=String)
     def get_products():
         product = Producto.query.all()
-        print(json.dumps(repr(product)))
-        return(json.dumps(repr(product)))
+        return json.dumps([p.serialize() for p in product]) 
 
     @srpc(Integer_spyne,_returns=String)
     def get_products_bycat(cat_id):

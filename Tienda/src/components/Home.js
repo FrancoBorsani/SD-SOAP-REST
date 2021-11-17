@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Container, Spinner } from "reactstrap";
 import ProductItem from "components/ProductItem";
 import { getData } from "utils/fetchData";
+import  GetProducts from 'utils/fetchSoap';
+
 import Filter from "components/Filter";
 import axios from 'axios';
 
@@ -14,24 +16,45 @@ const Home = () => {
     const [keyword, setKeyword] = useState("");
     const [categorySelected, setCategorySelected] = useState("");
     const [rangeOfPrice, setRangeOfPrice] = useState({ minPrice: 0, maxPrice: 1000000 });
-
+    const [prod]=[];
     useEffect(() => {
 
-    const url = 'http://localhost:8089/get_products?';
 
-// Axios Test.
-const axiosTest = axios.get
+        // const url = 'http://localhost:8089/get_products?'
 
-// Axios Test Data.
-axiosTest(url).then(function(axiosTestResult) {
+        // // Axios Test.
+        // const axiosTest = axios.get
+        
+        // // Axios Test Data.
+        // axiosTest(url).then(function(axiosTestResult) {
+        
+           
+           
+        //     //setProducts(axiosTestResult.data)	
+        //     console.log(axiosTestResult.data) 
+        // })
+        
 
-   
-    var myObject = JSON.parse(axiosTestResult.data);
-    console.log(myObject)
+        // GetProducts()
+        // .then(res => {
+        //     console.log(res);
+        // })
+        // .catch(err => console.log(err));
+
+        getData("productos")
+        .then(res => {
+            setProducts(res);
+        })
+        .catch(err => console.log(err));
+
     
-    setProducts(axiosTestResult.data)	
-    //console.log(axiosTestResult.data) 
-})
+        getData("productos")
+        .then(res => {
+            setProducts(res);
+        })
+        .catch(err => console.log(err));
+
+
         getData("categorias")
             .then(res => {
                 setCategories(res);
@@ -103,7 +126,7 @@ axiosTest(url).then(function(axiosTestResult) {
         <div className="row">
             <Filter
                 setProducts={setProducts}
-                products={products}
+                products={prod}
                 categories={categories}
                 order={order}
                 setOrder={setOrder}

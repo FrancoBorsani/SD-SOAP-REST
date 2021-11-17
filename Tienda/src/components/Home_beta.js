@@ -1,111 +1,36 @@
+import React, { useEffect, useState } from "react";
 import { Container, Spinner } from "reactstrap";
+import ProductItem from "components/ProductItem";
+import Filter from "components/Filter";
 import axios from 'axios';
-import React, { Component } from "react";
+import  GetProducts from 'utils/fetchSoap';
 
 
-const url = 'http://localhost:8089/get_products?';
-var myObject  = [];
-const axiosTest = axios.get
+const Home_beta = () => {
+
+    // const res= [];
 
 
-axiosTest(url).then(function(axiosTestResult) {
 
+    //     const axios = require('axios');
+    // axios.get('http://localhost:8089/get_products?').then(resp => {
+    //     res=JSON.stringify(resp.data);
+    //     console.log("lalalal");
+    // });
+    
+    const axios = require('axios');
+
+const res =  axios.get('http://localhost:8089/get_products?');
+
+console.log(res) 
+     const product = res;
+    
+          <div>
+           {product.map(function(product, idx){
+              return (<li key={idx}>{product.idProducto}</li>)
+            })}
+           </div>
+      
    
-    var myObject = JSON.parse(axiosTestResult.data);
-    console.log(myObject)
-        console.log("caca")
-    return JSON.parse(axiosTestResult.data);
-})
-export class Example1 extends Component {
-
-    constructor(props) {
-
-        super(props);
-
-        this.state = {
-
-            stringData: myObject
-
-        };
-
-    }
-
-
-    render() {
-
-        // Parsed valued from string
-
-        const valuesArray = JSON.parse(this.state.stringData);
-
-
-        return (
-
-            <>
-
-                <div>
-
-                    <h3>Using local JSON file Array</h3>
-
-                    <ul>
-
-                        {valuesArray.map(item => {
-
-                            return <li>{item}</li>;
-
-                        })}
-
-                    </ul>
-
-                </div>
-
-            </>
-
-        );
-
-    }
-
-}
-
-
-export default Example1;
-/*
-    return (
-        <div className="row">
-            <Filter
-                setProducts={setProducts}
-                products={products}
-                categories={categories}
-                order={order}
-                setOrder={setOrder}
-                handleChangeSearch={handleChangeSearch}
-                keyword={keyword}
-                categorySelected={categorySelected}
-                handleChangeCategory={handleChangeCategory}
-                rangeOfPrice={rangeOfPrice}
-                handleChangeRangeOfPrice={handleChangeRangeOfPrice}
-            />
-            <div className="col-md-9">
-                <div className="row justify-content-center">
-                    {
-                        products.length === 0 && (
-                            <div className="card">
-                                <div className="card-body">
-                                    No hay productos que coincidan con la busqueda.
-                                </div>
-                            </div>
-                        )
-                    }
-                    {   products.length > 0 &&
-                        products.map(product =>
-                            <div className="col-md-4" key={product.idProducto}>
-                                <ProductItem product={product} />
-                            </div>
-                        )
-                    }
-                </div>
-            </div>
-        </div>
-    )
-}
-
-export default Home;*/
+        }
+export default Home_beta;

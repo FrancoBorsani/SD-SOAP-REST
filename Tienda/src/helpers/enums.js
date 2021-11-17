@@ -3,6 +3,7 @@ export const ClientRoutes =  {
     HOME_BETA : "/beta",
     LOGIN : "/login",
     REGISTER : "/registro",
+    REGISTERSALER : "/registro_vendedor",
     PROFILE : "/profile",
     CART : "/cart",
     CHECKOUT : "/checkout",

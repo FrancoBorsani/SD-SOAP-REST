@@ -10,9 +10,9 @@ import { postData } from "utils/fetchData";
 import { postSaler } from "utils/fetchSoap";
 
 
-function RegisterPage() {
+function RegisterSaler() {
 
-  const initialState = { nombre: '', apellido: '', dni: '', username: '', email: '', password: '', tipo: '' }
+  const initialState = { nombre: '', apellido: '', dni: '', username: '', email: '', password: ''}
   const [userData, setUserData] = useState(initialState)
 
   const [message, setMessage] = useState({});
@@ -29,7 +29,8 @@ function RegisterPage() {
   const handleSubmit = async e => {
     e.preventDefault();
 
-      const response = await postData('registro/create', userData);
+    
+  const response = await postSaler(userData);
 
     if (response.error) return setMessage({ 
       text: 'Error inesperado por favor intente más tarde.',
@@ -40,7 +41,8 @@ function RegisterPage() {
       text: 'Usted se ha registrado exitosamente.',
       color: 'success'
     })
-  
+
+
 
   }
 
@@ -181,22 +183,7 @@ function RegisterPage() {
                         onChange={handleChangeInput}
                         required
                       ></Input>
-                    </InputGroup>
-                    <InputGroup>
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="now-ui-icons users_circle-08"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        placeholder="Ingrese tipo de ususario"
-                        type="text"
-                        name="tipo"
-                        value={userData.tipo}
-                        onChange={handleChangeInput}
-                        required
-                      ></Input>
-                    </InputGroup>
+                    </InputGroup>                  
                   </Col>
                   <Col md="6">
                     <InputGroup>
@@ -241,4 +228,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default RegisterSaler;
