@@ -1,0 +1,28 @@
+CREATE DATABASE modulo_banca;
+USE modulo_banca;
+
+CREATE TABLE usuario(
+	idUsuario INT PRIMARY KEY auto_increment,
+    nombre VARCHAR(255),
+    apellido VARCHAR(255),
+    dni LONG
+);
+
+CREATE TABLE cuenta_bancaria(
+	idCuenta INT PRIMARY KEY auto_increment,
+    numeroCuenta VARCHAR(255),
+    saldo DOUBLE,
+    idUsuario INT
+);
+
+ALTER TABLE cuenta_bancaria ADD FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario);
+
+CREATE TABLE tarjeta(
+	idTarjeta INT PRIMARY KEY auto_increment,
+    tipoTarjeta VARCHAR(255),
+    numeroTarjeta VARCHAR(255),
+    limiteMensual LONG,
+    idCuenta INT
+);
+
+ALTER TABLE tarjeta ADD FOREIGN KEY (idCuenta) REFERENCES cuenta_bancaria(idCuenta);
