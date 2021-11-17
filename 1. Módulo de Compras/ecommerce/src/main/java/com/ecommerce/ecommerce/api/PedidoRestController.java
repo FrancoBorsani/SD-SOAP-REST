@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.api;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -124,7 +125,7 @@ public class PedidoRestController {
 			System.out.println(newPedido.getIdCompra());
 			
 			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), newPedido.getIdCompra() + "" ,
-					newPedido.getComprador().getApellido() + " " + newPedido.getVendedor().getNombre());
+					newPedido.getVendedor().getApellido() + " " + newPedido.getVendedor().getNombre());
 
 			newPedido.setCodigoDeSeguimiento(envio.getCodigoDeSeguimiento());
 			newPedido.setEstadoDeEnvio(envio.getEstado());
@@ -168,6 +169,21 @@ public class PedidoRestController {
 
 		return pedidos;
 
+	}
+
+	@GetMapping("/getPedidosReclamables")
+	public List<Pedido> getPedidosReclamables() {
+		List<Pedido> pedidos = getPedidosByVendedorOCliente();
+		int days = 5;
+
+		for(Pedido p : pedidos){
+			//Si ya pasaron mas de N horas, no es un producto reclamable. Si no esta entregado, entonces tampoco lo mostramos.
+			if(ChronoUnit.HOURS.between(p.getCreatedAt(), LocalDateTime.now())>(days*24) || p.getEstadoDeEnvio().equalsIgnoreCase("Entregado")){
+				pedidos.remove(p);
+			}
+		}
+
+		return pedidos;
 	}
 	
 	@GetMapping("/{id}")
