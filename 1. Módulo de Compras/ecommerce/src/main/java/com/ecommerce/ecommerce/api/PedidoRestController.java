@@ -104,7 +104,7 @@ public class PedidoRestController {
 			
 			System.out.println(newPedido.getIdCompra());
 			
-			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), Long.toString(newPedido.getIdCompra()),
+			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), newPedido.getIdCompra() + "" ,
 					newPedido.getComprador().getApellido() + " " + newPedido.getVendedor().getNombre());
 
 			newPedido.setCodigoDeSeguimiento(envio.getCodigoDeSeguimiento());

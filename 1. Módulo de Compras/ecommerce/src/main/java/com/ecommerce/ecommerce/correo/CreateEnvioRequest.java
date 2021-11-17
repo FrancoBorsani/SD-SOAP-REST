@@ -6,10 +6,10 @@ public class CreateEnvioRequest {
 
     private String dniDestinatario;
     
+    private String idOrden;
+    
     private String vendedor;
     
-    private String idOrden;
-
 	public CreateEnvioRequest() {
 		super();
 	}
@@ -18,8 +18,8 @@ public class CreateEnvioRequest {
 		super();
 		this.descripcion = descripcion;
 		this.dniDestinatario = dniDestinatario;
-		this.vendedor = vendedor;
 		this.idOrden = idOrden;
+		this.vendedor = vendedor;
 	}
 
 	public String getDescripcion() {

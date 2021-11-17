@@ -60,7 +60,7 @@ public class EnvioRestController {
 
 		Envio envio = envioService.insertOrUpdate(new Envio(createEnvioRequest.getDescripcion(),
 				Envio.ESTADO_EN_PREPARACION, createEnvioRequest.getDniDestinatario(), UUID.randomUUID().toString(),
-				createEnvioRequest.getVendedor(), createEnvioRequest.getIdOrden()));
+				createEnvioRequest.getIdOrden(), createEnvioRequest.getVendedor()));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(envio);
 	}
