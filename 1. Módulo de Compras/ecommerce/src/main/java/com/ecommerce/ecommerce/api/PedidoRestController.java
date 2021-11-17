@@ -82,7 +82,7 @@ public class PedidoRestController {
 
 		User u = usuarioService.traerUser(username);
 		newPedido.setComprador(u);
-		/*
+		
 		Tarjeta tarjetaUsada = tarjetaService.findById(newPedido.getIdTarjetaUsada());
 		double totalGastado = calcularTotalGastado(newPedido.getIdTarjetaUsada(), newPedido.getCreatedAt());
 		String validacion = banca.validar_limite_mensual(tarjetaUsada.getNumero(), tarjetaUsada.getTipo(),
@@ -95,26 +95,33 @@ public class PedidoRestController {
 			String descripcionPedido = "";
 
 			for (Item item : newPedido.getListaItems()) {
-				descripcionPedido += item.getProducto().getNombre() + " x " + item.getCantidad() + " - /n";
+				descripcionPedido += item.getProducto().getDescripcion() + " x " + item.getCantidad();
 			}
+			
+			this.pedidoService.guardarPedido(newPedido);
 
-			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), "58",
+			System.out.println("ID COMPRA:");
+			
+			System.out.println(newPedido.getIdCompra());
+			
+			EnvioResponse envio = CorreoRestClient.callCreateEnvioAPI(descripcionPedido, newPedido.getComprador().getDni(), newPedido.getIdCompra() + "" ,
 					newPedido.getComprador().getApellido() + " " + newPedido.getVendedor().getNombre());
 
 			newPedido.setCodigoDeSeguimiento(envio.getCodigoDeSeguimiento());
 			newPedido.setEstadoDeEnvio(envio.getEstado());
-			
 
 			/***************************************************************************************************/
+			//Le descuento de la cuenta la plata
+			banca.transferir_plata(tarjetaUsada.getNumero() , -newPedido.getTotal());
 
-			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK); /*
+			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK);
 		} else {
 			if (tarjetaUsada.getTipo().equals("debito")) {
 				throw new RuntimeException("Error: Saldo insuficiente.");
 			} else {
 				throw new RuntimeException("Error: Esta tarjeta de credito ya supero el limite mensual.");
 			}
-		}*/
+		}
 
 	}
 
@@ -171,11 +178,18 @@ public class PedidoRestController {
 	
 	@PostMapping("/cancelar")
 	public ResponseEntity<Pedido> cancelarPedido(@RequestParam(name="idCompra") int idCompra, @RequestParam(name="total") double total) {
-    	Pedido pedido = pedidoService.findByIdCompra(idCompra); /*
-		Cuentas cuentaVendedor = cuentaService.traerCuentaPorUser(pedido.getVendedor());
+    	Pedido pedido = pedidoService.findByIdCompra(idCompra);
 		Tarjeta tarjetaUsada = tarjetaService.findById(pedido.getIdTarjetaUsada());
-		String validacion = banca.transferir_plata_por_reclamo(cuentaVendedor.getNumero(), tarjetaUsada.getNumero() , pedido.getTotal());
-		if (validacion.equals("1")) { */
+
+		String validacion = "";
+		if (pedido.getEstadoDeCompra()!="Cancelado"){
+			validacion = banca.transferir_plata(tarjetaUsada.getNumero(), pedido.getTotal());
+		}
+		else{
+			throw new RuntimeException("El pedido ya fue cancelado.");
+		}
+
+		if (validacion.equals("1")) {
 
 			/****************************** MODIFICAR ESTADO DEL ENVÍO A "CANCELADO" **************************************/
 			
@@ -183,10 +197,10 @@ public class PedidoRestController {
 
 			/***************************************************************************************************/
 
-			return new ResponseEntity<>(this.pedidoService.actualizarPedido(pedido), HttpStatus.OK);/*
+			return new ResponseEntity<>(this.pedidoService.actualizarPedido(pedido), HttpStatus.OK);
 		} else {
-				throw new RuntimeException("Error: Se ha producido un problema al intentar cancelar el pedido.");
-		}*/
+		throw new RuntimeException("Error: Se ha producido un problema al intentar cancelar el pedido.");
+		}
 
 	}
 

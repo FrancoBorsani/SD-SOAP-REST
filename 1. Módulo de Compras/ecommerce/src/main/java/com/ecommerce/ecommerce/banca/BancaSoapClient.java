@@ -71,18 +71,15 @@ public class BancaSoapClient {
         return callService(xml_parsed, "depositar_cuenta_bancaria");
     }
 
-    public String transferir_plata_por_reclamo(String nro_cuenta_vendedor, String nro_tarjeta_usada_comprador, double cantidad_a_devolver) {
+    public String transferir_plata(String nro_tarjeta_usada_comprador, double cantidad_a_devolver) {
 
         String xml_parsed="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:mod=\"modulo_banca_soap\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
                 "      <mod:transferir_plata_por_reclamo>\n" +
                 "         <!--Optional:-->\n" +
-                "         <mod:nro_cuenta_vendedor>"+ nro_cuenta_vendedor +"</mod:nro_cuenta_vendedor>\n" +
-                "         <!--Optional:-->\n" +
                 "         <mod:nro_tarjeta_usada_comprador>"+ nro_tarjeta_usada_comprador +"</mod:nro_tarjeta_usada_comprador>\n" +
                 "         <!--Optional:-->\n" +
-
                 "         <mod:cantidad_a_devolver>"+ cantidad_a_devolver +"</mod:cantidad_a_devolver>\n" +
                 "      </mod:transferir_plata_por_reclamo>\n" +
                 "   </soapenv:Body>\n" +
