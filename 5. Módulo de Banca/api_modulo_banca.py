@@ -65,7 +65,7 @@ class UsuarioService(CorsService):
         """
         Valida si la compra a realizar con el medio de pago elegido no supera el limite mensual (teniendo en cuenta todas las compras del mes) y si es el caso,
         si se cuenta con saldo suficiente.
-        @return 1 si la compra puede ser realizada (es decir, que el limite mensual aun no es alcanzado). Caso contrario, retorna 0.
+        @return 1 si la compra puede ser realizada (es decir, que el limite mensual aun no es alcanzado o que el saldo es suficiente). Caso contrario, retorna 0.
         """
         tipo_tarjeta = tipo_tarjeta.lower()
         if tipo_tarjeta not in ["credito","debito"]:
@@ -86,6 +86,10 @@ class UsuarioService(CorsService):
 
     @rpc(Unicode(nullable=False), Double(nullable=False), _returns=Integer(nullable=False))
     def depositar_cuenta_bancaria(ctx, nro_cuenta, cantidad_a_depositar):
+        """
+        Deposita dinero en la cuenta asociada que se pasó por parametro.
+        @return 1 si no hubo problemas al depositar la plata. Caso contrario, 0.
+        """
         try:
             update_row(f"UPDATE cuenta_bancaria c SET c.saldo = c.saldo+{cantidad_a_depositar} where c.numeroCuenta='{nro_cuenta}'")
             return 1
@@ -95,6 +99,10 @@ class UsuarioService(CorsService):
 
     @rpc(Unicode(nullable=False), Double(nullable=False), _returns=Integer(nullable=False))
     def transferir_plata_por_reclamo(ctx, nro_tarjeta_usada_comprador, cantidad_a_devolver):
+        """
+        Deposita dinero en la cuenta asociada a la tarjeta que se pasó por parametro.
+        @return 1 si no hubo problemas al depositar la plata. Caso contrario, 0.
+        """
         try:
             update_row(f"UPDATE cuenta_bancaria c SET c.saldo = c.saldo+{cantidad_a_devolver} where c.idCuenta = (SELECT t.idCuenta FROM tarjeta t where t.numeroTarjeta='{nro_tarjeta_usada_comprador}')")
             return 1
