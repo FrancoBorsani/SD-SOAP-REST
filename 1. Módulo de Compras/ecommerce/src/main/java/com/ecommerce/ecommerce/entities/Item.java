@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="item")
@@ -27,7 +29,8 @@ public class Item {
 	private int cantidad;
 
 	@ManyToOne
-	@JoinColumn(name = "fk_pedido", nullable = true, updatable = false)
+	@JoinColumn(name = "id_compra", nullable = false)
+    @JsonIgnore
 	private Pedido pedido;
 
 	public Item() { }

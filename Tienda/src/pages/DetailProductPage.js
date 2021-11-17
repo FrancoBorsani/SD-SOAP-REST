@@ -61,7 +61,10 @@ const DetailProduct = () => {
                         <h6 className="text-danger">Vendidos: {product.cantidadVendida}</h6>
                     </div>
 
-                    <div className="my-2">{product.descripcion} - {product.categoria.nombre}</div>
+                    <div className="row d-flex justify-content-between m-0">
+                        <div className="my-2">{product.descripcion} - {product.categoria.nombre}</div>
+                        <div className="text-capitalize">{product.formaDePago}</div>
+                    </div>
 
                     <div className="my-2">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo error sed obcaecati autem quas explicabo rerum delectus? Accusantium doloribus esse eaque non sint? Accusantium laboriosam praesentium dolores. Deleniti architecto harum saepe alias deserunt a, quibusdam veniam eaque sint ratione aspernatur.

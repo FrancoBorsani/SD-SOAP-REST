@@ -41,7 +41,7 @@ public class Pedido {
 	@Column(name = "total")
 	private double total;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="pedido")
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy="pedido")
 	private Set<Item> listaItems;
 	
 	@Column(name = "createdat")
@@ -131,6 +131,7 @@ public class Pedido {
 
 	public void setListaItems(Set<Item> listaItems) {
 		this.listaItems = listaItems;
+		listaItems.forEach(entity -> entity.setPedido(this));
 	}
 
 	public LocalDateTime getCreatedAt() {

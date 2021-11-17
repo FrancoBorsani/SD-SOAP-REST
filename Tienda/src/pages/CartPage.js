@@ -33,6 +33,8 @@ const CartPage = () => {
 
     const handleRedirectCheckout = async () => {
 
+        if(!auth.user) return setError("Para realizar una compra debe tener iniciar sesión.");
+
         const cards = await getData(`tarjeta/getTarjetasDeUsuario`, auth.token);
 
         const addresses = await getData(`direccion/getDomicilioDeUsuario`, auth.token);
@@ -71,7 +73,8 @@ const CartPage = () => {
                     error && (
                         <div className="col-md-12">
                             <div className="alert alert-danger" >
-                                {error} Puede registrarlas <Link to="/profile">aquí.</Link>
+                                {error} 
+                                {auth.user && <span>Puede registrarlas <Link to="/profile">aquí.</Link></span>} 
                             </div>
                         </div>
                     )

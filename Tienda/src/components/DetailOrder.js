@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { Container, Spinner } from "reactstrap";
 import { DataContext } from "store/GlobalState";
 import { getData } from "utils/fetchData";
+import CartItem from "./CartItem";
 
 const DetailOrder = () => {
 
@@ -58,17 +60,17 @@ const DetailOrder = () => {
 
 
                         <div className="row justify-content-between">
-                            <div className="col-md-4">
+                            <div className="col-md-6">
                                 <h3>Envio</h3>
 
                                 <p>Nombre: {order.comprador?.nombre + " " + order.comprador?.apellido}</p>
                                 <p>Email: {order.comprador?.email}</p>
                                 <p>Domicilio: {order.direccionDeEntrega}</p>
                                 <p>Telefono: {order.comprador?.telefono}</p>
-                                <p>Estado: { order.estadoDeCompra === 'Cancelado' ? 'Cancelado' : order.estadoDeEnvio}</p>
+                                <p>Estado: {order.estadoDeCompra === 'Cancelado' ? 'Cancelado' : order.estadoDeEnvio}</p>
 
                             </div>
-
+                            {/*
                             <div className="col-md-4">
 
                                 <h3>Pago</h3>
@@ -86,31 +88,36 @@ const DetailOrder = () => {
 
                                 </div>
 
-                            </div>
+                            </div>*/}
 
-                            <div className="col-md-4">
+                            <div className="col-md-6">
 
                                 <h3>Productos</h3>
-
-                                {/*
-                                order.listaitems.map(item => (
-                                    <div className="row border-bottom m-0 p-2 justify-content-between align-items-center"
-                                        style={{ maxWidth: '550px' }} key={item._id}>
-                                        <img src={item.images[0].url} alt={item.images[0].url}
-                                            className="img-thumbnail"
-                                            style={{ width: '50px', height: '45px' }}
-                                        />
-
-                                        <h5 className="flex-fill text-secondary px-3 text-capitalize m-0">
-                                            <Link href={`product/${item._id}`}>{item.title}</Link>
-                                        </h5>
-
-                                        <span className="text-info m-0">
-                                            {item.quantity} x ${item.price} = ${item.price * item.quantity}
-                                        </span>
-                                    </div>
-                                )) */
-                                }
+                                <table class="table">
+                                    <tbody>
+                                        {
+                                            order.listaItems && order.listaItems.length > 0 && order.listaItems.map(item => (
+                                                <tr>
+                                                    <td>
+                                                        <img src={item.producto.imagen} alt={item.producto.imagen} width="35" />
+                                                    </td>
+                                                    <td>
+                                                        <Link to={`/product/${item.producto.idProducto}`}>
+                                                            {item.producto.nombre}
+                                                        </Link>
+                                                    </td>
+                                                    <td>
+                                                       x {item.cantidad}
+                                                    </td>
+                                                    <td align="right" >
+                                                       ${item.producto.precio}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </table>
+                                <span className="float-right pr-2" >Total: ${order.total}</span>
                             </div>
                         </div>
                     </div>
