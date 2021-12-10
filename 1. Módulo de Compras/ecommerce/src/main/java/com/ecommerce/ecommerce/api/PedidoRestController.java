@@ -92,7 +92,7 @@ public class PedidoRestController {
 
 		User u = usuarioService.traerUser(username);
 		newPedido.setComprador(u);
-		/*
+		
 		Tarjeta tarjetaUsada = tarjetaService.findById(newPedido.getIdTarjetaUsada());
 		double totalGastado = calcularTotalGastado(newPedido.getIdTarjetaUsada(), newPedido.getCreatedAt());
 		String validacion = banca.validar_limite_mensual(tarjetaUsada.getNumero(), tarjetaUsada.getTipo(),
@@ -132,16 +132,16 @@ public class PedidoRestController {
 
 			/***************************************************************************************************/
 			//Le descuento de la cuenta la plata
-			//banca.transferir_plata(tarjetaUsada.getNumero() , -newPedido.getTotal());
+			banca.transferir_plata(tarjetaUsada.getNumero() , -newPedido.getTotal());
 
 			return new ResponseEntity<>(this.pedidoService.guardarPedido(newPedido), HttpStatus.OK);
-		/*} else {
+		} else {
 			if (tarjetaUsada.getTipo().equals("debito")) {
 				throw new RuntimeException("Error: Saldo insuficiente.");
 			} else {
 				throw new RuntimeException("Error: Esta tarjeta de credito ya supero el limite mensual.");
 			}
-		} */
+		}
 
 	}
 
